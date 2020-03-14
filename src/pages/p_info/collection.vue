@@ -1,11 +1,11 @@
 <template>
   <div id="index">
-    <mt-header fixed title="我的收藏">
+    <!-- <mt-header fixed title="我的收藏">
     <router-link to="/" slot="left">
-        <mt-button icon="back"></mt-button>
+        <mt-button icon="back" @click="prev"></mt-button>
     </router-link>
-    </mt-header>
-
+    </mt-header> -->
+    <header-bar header-title="我的收藏"></header-bar>
 
     <div class="container-fluid">
         <!--ul class="list-group list-group-flush">
@@ -56,6 +56,7 @@
 
 <script>
   import MerchantsList from '../../components/MerchantsList.vue'
+  import HeaderBar from '../../components/HeaderBar.vue'
   export default{
       name: 'index',
       data () {
@@ -115,10 +116,14 @@
     methods:{
         routerTo(merchant){
         this.$router.push({ name: 'choosing', params: { merchant }});
+        },
+        prev(){
+          this.$router.go(-1)
         }
     },
     components:{
-      MerchantsList
+      MerchantsList,
+      HeaderBar
     }
 
   }

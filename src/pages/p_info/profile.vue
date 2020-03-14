@@ -2,11 +2,12 @@
   <div id="index">
 <el-container>
   <el-header>
-     <mt-header fixed title="个人资料">
+     <!-- <mt-header fixed title="个人资料">
     <router-link to="/" slot="left">
         <mt-button icon="back"></mt-button>
     </router-link>
-    </mt-header>
+    </mt-header> -->
+    <header-bar header-title="个人资料"></header-bar>
   </el-header>
   <el-main>
     <p type="info">基础信息</p>
@@ -66,8 +67,12 @@
 </style>
 
 <script>
+  import HeaderBar from '../../components/HeaderBar.vue'
   export default{
       name: 'index',
+      components:{
+        HeaderBar
+      },
       data () {
         return {
           sheetVisible: false,
