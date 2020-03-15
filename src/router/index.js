@@ -33,8 +33,8 @@ export default new Router({
     },
     {
       path: '/p_info/choosing',
-      name: 'choosing'
-      //component: Choosing
+      name: 'choosing',
+      component: Choosing
     },
     {
       path: '/p_info/profile', component: Profile

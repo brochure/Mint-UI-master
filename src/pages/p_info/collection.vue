@@ -115,7 +115,7 @@
       },
     methods:{
         routerTo(merchant){
-        this.$router.push({ name: 'choosing', params: { merchant }});
+          this.$router.push({ name: 'choosing', params: { merchant }});
         },
         prev(){
           this.$router.go(-1)

@@ -77,6 +77,10 @@ export default {
       })
   
     },
+    routerTo(merchant){
+      this.$router.push({ name: 'choosing', params: { merchant }});
+      // this.$router.push({ name: 'choosing'});
+    },
 
 
   },
