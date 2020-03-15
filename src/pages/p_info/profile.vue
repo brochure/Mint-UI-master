@@ -112,6 +112,11 @@
         }
         var url = getObjectURL(this.$refs.filElem.files[0]);
         console.log(url);
+            // 应该用canvas编辑和保存图片
+            var downloadLink = document.createElement("a");
+            downloadLink.setAttribute("href", url);
+            downloadLink.setAttribute("download", "new.png");
+            downloadLink.click();
         // this.$axios({
         //   url: url,
         //   type: "POST",
@@ -124,15 +129,20 @@
         //   }
         // });
         
-        this.$http({
-          url: url,
-          method: "POST",
-          headers:{'Content-Type':'image/jpeg','X-Requested-With':'XMLHttpRequest'},
-          responseType: "blob"
-        }).then(function(response){
-          console.log('awsdawd');
+        // this.$http({
+        //   url: url,
+        //   method: "POST",
+        //   headers:{'Content-Type':'image/jpeg','X-Requested-With':'XMLHttpRequest'},
+        //   responseType: "blob"
+        // }).then(function(response){
+        //   console.log('awsdawd');
           
-        })
+        // }).catch(function(error){
+        //   console.log('error33');
+          
+        //   console.log(error);
+          
+        // })
 
   //         this.$axios.get(url).then((res) => {
   //           const blob = new Blob([res.data], {type: 'image/jpeg'})
