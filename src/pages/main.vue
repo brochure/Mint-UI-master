@@ -1,19 +1,5 @@
 <template>
   <div id="index">
-
-    <!--mt-header fixed title="qwdqw">
-      <router-link to="/" slot="left">
-        <mt-button icon="back">back</mt-button>
-      </router-link>
-      <mt-button icon="scan" ></mt-button>
-      <mt-button icon="message" style="margin-left:5px;"></mt-button>
-    </mt-header-->
-  <!--
-      <div :style="stylePortrait">
-        <span :style="stylePortrait">{{userNickName}}</span>
-      </div>
-  -->
-
   <div class="container-fluid">
     <div class="row">
       <div class="pos-f-t col-12">
@@ -32,8 +18,6 @@
         </nav>
       </div>
     </div>
-        <!--div class="portrait">
-        </div-->
         <div fixed style="height:60px;">
           <mt-search
             v-model="searchContent"
@@ -114,26 +98,6 @@
   <mt-tab-item id="3">到店自取</mt-tab-item>
 </mt-navbar>
 
-<!--mt-tab-container v-model="selected">
-  <mt-tab-container-item id="1">
-    <mt-cell v-for="value in canteens" :title="value.title" :key="value">
-      <img :src="value.pic" class="logo">
-    </mt-cell>
-  </mt-tab-container-item>
-  <mt-tab-container-item id="2">
-    <mt-cell v-for="value in markets" :title="value.title" :key="value">
-      <img :src="value.pic" class="logo">
-    </mt-cell>
-  </mt-tab-container-item>
-  <mt-tab-container-item id="3">
-    <mt-cell v-for="value in merchants" v-if="value.isSelfCollectable" :title="value.title" :key="value">
-      <img :src="value.pic" class="logo">
-    </mt-cell>
-    <mt-cell v-for="value in markets" v-if="value.isSelfCollectable" :title="value.title" :key="value">
-      <img :src="value.pic" class="logo">
-    </mt-cell>
-  </mt-tab-container-item>
-</mt-tab-container-->
 <mt-tab-container v-model="selected">
   <mt-tab-container-item id="1">
     <merchants-list :filters="filters1"></merchants-list>
@@ -332,69 +296,7 @@ import MerchantsList from '../components/MerchantsList.vue'
             pic: '../../static/banners/3.jpg',
           }
         ],
-        /*
-        merchants: [
-          { title: '麦当劳',
-            pic:'../../static/canteen_logos/mcd.jpg',
-            isSelfCollectable: false,
-            link: '',
-            type: 0
-           },
-          { title: '肯德基',
-            pic:'../../static/canteen_logos/kfc.jpg',
-            isSelfCollectable: true,
-            link: '',
-            type: 0
-           },
-          { title: '棒！约翰',
-            pic:'../../static/canteen_logos/ppj.jpg',
-            isSelfCollectable: false,
-            link: '',
-            type: 0
-           },
-           {
-             title: '必胜客',
-            pic:'../../static/canteen_logos/psh.jpg',
-            isSelfCollectable: true,
-            link: '',
-            type: 0
-           },
-           {
-            title: '永辉超市',
-            pic: '../../static/markets/1.jpg',
-            isSelfCollectable: true,
-            link: '',
-            type: 1
-          },
-          {
-            title: '百世邻里',
-            pic: '../../static/markets/2.jpg',
-            isSelfCollectable: false,
-            link: '',
-            type: 1
-          },
-          {
-            title: '全家',
-            pic: '../../static/markets/3.jpg',
-            isSelfCollectable: false,
-            link: '',
-            type: 1
-          },
-          {
-            title: '联华超市',
-            pic: '../../static/markets/4.jpg',
-            isSelfCollectable: false,
-            link: '',
-            type: 1
-          },
-          {
-            title: '鲜丰水果',
-            pic: '../../static/markets/5.jpg',
-            isSelfCollectable: true,
-            link: '',
-            type: 1
-          }
-        ],*/
+       
         discounts: [
           {
             title: '白桃气泡饮套餐',
@@ -412,7 +314,7 @@ import MerchantsList from '../components/MerchantsList.vue'
             pic: '../../static/discounts/3.jpg'
           }
         ],
-        selected: "",
+        selected: "1",
         userNickName: 'CheetoMan'
       }
     },
