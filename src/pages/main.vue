@@ -36,7 +36,7 @@
         </div-->
         <div fixed style="height:60px;">
           <mt-search
-            v-model="value"
+            v-model="searchContent"
             cancel-text="取消"
             placeholder="我爱专星送"
             style="width:100%;">
@@ -45,7 +45,7 @@
         
     <div class="block">
       <el-carousel trigger="click" height="150px">
-        <el-carousel-item v-for="item in banners" :key="item">
+        <el-carousel-item v-for="item in banners" :key="item.pic">
           <img :src="item.pic" class="banner"/>
         </el-carousel-item>
       </el-carousel>
@@ -97,7 +97,7 @@
       <p class="text-danger d-inline-block">新人专属</p><p class="text-danger d-inline-block font-weight-bold hight-amt">1</p><p class="text-danger d-inline-block">元起</p>
       <p class="small font-weight-light" style="float:right;margin-top:2px;">更多 ></p>
       </div>
-      <div class="card col-4 p-0 d-inline-block" v-for="value in discounts" :title="value.title" :key="value">
+      <div class="card col-4 p-0 d-inline-block" v-for="value in discounts" :title="value.title" :key="value.title">
         <img :src="value.pic" class="card-img-top discountimg">
           <div class="card-body p-2">
             <p class="card-title text-nowrap small m-1">{{value.title}}</p>
@@ -305,6 +305,7 @@ import MerchantsList from '../components/MerchantsList.vue'
       return {
         name: "index",
         selected: 1,
+        searchContent: "",
         filters1:{
           flrfav: [true,false],
           flrsc: [true, false],

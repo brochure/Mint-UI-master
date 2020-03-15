@@ -1,6 +1,6 @@
 <template>
     <ul class="list-group list-group-flush">
-      <div v-for="value in merchants" :key="value">
+      <div v-for="value in merchants" :key="value.title">
         <div v-if="filters.flrfav.includes(value.isFav) && filters.flrsc.includes(value.isSelfCollectable) && filters.flrtype.includes(value.type)">
       <li class="list-group-item">
             <div class="row" @click="routerTo(value)">

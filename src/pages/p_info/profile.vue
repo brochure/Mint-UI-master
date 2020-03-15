@@ -40,15 +40,14 @@
       <span style="color:#409EFF;font-size:0.8em;">未绑定</span>
     </mt-cell>
   </el-main>
-  <el-upload>
   <mt-actionsheet
     :actions="actions"
     v-model="sheetVisible">
   </mt-actionsheet>
 
-  
+  <!-- <el-upload>
 
-</el-upload>
+</el-upload> -->
 </el-container>
 
   </div>
@@ -81,7 +80,7 @@
           method : this.getCamera
           }, {
             name: '从相册中选择', 
-            method : this.getLibrary
+            method : this.fileUpload
           }],
         }
       },
@@ -94,6 +93,36 @@
     },
     getLibrary(){
       console.log("打开相册")
+    },
+    fileUpload(event){
+      // 上传文件
+      console.log(event);
+      
+      // let file = event.target.files
+      // let formData = new FormData()
+      // formData.append('category', 'settingPic')
+      // formData.append('file', file[0])
+      // console.log(formData);
+      // // 文件上传
+      // this.$axios({
+      //   method: "POST",
+      //   url: url_g + '/dcas/event/'+this.contrastId+'/importathlete',
+      //   data: formData
+      // }).then((res) => {
+      //   let data = res.data
+      //   if(data.success) {
+      //     console.log(data);
+          
+          
+      //   } else {
+      //     this.$message.error(data.message || '操作失败')
+      //   }
+      //   this.uploadLoading = false
+      // }).catch((e)=>{
+      //   this.uploadLoading = false
+      //   alert(e)
+      // })
+      
     }
 
         // routerTo(merchant){

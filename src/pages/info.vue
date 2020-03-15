@@ -52,7 +52,7 @@
 </div>
 
 <ul class="list-group list-group-flush">
-  <li class="list-group-item" v-for="value in userscopes" :key="value" @click="jumpto(value.link)">
+  <li class="list-group-item" v-for="value in userscopes" :key="value.title" @click="jumpto(value.link)">
     <i class="mintui" :class="'mintui-'+value.icon"></i>
     <span class="ml-2">{{value.title}}</span>
     <span style="float:right;">
@@ -148,12 +148,14 @@
     }
 </style>
 <script>
-import { Header, Toast} from 'mint-ui'
+import { Toast} from 'mint-ui'
+//import { Header, Toast} from 'mint-ui'
+
 
   export default{
     name:'info',
     components: {
-      'header': Header
+      //'header': Header
     },
     data () {
       return {
