@@ -320,7 +320,7 @@ import MerchantsList from '../components/MerchantsList.vue'
     },
   methods: {
     exportJSON () {
-      const data = JSON.stringify(this.merchants)
+      const data = JSON.stringify(this.merchants) //this.merchants has been deleted
       const blob = new Blob([data], {type: ''})
       FileSaver.saveAs(blob, 'merchants.json')
     }

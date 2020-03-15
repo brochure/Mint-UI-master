@@ -44,7 +44,7 @@
     :actions="actions"
     v-model="sheetVisible">
   </mt-actionsheet>
-
+  <input ref="filElem" type="file" style="display:none" class="upload-file" @change="getFile">
   <!-- <el-upload>
 
 </el-upload> -->
@@ -67,6 +67,9 @@
 
 <script>
   import HeaderBar from '../../components/HeaderBar.vue'
+  import FileSaver from 'file-saver'
+
+  var formData = new FormData()
   export default{
       name: 'index',
       components:{
@@ -80,7 +83,7 @@
           method : this.getCamera
           }, {
             name: '从相册中选择', 
-            method : this.fileUpload
+            method : this.getLibrary
           }],
         }
       },
@@ -90,13 +93,89 @@
       },
       getCamera(){
       console.log("打开照相机")
-    },
-    getLibrary(){
-      console.log("打开相册")
-    },
+      },
+      getLibrary(){
+        this.$refs.filElem.dispatchEvent(new MouseEvent('click'))
+      },
+      getFile(){
+        
+        function getObjectURL(file) { 
+            var url = null; 
+            if (window.createObjcectURL != undefined) { 
+                url = window.createOjcectURL(file); 
+            } else if (window.URL != undefined) { 
+                url = window.URL.createObjectURL(file); 
+            } else if (window.webkitURL != undefined) { 
+                url = window.webkitURL.createObjectURL(file); 
+            } 
+            return url; 
+        }
+        var url = getObjectURL(this.$refs.filElem.files[0]);
+        console.log(url);
+        // this.$axios({
+        //   url: url,
+        //   type: "POST",
+        //   dataType: 'binary',
+        //   headers:{'Content-Type':'image/jpeg','X-Requested-With':'XMLHttpRequest'},
+        //   processData: false,
+        //   success: function(result){
+        //     console.log('wawad');
+            
+        //   }
+        // });
+        
+        this.$http({
+          url: url,
+          method: "POST",
+          headers:{'Content-Type':'image/jpeg','X-Requested-With':'XMLHttpRequest'},
+          responseType: "blob"
+        }).then(function(response){
+          console.log('awsdawd');
+          
+        })
+
+  //         this.$axios.get(url).then((res) => {
+  //           const blob = new Blob([res.data], {type: 'image/jpeg'})
+  //           FileSaver.saveAs(blob, 'new.jpg')
+  //         })
+        
+        // var that = this;
+        // const inputFile = this.$refs.filElem.files[0];
+        // console.log(inputFile);
+        
+        // if(inputFile){
+        //     if(inputFile.type !== 'image/jpeg' && inputFile.type !== 'image/png' && inputFile.type !== 'image/gif'){
+        //         alert('不是有效的图片文件！');
+        //         return;
+        //     }
+        //     // this.imgInfo = Object.assign({}, this.imgInfo, {
+        //     //     name: inputFile.name,
+        //     //     size: inputFile.size,
+        //     //     lastModifiedDate: inputFile.lastModifiedDate.toLocaleString()
+        //     // })
+        //     // const reader = new FileReader();
+        //     // reader.readAsDataURL(inputFile);
+        //     // reader.onload = function (e) {
+        //     //     that.imgSrc = this.result;
+        //     // }
+
+
+        // } else {
+        //     return;
+        // }
+      },
     fileUpload(event){
-      // 上传文件
-      console.log(event);
+      // formData.append('file', document.querySelector('input[type=file]').files[0]) // 'file' 这个名字要和后台获取文件的名字一样;
+      // formData.append('user',this.name)
+      // this.$axios({
+
+      // }
+
+      // )
+
+
+      // // 上传文件
+      // console.log(event);
       
       // let file = event.target.files
       // let formData = new FormData()
@@ -122,7 +201,6 @@
       //   this.uploadLoading = false
       //   alert(e)
       // })
-      
     }
 
         // routerTo(merchant){
