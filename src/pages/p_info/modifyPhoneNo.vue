@@ -5,10 +5,15 @@
         <header-bar header-title="修改手机"></header-bar>
       </el-header>
       <p class="text-center text-nowrap small" style="">请输入手机号码</p>
-
-      <mt-field placeholder="手机号码" type="tel" v-model="phone"></mt-field>
+    <el-row>
+      <el-col :span="22" :offset="1">
+        <mt-field placeholder="手机号码" type="tel" v-model="phoneNo"></mt-field>
+      </el-col>
+    </el-row>
       <el-row>
-        <el-button type="info" plain style="text-align:center">确认</el-button>
+        <el-col :span="22" :offset="1">
+          <el-button :type="btnType" :disabled="isBtnDisabled" plain @click="savePhoneNo" style="width:100%;">确&nbsp;&nbsp;认</el-button>
+        </el-col>
       </el-row>
     </el-container>
 
@@ -29,8 +34,28 @@ export default{
       },
       data () {
         return {
-
+          phoneNo: "",
+          btnType: "info",
+          isBtnDisabled: true
         }
       },
+      watch: {
+        phoneNo: function (newPhoneNo, oldPhoneNo) {
+          var phoneNoReg=/^[1][3,4,5,7,8][0-9]{9}$/;
+          if(phoneNoReg.test(newPhoneNo)){
+            this.isBtnDisabled = false;
+            this.btnType = "primary";
+          }else{
+            this.isBtnDisabled = true;
+            this.btnType = "info";
+          }
+        }
+      },
+      methods:{
+        savePhoneNo(){
+          alert(this.phoneNo)
+          // modify in the local json file - account_info.json
+        }
+      }
   }
 </script>
