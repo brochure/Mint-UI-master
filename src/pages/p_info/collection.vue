@@ -43,7 +43,7 @@
 </template>
 
 <style scoped>
-@import url("//at.alicdn.com/t/font_1684162_vhstopvyxxm.css");
+@import url("//at.alicdn.com/t/font_1684162_mmd1uezrjmf.css");
   /* #index{
     display: flex;
     justify-content: center;

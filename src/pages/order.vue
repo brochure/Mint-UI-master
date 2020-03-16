@@ -3,7 +3,7 @@
   <el-container>
     <el-header>
       <el-row style="padding-top:10px;">
-        <el-col :span="4" :offset="20">
+        <el-col :span="5" :offset="19">
           <el-dropdown>
               <span class="el-dropdown-link">其他订单</span>
               <el-dropdown-menu slot="dropdown">

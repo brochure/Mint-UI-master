@@ -27,14 +27,15 @@
           </el-col>
         </el-row>
         <el-row style="margin-top:10px;">
-          <div fixed style="height:60px;">
+          <search-bar></search-bar>
+          <!-- <div fixed style="height:60px;">
             <mt-search
               v-model="searchContent"
               cancel-text="取消"
               placeholder="我爱专星送"
               style="width:100%;">
             </mt-search>
-          </div>
+          </div> -->
         </el-row>
       </el-header>
       <el-main>
@@ -127,7 +128,7 @@
 </template>
 
 <style scoped>
-@import url("//at.alicdn.com/t/font_1684162_l2psewjzi8b.css");
+@import url("//at.alicdn.com/t/font_1684162_mmd1uezrjmf.css");
 
   #index{
     display: flex;
@@ -235,11 +236,13 @@ import FileSaver from 'file-saver'
 
 import { Header, TabContainer, TabContainerItem} from 'mint-ui'
 import MerchantsList from '../components/MerchantsList.vue'
+import SearchBar from '../components/SearchBar.vue'
    export default{
     name:'index',
     components: {
       'header': Header,
-      MerchantsList
+      MerchantsList,
+      SearchBar
     },
     data () {
       return {
