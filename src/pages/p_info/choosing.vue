@@ -7,28 +7,36 @@
     </figure>
     <el-container>
       <el-main>
-      <el-tabs v-model="activeName" @tab-click="handleClick" stretch="true">
-        <el-tab-pane :span="8" label="点餐" name="first">
-          <el-row>
-            <el-col :span="5">
-              <el-menu
-                default-active="2"
-                class="el-menu-vertical-demo"
-                @open="handleOpen"
-                @close="handleClose">
-                  <el-menu-item index="1-1"><i class="el-icon-location"></i>优惠
-                  </el-menu-item>
-                  <el-menu-item index="value.index" class="text-wrap" style="height:60px;" v-for="value in menu" :key="value">{{value.title}}
-                  </el-menu-item>
-                </el-menu>
-            </el-col>
-          </el-row>
-        </el-tab-pane>
-        <el-tab-pane :span="8" label="评价" name="second">
-         评价
+        <!-- <el-menu :default-active="activeIndex" class="el-menu-demo" mode="horizontal" @select="handleSelect">
+          <el-menu-item index="1">处理中心</el-menu-item>
+          <el-submenu index="2">
+            <template slot="title">我的工作台</template>
+            <el-menu-item index="2-1">选项1</el-menu-item>
+            <el-menu-item index="2-2">选项2</el-menu-item>
+            <el-menu-item index="2-3">选项3</el-menu-item>
+          </el-submenu>
+          <el-menu-item index="4"><a href="https://www.ele.me" target="_blank">订单管理</a></el-menu-item>
+        </el-menu> -->
+
+
+        <el-tabs v-model="activeName" @tab-click="handleClick" stretch="true">
+          <el-tab-pane :span="8" label="点餐" name="first">
+            <el-row>
+              <el-col :span="4">
+                <el-menu>
+                    <el-menu-item index="1-1"><i class="el-icon-location"></i>优惠
+                    </el-menu-item>
+                    <el-menu-item index="item.index" class="text-wrap" style="height:30px;font-size:0.8em;lineHeight:1.1em;padding:0px" v-for="item in menu" :key="item">{{item.title}}
+                    </el-menu-item>
+                  </el-menu>
+              </el-col>
+            </el-row>
           </el-tab-pane>
-        <el-tab-pane :span="8" label="商家" name="third">商家</el-tab-pane>
-      </el-tabs>
+          <el-tab-pane :span="8" label="评价" name="second">
+          评价
+            </el-tab-pane>
+          <el-tab-pane :span="8" label="商家" name="third">商家</el-tab-pane>
+        </el-tabs>
       </el-main>
     </el-container>
 
