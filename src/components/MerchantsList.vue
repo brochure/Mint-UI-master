@@ -1,27 +1,31 @@
 <template>
     <ul class="list-group list-group-flush">
+      <el-row>
       <div v-for="value in merchants" :key="value.title">
         <div v-if="filters.flrfav.includes(value.isFav) && filters.flrsc.includes(value.isSelfCollectable) && filters.flrtype.includes(value.type)">
-      <li class="list-group-item">
-            <div class="row" @click="routerTo(value)">
-                <div class="col-3">
-                    <img :src="value.pic" class="logo">
-                </div>
-                <div class="col-9">
-                    <span>{{value.title}}</span>
-                    <ul class="list-inline">
-                        <li class="list-inline-item"><i class="mintui mintui-star" style="color:#ec6800;"></i><small style="color:#ec6800;">{{value.rate}}</small></li>
-                        <li class="list-inline-item"><small class="text-muted">月售{{value.sale}}</small></li>
-                    </ul>
-                    <ul class="list-inline" style='margin-top:-5px;'>
-                        <li class="list-inline-item"><small class="text-muted">起送¥{{value.initfee}}</small></li>
-                        <li class="list-inline-item"><small class="text-muted">配送¥{{value.postage}}</small></li>
-                    </ul>
-                </div>
-            </div>
-        </li>
+          <el-col>
+            <li class="list-group-item">
+                  <div class="row" @click="routerTo(value)">
+                      <div class="col-3">
+                          <img :src="value.pic" class="logo">
+                      </div>
+                      <div class="col-9">
+                          <span>{{value.title}}</span>
+                          <ul class="list-inline">
+                              <li class="list-inline-item"><i class="mintui mintui-star" style="color:#ec6800;"></i><small style="color:#ec6800;">{{value.rate}}</small></li>
+                              <li class="list-inline-item"><small class="text-muted">月售{{value.sale}}</small></li>
+                          </ul>
+                          <ul class="list-inline" style='margin-top:-5px;'>
+                              <li class="list-inline-item"><small class="text-muted">起送¥{{value.initfee}}</small></li>
+                              <li class="list-inline-item"><small class="text-muted">配送¥{{value.postage}}</small></li>
+                          </ul>
+                      </div>
+                  </div>
+              </li>
+          </el-col>
         </div>
       </div>
+      </el-row>
     </ul>
 </template>
 

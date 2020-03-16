@@ -11,6 +11,7 @@
         </div>
         <nav class="navbar navbar-light bg-light">
           <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarToggleExternalContent" aria-controls="navbarToggleExternalContent" aria-expanded="false" aria-label="Toggle navigation">
+            <!-- <i class="el-icon-location"> -->
             <span>航科大厦</span>
           </button>
           <mt-button icon="scan"></mt-button>

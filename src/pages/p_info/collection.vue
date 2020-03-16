@@ -5,46 +5,50 @@
         <mt-button icon="back" @click="prev"></mt-button>
     </router-link>
     </mt-header> -->
-    <header-bar header-title="我的收藏"></header-bar>
-
-    <div class="container-fluid">
-        <!--ul class="list-group list-group-flush">
-            <li class="list-group-item" v-for="value in canteens" :key="value">
-                <div class="row" @click="routerTo(value)">
-                    <div class="col-3">
-                        <img :src="value.pic" class="logo">
-                    </div>
-                    <div class="col-9">
-                            <span>{{value.title}}</span>
-                            <ul class="list-inline">
-                                <li class="list-inline-item"><i class="mintui mintui-star" style="color:#ec6800;"></i><small style="color:#ec6800;">{{value.rate}}</small></li>
-                                <li class="list-inline-item"><small class="text-muted">月售{{value.sale}}</small></li>
-                            </ul>
-                            <ul class="list-inline" style='margin-top:-5px;'>
-                                <li class="list-inline-item"><small class="text-muted">起送¥{{value.initfee}}</small></li>
-                                <li class="list-inline-item"><small class="text-muted">配送¥{{value.postage}}</small></li>
-                            </ul>
-                    </div>
-                </div>
-            </li>
-        </ul-->
+    <el-container>
+      <el-header>
+        <el-row>
+          <header-bar header-title="我的收藏"></header-bar>
+        </el-row>
+      </el-header>
+      <el-main>
+          <!--ul class="list-group list-group-flush">
+              <li class="list-group-item" v-for="value in canteens" :key="value">
+                  <div class="row" @click="routerTo(value)">
+                      <div class="col-3">
+                          <img :src="value.pic" class="logo">
+                      </div>
+                      <div class="col-9">
+                              <span>{{value.title}}</span>
+                              <ul class="list-inline">
+                                  <li class="list-inline-item"><i class="mintui mintui-star" style="color:#ec6800;"></i><small style="color:#ec6800;">{{value.rate}}</small></li>
+                                  <li class="list-inline-item"><small class="text-muted">月售{{value.sale}}</small></li>
+                              </ul>
+                              <ul class="list-inline" style='margin-top:-5px;'>
+                                  <li class="list-inline-item"><small class="text-muted">起送¥{{value.initfee}}</small></li>
+                                  <li class="list-inline-item"><small class="text-muted">配送¥{{value.postage}}</small></li>
+                              </ul>
+                      </div>
+                  </div>
+              </li>
+          </ul-->
         <merchants-list :filters="filters"></merchants-list>
-    <div class="col">
-        <!--p class="text-muted text-center small mt-3">当前位置暂无超出配送范围的商家</p-->
+        <el-row>
+            <!--p class="text-muted text-center small mt-3">当前位置暂无超出配送范围的商家</p-->
             <el-divider class="text-center text-nowrap" style="color:#909399;">当前位置暂无超出配送范围的商家</el-divider>
-
-    </div>
-    </div>
+        </el-row>
+      </el-main>
+    </el-container>
   </div>
 </template>
 
 <style scoped>
 @import url("//at.alicdn.com/t/font_1684162_vhstopvyxxm.css");
-  #index{
+  /* #index{
     display: flex;
     justify-content: center;
     margin-top: 40px;
-  }
+  } */
 /* to del
    .logo{
     width: 70px;
