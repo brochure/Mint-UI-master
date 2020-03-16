@@ -20,7 +20,8 @@
     <mt-cell title="收货地址" is-link />
 
     <p type="info" class="mt-4">账号绑定</p>
-    <mt-cell title="手机" is-link>
+    <mt-cell title="手机" is-link to="/p_info/modifyPhoneNo">
+    <!-- <mt-cell title="手机" is-link @click.native="modifyPhoneNo"> -->
       <span style="color:#909399;">{{replacePhone(accountInfo.phoneNo)}}</span>
     </mt-cell>
     <div v-for="item in accountInfo.thirdPartyAccount" :key="item.title">
