@@ -3,20 +3,28 @@
     <el-container>
       <el-header>
         <el-row style="padding-top:10px;">
-          <el-dropdown>
-            <span class="el-dropdown-link" style="font-size:1.2em;">
-              <i class="el-icon-location"/>
-              航科大厦（源深路）<i class="el-icon-arrow-down el-icon--right"/>
-            </span>
-            <el-dropdown-menu slot="dropdown">
-              <el-dropdown-item>当前定位</el-dropdown-item>
-              <el-dropdown-item>当前定位</el-dropdown-item>
-              <el-dropdown-item divided>收货地址</el-dropdown-item>
-              <el-dropdown-item>收货地址</el-dropdown-item>
-              <el-dropdown-item divided>附近地址</el-dropdown-item>
-              <el-dropdown-item>附近地址</el-dropdown-item>
-            </el-dropdown-menu>
-          </el-dropdown>
+          <el-col :span="20">
+            <el-dropdown>
+              <span class="el-dropdown-link" style="font-size:1.2em;">
+                <i class="el-icon-location"/>
+                航科大厦（源深路）<i class="el-icon-arrow-down el-icon--right"/>
+              </span>
+              <el-dropdown-menu slot="dropdown">
+                <el-dropdown-item>当前定位</el-dropdown-item>
+                <el-dropdown-item>当前定位</el-dropdown-item>
+                <el-dropdown-item divided>收货地址</el-dropdown-item>
+                <el-dropdown-item>收货地址</el-dropdown-item>
+                <el-dropdown-item divided>附近地址</el-dropdown-item>
+                <el-dropdown-item>附近地址</el-dropdown-item>
+              </el-dropdown-menu>
+            </el-dropdown>
+          </el-col>
+          <el-col :span="2">
+            <i class="mintui mintui-scan"/>
+          </el-col>
+          <el-col :span="2">
+            <i class="mintui mintui-message" @click="jumpto(urlmsgctr)"/>
+          </el-col>
         </el-row>
         <el-row style="margin-top:10px;">
           <div fixed style="height:60px;">
@@ -238,6 +246,7 @@ import MerchantsList from '../components/MerchantsList.vue'
         name: "index",
         selected: 1,
         searchContent: "",
+        urlmsgctr: "messageCenter",
         filters1:{
           flrfav: [true,false],
           flrsc: [true, false],
@@ -291,7 +300,18 @@ import MerchantsList from '../components/MerchantsList.vue'
       const data = JSON.stringify(this.merchants) //this.merchants has been deleted
       const blob = new Blob([data], {type: ''})
       FileSaver.saveAs(blob, 'merchants.json')
-    }
+    },
+    jumpto(link){
+  if(link==''){
+    Toast({
+      message: '功能开发中',
+      position: 'middle',
+      duration: 1000
+    });
+  }else{
+    this.$router.push(link);
+  }
+}
   }
 
   }

@@ -8,6 +8,8 @@ import Collection from '../pages/p_info/collection.vue'
 import Choosing from '../pages/p_info/choosing.vue'
 import Profile from '../pages/p_info/profile.vue'
 import ModifyPhoneNo from '../pages/p_info/modifyPhoneNo.vue'
+import MessageCenter from '../pages/messageCenter.vue'
+
 
 
 Vue.use(Router);
@@ -41,6 +43,9 @@ export default new Router({
     },
     {
       path: '/p_info/modifyPhoneNo', component: ModifyPhoneNo
+    },
+    {
+      path: '/messageCenter', component: MessageCenter
     }
   ]
 })
