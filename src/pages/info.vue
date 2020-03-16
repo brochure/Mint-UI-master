@@ -1,29 +1,45 @@
 <template>
   <div id="info">
-    <mt-header fixed>
+    <!-- <mt-header fixed>
       <div slot="right">
         <mt-button icon="setting"></mt-button>
         <mt-button icon="message" style="styleMsg"></mt-button>
       </div>
-    </mt-header>
+    </mt-header> -->
+    <el-header>
+      <el-row style="padding-top:10px;">
+          <el-col :span="2" :offset="20">
+            <i class="mintui mintui-setting"/>
+          </el-col>
+          <el-col :span="2">
+            <i class="mintui mintui-message" @click="jumpto(urlmsgctr)"/>
+          </el-col>
+      </el-row>
+    </el-header>
 <!--
     <div :style="stylePortrait">
       <span :style="stylePortrait">{{userNickName}}</span>
     </div>
 -->
-    <div class="container" style="margin-top:55px">
-      <div class="portrait" @click="jumpto(urlprofile)">
-          <div style="float:left;">
-            <h1>Cheetos</h1>
-            <p style="font-size:0.7em;color:#777777;margin-top:-10px;">再忙，也要记得吃饭哟～</p>
-          </div>
-          <img src="../../static/user_portrait.jpg" class="round_icon" alt="" style="float:right;">
-      </div>
+<el-main>
+  <el-row>
+    <div  @click="jumpto(urlprofile)">
+    <el-col :span="18">
+          <!-- <div style="float:left;"> -->
+      <h1>Cheetos</h1>
+      <p style="font-size:0.7em;color:#777777;margin-top:-10px;">再忙，也要记得吃饭哟～</p>
+          <!-- </div> -->
+    </el-col>
+    <el-col :span="6">
+      <img src="../../static/user_portrait.jpg" class="round_icon" alt="" style="float:right;">
+    </el-col>
+    </div>
+  </el-row>
 
-
-<div class="container mb-2">
-  <div class="row">
-    <div class="col-4 p-1">
+<!-- <div class="container mb-2"> -->
+<el-row type="flex" :gutter="5">
+    <!-- <div class="col-4 p-1"> -->
+      <el-col :span="8">
       <div class="card notice-card shadow-sm bg-white rounded">
         <div class="card-body p-2">
           <h6 class="card-title mb-2">红包卡券</h6>
@@ -31,50 +47,53 @@
           <small class="text-muted smaller-font">个未使用</small>
         </div>
       </div>
-    </div>
-    <div class="col-4 p-1">
+      </el-col>
+    <!-- </div> -->
+    <!-- <div class="col-4 p-1"> -->
+      <el-col :span="8">
             <div class="card notice-card shadow-sm bg-white rounded">
         <div class="card-body p-2">
           <h6 class="card-title mb-2">津贴</h6>
           <p class="text-md-left font-weight-bold d-inline-block highlight-num mb-0">¥{{balanceprm}}</p><small class="text-muted smaller-font">可用</small>
         </div>
       </div>
-    </div>
-    <div class="col-4 p-1">
+      </el-col>
+    <!-- </div> -->
+    <!-- <div class="col-4 p-1"> -->
+      <el-col :span="8">
             <div class="card notice-card shadow-sm bg-white rounded">
         <div class="card-body p-2">
           <h6 class="card-title mb-2">钱包</h6>
           <small class="text-muted mb-0 text-nowrap smaller-font">金币、借钱、福利</small>
         </div>
       </div>
-    </div>
-  </div>
-</div>
+      </el-col>
+    <!-- </div> -->
+  <!-- </div> -->
+</el-row>
 
-<ul class="list-group list-group-flush">
-  <li class="list-group-item" v-for="value in userscopes" :key="value.title" @click="jumpto(value.link)">
-    <i class="mintui" :class="'mintui-'+value.icon"></i>
-    <span class="ml-2">{{value.title}}</span>
-    <span style="float:right;">
-    <span v-if="value.extra!=''" class="small font-weight-light text-muted">{{value.extra}}</span>
-    <svg class="bi bi-chevron-right text-muted font-weight-bold" width="15" height="15" viewBox="0 0 20 20" fill="currentColor" xmlns="http://www.w3.org/2000/svg"><path fill-rule="evenodd" d="M6.646 3.646a.5.5 0 01.708 0l6 6a.5.5 0 010 .708l-6 6a.5.5 0 01-.708-.708L12.293 10 6.646 4.354a.5.5 0 010-.708z" clip-rule="evenodd"/></svg>
-    </span>
-  </li>
-</ul>
+  <ul class="list-group list-group-flush">
+    <li class="list-group-item" v-for="value in userscopes" :key="value.title" @click="jumpto(value.link)">
+      <i class="mintui" :class="'mintui-'+value.icon"></i>
+      <span class="ml-2">{{value.title}}</span>
+      <span style="float:right;">
+      <span v-if="value.extra!=''" class="small font-weight-light text-muted">{{value.extra}}</span>
+      <svg class="bi bi-chevron-right text-muted font-weight-bold" width="15" height="15" viewBox="0 0 20 20" fill="currentColor" xmlns="http://www.w3.org/2000/svg"><path fill-rule="evenodd" d="M6.646 3.646a.5.5 0 01.708 0l6 6a.5.5 0 010 .708l-6 6a.5.5 0 01-.708-.708L12.293 10 6.646 4.354a.5.5 0 010-.708z" clip-rule="evenodd"/></svg>
+      </span>
+    </li>
+  </ul>
 
 
       <!--mt-cell v-for="value in userscopes" :key="value" :icon='value.icon' :title="value.title" is-link @click="jumpto()">
         <span v-if="value.extra!=''" class="small">{{value.extra}}</span>
       </mt-cell-->
-    </div>
-
     
     <!--mt-popup
   v-model="popupVisible">
 
   <button type="button" class="btn btn-primary" @click="switchPopup">OK</button>
 </mt-popup-->
-
+</el-main>
   </div>
 </template>
 <style scoped>

@@ -2,9 +2,20 @@
   <div id="index">
   <el-container>
     <el-header>
-      <el-row>
-        <el-col :span="7" :offset="17">
-          <el-menu :default-active="activeIndex" mode="horizontal" @select="handleSelect" style="width:100px">
+      <el-row style="padding-top:10px;">
+        <el-col :span="4" :offset="20">
+          <el-dropdown>
+              <span class="el-dropdown-link">其他订单</span>
+              <el-dropdown-menu slot="dropdown">
+                <el-dropdown-item>跑腿代购</el-dropdown-item>
+                <el-dropdown-item>口碑团购</el-dropdown-item>
+                <el-dropdown-item>电影</el-dropdown-item>
+                <el-dropdown-item>酒店</el-dropdown-item>
+                <el-dropdown-item>火车票</el-dropdown-item>
+                <el-dropdown-item>外卖卡券</el-dropdown-item>
+              </el-dropdown-menu>
+            </el-dropdown>
+          <!-- <el-menu :default-active="activeIndex" mode="horizontal" @select="handleSelect" style="width:100px">
             <el-submenu index="1">
               <template slot="title">其他订单</template>
               <el-menu-item index="1-1">跑腿代购</el-menu-item>
@@ -14,7 +25,7 @@
               <el-menu-item index="1-5">火车票</el-menu-item>
               <el-menu-item index="1-6">外卖卡券</el-menu-item>
             </el-submenu>
-          </el-menu>
+          </el-menu> -->
         </el-col>
       </el-row>
 
@@ -40,6 +51,9 @@
 </template>
 
 <style scoped>
+h5, span{
+  color:#303133;
+}
 </style>
 
 <script>
