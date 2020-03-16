@@ -24,9 +24,9 @@
             <el-row>
               <el-col :span="4">
                 <el-menu>
-                    <el-menu-item index="1-1"><i class="el-icon-location"></i>优惠
+                    <el-menu-item index="1-1" class="text-wrap" style="padding:0px;"><p style="font-size:0.8em;line-height:1.1em;padding-top:20px;padding-bottom:10px;"><i class="el-icon-location" style="margin-right:0px;"></i>优惠</p>
                     </el-menu-item>
-                    <el-menu-item index="item.index" class="text-wrap" style="height:30px;font-size:0.8em;lineHeight:1.1em;padding:0px" v-for="item in menu" :key="item">{{item.title}}
+                    <el-menu-item index="item.index" class="text-wrap" style="padding:0px;" v-for="item in menu" :key="item"><p style="font-size:0.8em;line-height:1.1em;padding-top:20px;padding-bottom:10px;">{{item.title}}</p>
                     </el-menu-item>
                   </el-menu>
               </el-col>
