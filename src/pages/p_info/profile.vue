@@ -15,16 +15,21 @@
       <img src="/static/user_portrait.jpg" class="round_icon" />
     </mt-cell>
         <mt-cell title="用户名" is-link>
-      <span style="color:#909399;">Cheetos</span>
+      <span style="color:#909399;">{{accountInfo.nickName}}</span>
     </mt-cell>
-    <mt-cell title="收货地址" is-link>
-    </mt-cell>
+    <mt-cell title="收货地址" is-link />
 
     <p type="info" class="mt-4">账号绑定</p>
     <mt-cell title="手机" is-link>
-    <span style="color:#909399;">139****1111</span>
+      <span style="color:#909399;">{{replacePhone(accountInfo.phoneNo)}}</span>
     </mt-cell>
-    <mt-cell title="淘宝" is-link>
+    <div v-for="item in accountInfo.thirdPartyAccount" :key="item.title">
+      <mt-cell :title=item.title is-link>
+        <span v-if="item.isBound" class="bound">已绑定</span>
+        <span v-else class="bound" style="color:#409EFF;">未绑定</span>
+      </mt-cell>
+    </div>
+    <!-- <mt-cell title="淘宝" is-link>
       <span style="color:#409EFF;font-size:0.8em;">未绑定</span>
     </mt-cell>
     <mt-cell title="支付宝" is-link>
@@ -38,7 +43,7 @@
     </mt-cell>
     <mt-cell title="QQ" is-link>
       <span style="color:#409EFF;font-size:0.8em;">未绑定</span>
-    </mt-cell>
+    </mt-cell> -->
   </el-main>
   <mt-actionsheet
     :actions="actions"
@@ -63,6 +68,9 @@
     justify-content: center;
     overflow: hidden;
   }
+  .bound{
+    font-size:0.8em;
+  }
 </style>
 
 <script>
@@ -77,6 +85,7 @@
       },
       data () {
         return {
+          accountInfo:{},
           sheetVisible: false,
           actions: [{
           name: '拍照',
@@ -88,17 +97,22 @@
         }
       },
     methods:{
-      actionSheet(){
-        this.sheetVisible = true;
+      getAccountInfo () {
+      var url = "../../static/json/account_info.json";  
+      this.$axios.get(url).then((res) => {this.accountInfo = res.data;});
       },
+      replacePhone: function (str) { // should be handed to the backstage
+        if(!str){return ''}
+        return str.replace(/(\d{3})\d{5}(\d{3})/, '$1****$2');
+      },
+      actionSheet(){this.sheetVisible = true;},
       getCamera(){
-      console.log("打开照相机")
+        console.log("打开照相机")
       },
       getLibrary(){
         this.$refs.filElem.dispatchEvent(new MouseEvent('click'))
       },
       getFile(){
-        
         function getObjectURL(file) { 
             var url = null; 
             if (window.createObjcectURL != undefined) { 
@@ -218,6 +232,7 @@
         // }
     },
     created(){
+      this.getAccountInfo()
       // this.actionSheet()
     }
 

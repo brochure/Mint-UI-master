@@ -26,8 +26,6 @@
 </template>
 
 <script>
-//import axios from 'axios';
-
 export default {
   //组件私有数据（必须是function，而且要return对象类型）
   props: {
@@ -39,8 +37,8 @@ export default {
   },
   data () {
     return {
-      title: '组件标题',
-      merchants: 'a'
+      title: "MerchantsList",
+      merchants: {}
     }
   },
   //父组件传递过来的数据（两种方式声明：1.数组 2.对象）
@@ -86,7 +84,6 @@ export default {
   },
   //生命周期钩子：实例初始化之后，数据观测(data observer) 和 event/watcher 事件配置之前被调用
   beforeCreated () {
-    console.log('component before created')
   },
   //生命周期钩子：组件实例完成创建之后调用
   created () {
@@ -94,7 +91,6 @@ export default {
   },
   //生命周期钩子：组件实例渲染完成时调用
   mounted () {
-
   },
   //要用到哪些子组件（如果组件已是最小粒度，那么可省略该属性）
   components: {

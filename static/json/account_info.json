@@ -1,0 +1,30 @@
+
+{
+    "nickName": "Cheetos",
+    "pic": "../../static/user_portrait.jpg",
+    "phoneNo": "13912345678",
+    "diliverAddress":"",
+    "thirdPartyAccount":{
+        "taobao":{
+            "title": "淘宝",
+            "isBound": false
+        },
+        "alipay":{
+            "title": "支付宝",
+            "isBound": true,
+            "accountNo": "12932111"
+        },
+        "weibo":{
+            "title": "微博",
+            "isBound": false
+        },
+        "wechat":{
+            "title": "微信",
+            "isBound": false
+        },
+        "qq":{
+            "title": "QQ",
+            "isBound": false
+        }
+    }
+}
