@@ -15,17 +15,6 @@
                 <el-dropdown-item>外卖卡券</el-dropdown-item>
               </el-dropdown-menu>
             </el-dropdown>
-          <!-- <el-menu :default-active="activeIndex" mode="horizontal" @select="handleSelect" style="width:100px">
-            <el-submenu index="1">
-              <template slot="title">其他订单</template>
-              <el-menu-item index="1-1">跑腿代购</el-menu-item>
-              <el-menu-item index="1-2">口碑团购</el-menu-item>
-              <el-menu-item index="1-3">电影</el-menu-item>
-              <el-menu-item index="1-4">酒店</el-menu-item>
-              <el-menu-item index="1-5">火车票</el-menu-item>
-              <el-menu-item index="1-6">外卖卡券</el-menu-item>
-            </el-submenu>
-          </el-menu> -->
         </el-col>
       </el-row>
 

@@ -79,33 +79,33 @@
         </el-row>
 
       <!-- <el-row type="flex" :gutter="100"> -->
-        <div style="margin-top:25px;">
-        <el-tabs v-model="activeName" @tab-click="handleClick">
-          <el-tab-pane label="推荐" name="first">
-              <el-menu :default-active="activeIndex" mode="horizontal" @select="handleSelect" style="margin-top:-16px;">
-              <el-submenu index="1">
-                <template slot="title">综合排序</template>
-                <el-menu-item index="1-1">好评优先</el-menu-item>
-                <el-menu-item index="1-2">起送价最低</el-menu-item>
-                <el-menu-item index="1-3">配送最快</el-menu-item>
-                <el-menu-item index="1-4">配送费最低</el-menu-item>
-                <el-menu-item index="1-5">人均从低到高</el-menu-item>
-                <el-menu-item index="1-6">人均从高到低</el-menu-item>
-                <el-menu-item index="1-7">通用排序</el-menu-item>
-              </el-submenu>
-              <el-menu-item index="2">距离</el-menu-item>
-              <el-menu-item index="3">销量</el-menu-item>
-              <el-menu-item index="4">筛选</el-menu-item>
-            </el-menu>
-            <merchants-list :filters="filters1"></merchants-list>
-          </el-tab-pane>
-          <el-tab-pane label="果蔬商超" name="second">
-            <merchants-list :filters="filters2"></merchants-list>
-          </el-tab-pane>
-          <el-tab-pane label="到店自取" name="third">
-            <merchants-list :filters="filters3"></merchants-list>
-          </el-tab-pane>
-        </el-tabs>
+        <div id="divrecm" style="margin-top:25px;">
+          <el-tabs v-model="activeName" @tab-click="handleClick">
+            <el-tab-pane label="推荐" name="first">
+                <el-menu :default-active="activeIndex" mode="horizontal" @select="handleSelect" style="margin-top:-16px;">
+                <el-submenu index="1">
+                  <template slot="title">综合排序</template>
+                  <el-menu-item index="1-1">好评优先</el-menu-item>
+                  <el-menu-item index="1-2">起送价最低</el-menu-item>
+                  <el-menu-item index="1-3">配送最快</el-menu-item>
+                  <el-menu-item index="1-4">配送费最低</el-menu-item>
+                  <el-menu-item index="1-5">人均从低到高</el-menu-item>
+                  <el-menu-item index="1-6">人均从高到低</el-menu-item>
+                  <el-menu-item index="1-7">通用排序</el-menu-item>
+                </el-submenu>
+                <el-menu-item index="2">距离</el-menu-item>
+                <el-menu-item index="3">销量</el-menu-item>
+                <el-menu-item index="4">筛选</el-menu-item>
+              </el-menu>
+              <merchants-list :filters="filters1"></merchants-list>
+            </el-tab-pane>
+            <el-tab-pane label="果蔬商超" name="second">
+              <merchants-list :filters="filters2"></merchants-list>
+            </el-tab-pane>
+            <el-tab-pane label="到店自取" name="third">
+              <merchants-list :filters="filters3"></merchants-list>
+            </el-tab-pane>
+          </el-tabs>
         </div>
         <!-- <mt-navbar v-model="selected">
           <mt-tab-item id="1">
@@ -138,12 +138,12 @@
 </template>
 
 <style>
-.el-submenu__title {
+#divrecm .el-submenu__title {
   float:left;
   padding-left:0;
 }
 
-.el-tabs__item {
+#divrecm .el-tabs__item {
   /* color:red !important; */
   font-size: 1em !important;
 }
