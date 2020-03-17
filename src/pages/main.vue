@@ -41,7 +41,7 @@
       <el-main>
         <!-- <div class="block"> -->
         <el-row style="margin-top:20px;">
-          <el-carousel trigger="click" height="150px">
+          <el-carousel height="100px" trigger="click">
             <el-carousel-item v-for="item in banners" :key="item.pic">
               <img :src="item.pic" class="banner"/>
             </el-carousel-item>
@@ -138,6 +138,11 @@
 </template>
 
 <style scoped>
+.el-carousel{
+  /* height: 100px;; */
+  border-radius: 10px;
+}
+
 @import url("//at.alicdn.com/t/font_1684162_mmd1uezrjmf.css");
 .txtbnthic{
   text-align:center;
