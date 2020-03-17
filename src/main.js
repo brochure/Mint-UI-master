@@ -9,6 +9,8 @@ import axios from 'axios';
 import VueResource from 'vue-resource';
 import 'mint-ui/lib/style.css'
 import 'element-ui/lib/theme-chalk/index.css'
+import './icons'
+
 Vue.prototype.$axios=axios;
 Vue.config.productionTip = false
 Vue.use(ElementUI)

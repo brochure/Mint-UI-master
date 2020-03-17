@@ -48,41 +48,51 @@
           </el-carousel>
         </el-row>
 
-        <el-row type="flex" justify="space-around">
-          <el-col :span="4">
-            <div class="cpanel qsort">
+        <el-row type="flex" justify="space-around" style="margin-top:20px;">
+          <el-col :span="3">
+            <svg-icon icon-class="meishi" style="font-size:3em;" />
+            <p class="txtbnthic text-nowrap">美食</p>
+            <!-- <div class="cpanel qsort">
                 <div class="icon">
                     <span>美食</span>
                 </div>
-            </div>
+            </div> -->
           </el-col>
-            <el-col :span="4">
-              <div class="cpanel qsort">
+            <el-col :span="3">
+              <svg-icon icon-class="meishi" style="font-size:3em;" />
+              <p class="txtbnthic text-nowrap">商超便利</p>
+              <!-- <div class="cpanel qsort">
                 <div class="icon">
             <span>商超便利</span>
                 </div>
-            </div>
+            </div> -->
             </el-col>
-              <el-col :span="4">
-              <div class="cpanel qsort">
+              <el-col :span="3">
+                <svg-icon icon-class="meishi" style="font-size:3em;" />
+                <p class="txtbnthic text-nowrap">买菜</p>
+              <!-- <div class="cpanel qsort">
                 <div class="icon">
                     <span>买菜</span>
                 </div>
-            </div>
+            </div> -->
               </el-col>
-              <el-col :span="4">
-              <div class="cpanel qsort">
+              <el-col :span="3">
+                <svg-icon icon-class="meishi" style="font-size:3em;" />
+                <p class="txtbnthic text-nowrap">跑腿代购</p>
+              <!-- <div class="cpanel qsort">
                 <div class="icon">
                     <span>跑腿代购</span>
                 </div>
-              </div>
+              </div> -->
               </el-col>
-              <el-col :span="4">
-              <div class="cpanel qsort">
+              <el-col :span="3">
+                <svg-icon icon-class="meishi" style="font-size:3em;" />
+                <p class="txtbnthic text-nowrap">送药上门</p>
+              <!-- <div class="cpanel qsort">
                 <div class="icon">
                     <span>送药上门</span>
                 </div>
-            </div>
+            </div> -->
               </el-col>
         </el-row>
 
@@ -129,6 +139,12 @@
 
 <style scoped>
 @import url("//at.alicdn.com/t/font_1684162_mmd1uezrjmf.css");
+.txtbnthic{
+  text-align:center;
+  font-size:0.8em;
+  color:#565656;
+  margin-top:3px;
+}
 
   #index{
     display: flex;
