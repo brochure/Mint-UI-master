@@ -1,43 +1,29 @@
 <template>
     <ul class="list-group list-group-flush">
-      <el-row>
-      <div v-for="value in merchants" :key="value.title">
-        <div v-if="filters.flrfav.includes(value.isFav) && filters.flrsc.includes(value.isSelfCollectable) && filters.flrtype.includes(value.type)">
-          <el-col>
+      <div v-for="item in merchants" :key="item.title">
+        <div v-if="filters.flrfav.includes(item.isFav) && filters.flrsc.includes(item.isSelfCollectable) && filters.flrtype.includes(item.type)">
             <li class="list-group-item">
-                  <div class="row" @click="routerTo(value)">
-                      <div class="col-3">
-                          <img :src="value.pic" class="logo">
-                      </div>
-                      <div class="col-9">
-                          <span>{{value.title}}</span>
-                          <ul class="list-inline">
-                              <li class="list-inline-item"><i class="mintui mintui-star" style="color:#ec6800;"></i><small style="color:#ec6800;">{{value.rate}}</small></li>
-                              <li class="list-inline-item"><small class="text-muted">月售{{value.sale}}</small></li>
-                          </ul>
-                          <ul class="list-inline" style='margin-top:-5px;'>
-                              <li class="list-inline-item"><small class="text-muted">起送¥{{value.initfee}}</small></li>
-                              <li class="list-inline-item"><small class="text-muted">配送¥{{value.postage}}</small></li>
-                          </ul>
-                      </div>
+                  <div @click="routerTo(item)">
+                    <merchant-display :merchant="item"></merchant-display>
                   </div>
               </li>
-          </el-col>
         </div>
       </div>
-      </el-row>
     </ul>
 </template>
 
 <script>
+import MerchantDisplay from '../components/MerchantDisplay.vue'
 export default {
-  //组件私有数据（必须是function，而且要return对象类型）
   props: {
     filters:{
       flrfav: [true, false],
       flrsc: [true, false],
       flrtype: [0, 1]
     }
+  },
+  components: {
+    MerchantDisplay
   },
   data () {
     return {
@@ -95,17 +81,6 @@ export default {
   },
   //生命周期钩子：组件实例渲染完成时调用
   mounted () {
-  },
-  //要用到哪些子组件（如果组件已是最小粒度，那么可省略该属性）
-  components: {
   }
 }
 </script>
-
-<style scoped>
-  .logo{
-    width: 70px;
-    height: 70px;
-    float: left;
-  }
-</style>

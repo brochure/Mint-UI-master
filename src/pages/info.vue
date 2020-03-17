@@ -1,11 +1,5 @@
 <template>
   <div id="info">
-    <!-- <mt-header fixed>
-      <div slot="right">
-        <mt-button icon="setting"></mt-button>
-        <mt-button icon="message" style="styleMsg"></mt-button>
-      </div>
-    </mt-header> -->
     <el-header>
       <el-row style="padding-top:10px;">
           <el-col :span="2" :offset="20">
@@ -16,19 +10,12 @@
           </el-col>
       </el-row>
     </el-header>
-<!--
-    <div :style="stylePortrait">
-      <span :style="stylePortrait">{{userNickName}}</span>
-    </div>
--->
 <el-main>
   <el-row>
     <div  @click="jumpto(urlprofile)">
     <el-col :span="18">
-          <!-- <div style="float:left;"> -->
       <h1>Cheetos</h1>
       <p style="font-size:0.7em;color:#777777;margin-top:-10px;">再忙，也要记得吃饭哟～</p>
-          <!-- </div> -->
     </el-col>
     <el-col :span="6">
       <img src="../../static/user_portrait.jpg" class="round_icon" alt="" style="float:right;">
@@ -83,19 +70,10 @@
     </li>
   </ul>
 
-
-      <!--mt-cell v-for="value in userscopes" :key="value" :icon='value.icon' :title="value.title" is-link @click="jumpto()">
-        <span v-if="value.extra!=''" class="small">{{value.extra}}</span>
-      </mt-cell-->
-    
-    <!--mt-popup
-  v-model="popupVisible">
-
-  <button type="button" class="btn btn-primary" @click="switchPopup">OK</button>
-</mt-popup-->
 </el-main>
   </div>
 </template>
+
 <style scoped>
 /*@import url("//at.alicdn.com/t/font_1684162_l2psewjzi8b.css");*/
 
@@ -169,12 +147,9 @@
 <script>
 import { Toast} from 'mint-ui'
 //import { Header, Toast} from 'mint-ui'
-
-
   export default{
     name:'info',
     components: {
-      //'header': Header
     },
     data () {
       return {
