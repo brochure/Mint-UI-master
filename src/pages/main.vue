@@ -62,7 +62,7 @@
               </el-col>
         </el-row>
 
-        <el-row style="margin-top:20px;">
+        <el-row style="margin-top:5px;">
           <div class="card-group bg-warning rounded-lg p-1" style="height:216px;">
             <div class="col-12 ml-2" style="margin-bottom:-10px">
             <p class="text-danger d-inline-block">新人专属</p><p class="text-danger d-inline-block font-weight-bold hight-amt">1</p><p class="text-danger d-inline-block">元起</p>
@@ -78,14 +78,50 @@
           </div>
         </el-row>
 
-      <el-row>
-        <mt-navbar v-model="selected">
-          <mt-tab-item id="1">推荐</mt-tab-item>
-          <mt-tab-item id="2">果蔬商超</mt-tab-item>
-          <mt-tab-item id="3">到店自取</mt-tab-item>
-        </mt-navbar>
-      </el-row>
-        <mt-tab-container v-model="selected">
+      <!-- <el-row type="flex" :gutter="100"> -->
+        <div style="margin-top:25px;">
+        <el-tabs v-model="activeName" @tab-click="handleClick">
+          <el-tab-pane label="推荐" name="first">
+              <el-menu :default-active="activeIndex" mode="horizontal" @select="handleSelect" style="margin-top:-16px;">
+              <el-submenu index="1">
+                <template slot="title">综合排序</template>
+                <el-menu-item index="1-1">好评优先</el-menu-item>
+                <el-menu-item index="1-2">起送价最低</el-menu-item>
+                <el-menu-item index="1-3">配送最快</el-menu-item>
+                <el-menu-item index="1-4">配送费最低</el-menu-item>
+                <el-menu-item index="1-5">人均从低到高</el-menu-item>
+                <el-menu-item index="1-6">人均从高到低</el-menu-item>
+                <el-menu-item index="1-7">通用排序</el-menu-item>
+              </el-submenu>
+              <el-menu-item index="2">距离</el-menu-item>
+              <el-menu-item index="3">销量</el-menu-item>
+              <el-menu-item index="4">筛选</el-menu-item>
+            </el-menu>
+            <merchants-list :filters="filters1"></merchants-list>
+          </el-tab-pane>
+          <el-tab-pane label="果蔬商超" name="second">
+            <merchants-list :filters="filters2"></merchants-list>
+          </el-tab-pane>
+          <el-tab-pane label="到店自取" name="third">
+            <merchants-list :filters="filters3"></merchants-list>
+          </el-tab-pane>
+        </el-tabs>
+        </div>
+        <!-- <mt-navbar v-model="selected">
+          <mt-tab-item id="1">
+            <el-col>推荐</el-col>
+          </mt-tab-item>
+          <mt-tab-item id="2">
+            <el-col>果蔬商超
+            </el-col>
+            </mt-tab-item>
+          <mt-tab-item id="3">
+            <el-col>到店自取
+            </el-col>
+            </mt-tab-item>
+        </mt-navbar> -->
+      <!-- </el-row> -->
+        <!-- <mt-tab-container v-model="selected">
           <mt-tab-container-item id="1">
             <merchants-list :filters="filters1"></merchants-list>
           </mt-tab-container-item>
@@ -95,13 +131,23 @@
           <mt-tab-container-item id="3">
             <merchants-list :filters="filters3"></merchants-list>
           </mt-tab-container-item>
-        </mt-tab-container>
+        </mt-tab-container> -->
       </el-main>
     </el-container>
   </div>
 </template>
 
-<style scoped>
+<style>
+.el-submenu__title {
+  float:left;
+  padding-left:0;
+}
+
+.el-tabs__item {
+  /* color:red !important; */
+  font-size: 1em !important;
+}
+
 .svg-icon{
   font-size:3em;
   position:relative;
@@ -162,10 +208,10 @@
     overflow: hidden;
   }
 
-  .portrait{
+  /* .portrait{
       width:100%;
       height:100px;
-    }
+    } */
 
     .main{
       width:100%;
@@ -176,17 +222,17 @@
       margin-left:5px;
     }
 
-     .row .col {
+     /* .row .col {
     float: left;
     width: 34px;
     background-color: #0f0;
     border: 10px solid #fff;
-  }
+  } */
 
-  .banner{
+  /* .banner{
     width: 100%;
     height: 150px;
-  }
+  } */
 
 /* .cpanel div.icon span{-moz-transition-duration: 0.8s;
     background-color: #FF0000;
@@ -236,7 +282,8 @@ import SearchBar from '../components/SearchBar.vue'
     data () {
       return {
         name: "index",
-        selected: 1,
+        // selected: 1,
+        activeName: "first",
         searchContent: "",
         urlmsgctr: "messageCenter",
         filters1:{
@@ -284,7 +331,7 @@ import SearchBar from '../components/SearchBar.vue'
           }
         ],
         selected: "1",
-        userNickName: 'CheetoMan'
+        // userNickName: 'CheetoMan'
       }
     },
   methods: {
