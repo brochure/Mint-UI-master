@@ -59,7 +59,7 @@
             </div> -->
           </el-col>
             <el-col :span="3">
-              <svg-icon icon-class="meishi" style="font-size:3em;" />
+              <svg-icon icon-class="shangchao" style="font-size:3em;" />
               <p class="txtbnthic text-nowrap">商超便利</p>
               <!-- <div class="cpanel qsort">
                 <div class="icon">
@@ -68,8 +68,8 @@
             </div> -->
             </el-col>
               <el-col :span="3">
-                <svg-icon icon-class="meishi" style="font-size:3em;" />
-                <p class="txtbnthic text-nowrap">买菜</p>
+                <svg-icon icon-class="shuiguo" style="font-size:3em;" />
+                <p class="txtbnthic text-nowrap">水果</p>
               <!-- <div class="cpanel qsort">
                 <div class="icon">
                     <span>买菜</span>
@@ -77,7 +77,7 @@
             </div> -->
               </el-col>
               <el-col :span="3">
-                <svg-icon icon-class="meishi" style="font-size:3em;" />
+                <svg-icon icon-class="paotui" style="font-size:3em;" />
                 <p class="txtbnthic text-nowrap">跑腿代购</p>
               <!-- <div class="cpanel qsort">
                 <div class="icon">
@@ -86,7 +86,7 @@
               </div> -->
               </el-col>
               <el-col :span="3">
-                <svg-icon icon-class="meishi" style="font-size:3em;" />
+                <svg-icon icon-class="yaodian" style="font-size:3em;" />
                 <p class="txtbnthic text-nowrap">送药上门</p>
               <!-- <div class="cpanel qsort">
                 <div class="icon">
