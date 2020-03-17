@@ -28,18 +28,9 @@
         </el-row>
         <el-row style="margin-top:10px;">
           <search-bar></search-bar>
-          <!-- <div fixed style="height:60px;">
-            <mt-search
-              v-model="searchContent"
-              cancel-text="取消"
-              placeholder="我爱专星送"
-              style="width:100%;">
-            </mt-search>
-          </div> -->
         </el-row>
       </el-header>
       <el-main>
-        <!-- <div class="block"> -->
         <el-row style="margin-top:20px;">
           <el-carousel height="100px" trigger="click">
             <el-carousel-item v-for="item in banners" :key="item.pic">
@@ -49,54 +40,28 @@
         </el-row>
 
         <el-row type="flex" justify="space-around" style="margin-top:20px;">
-          <el-col :span="3">
-            <svg-icon icon-class="meishi" style="font-size:3em;" />
+          <el-col :span="4">
+            <svg-icon icon-class="meishi" />
             <p class="txtbnthic text-nowrap">美食</p>
-            <!-- <div class="cpanel qsort">
-                <div class="icon">
-                    <span>美食</span>
-                </div>
-            </div> -->
           </el-col>
-            <el-col :span="3">
-              <svg-icon icon-class="shangchao" style="font-size:3em;" />
+            <el-col :span="4">
+              <svg-icon icon-class="shangchao" />
               <p class="txtbnthic text-nowrap">商超便利</p>
-              <!-- <div class="cpanel qsort">
-                <div class="icon">
-            <span>商超便利</span>
-                </div>
-            </div> -->
             </el-col>
-              <el-col :span="3">
-                <svg-icon icon-class="shuiguo" style="font-size:3em;" />
+              <el-col :span="4">
+                <svg-icon icon-class="shuiguo" />
                 <p class="txtbnthic text-nowrap">水果</p>
-              <!-- <div class="cpanel qsort">
-                <div class="icon">
-                    <span>买菜</span>
-                </div>
-            </div> -->
               </el-col>
-              <el-col :span="3">
-                <svg-icon icon-class="paotui" style="font-size:3em;" />
+              <el-col :span="4">
+                <svg-icon icon-class="paotui" />
                 <p class="txtbnthic text-nowrap">跑腿代购</p>
-              <!-- <div class="cpanel qsort">
-                <div class="icon">
-                    <span>跑腿代购</span>
-                </div>
-              </div> -->
               </el-col>
-              <el-col :span="3">
-                <svg-icon icon-class="yaodian" style="font-size:3em;" />
+              <el-col :span="4">
+                <svg-icon icon-class="yaodian" />
                 <p class="txtbnthic text-nowrap">送药上门</p>
-              <!-- <div class="cpanel qsort">
-                <div class="icon">
-                    <span>送药上门</span>
-                </div>
-            </div> -->
               </el-col>
         </el-row>
 
-        <!-- <div class="container"> -->
         <el-row style="margin-top:20px;">
           <div class="card-group bg-warning rounded-lg p-1" style="height:216px;">
             <div class="col-12 ml-2" style="margin-bottom:-10px">
@@ -112,7 +77,6 @@
             </div>
           </div>
         </el-row>
-        <!-- </div> -->
 
       <el-row>
         <mt-navbar v-model="selected">
@@ -138,8 +102,14 @@
 </template>
 
 <style scoped>
+.svg-icon{
+  font-size:3em;
+  position:relative;
+  left:50%;
+  margin-left:-0.5em;
+}
+
 .el-carousel{
-  /* height: 100px;; */
   border-radius: 10px;
 }
 
@@ -151,11 +121,10 @@
   margin-top:3px;
 }
 
-  #index{
+  /* #index{
     display: flex;
     justify-content: center;
-    /*margin-top: 50px;*/
-  }
+  } */
 
   .iconfont{
     color: #f76349;
@@ -219,7 +188,7 @@
     height: 150px;
   }
 
-.cpanel div.icon span{-moz-transition-duration: 0.8s;
+/* .cpanel div.icon span{-moz-transition-duration: 0.8s;
     background-color: #FF0000;
     background-position: -30px 50%;
     border: 1px solid #CCCCCC;
@@ -230,7 +199,7 @@
     height: 40px;width: 40px;
     text-align:center;
     text-indent:0;}
-.cpanel div.icon span:hover{border:1px solid white;}
+.cpanel div.icon span:hover{border:1px solid white;} */
 
 .card{
   width: 33%;
@@ -240,10 +209,9 @@
   height: 100px;
 }
 
-.qsort{
-  /*display:inline-block;*/
+/* .qsort{
   padding:10px;
-}
+} */
 
   .hight-amt{
     font-size:1.3em;

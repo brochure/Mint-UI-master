@@ -40,7 +40,7 @@
 <el-row type="flex" :gutter="5">
     <!-- <div class="col-4 p-1"> -->
       <el-col :span="8">
-      <div class="card notice-card shadow-sm bg-white rounded">
+      <div class="card notice-card shadow-sm bg-white rounded" @click="jumpto(urlcouponspot)">
         <div class="card-body p-2">
           <h6 class="card-title mb-2">红包卡券</h6>
           <p class="text-md-left font-weight-bold d-inline-block highlight-num mb-0">{{ncoupon}}</p>
@@ -221,6 +221,7 @@ import { Toast} from 'mint-ui'
            },
         ],
         urlprofile: "/p_info/profile",
+        urlcouponspot: "/p_info/couponSpot",
         ncoupon: 6,
         balanceprm: 20,
         userNickName: 'CheetoMan',

@@ -9,6 +9,7 @@ import Choosing from '../pages/p_info/choosing.vue'
 import Profile from '../pages/p_info/profile.vue'
 import ModifyPhoneNo from '../pages/p_info/modifyPhoneNo.vue'
 import MessageCenter from '../pages/messageCenter.vue'
+import CouponSpot from '../pages/p_info/couponSpot.vue'
 
 
 
@@ -46,6 +47,9 @@ export default new Router({
     },
     {
       path: '/messageCenter', component: MessageCenter
+    },
+    {
+      path: '/p_info/couponSpot', component: CouponSpot
     }
   ]
 })
