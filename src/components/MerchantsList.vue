@@ -37,7 +37,7 @@ export default {
   },
   methods: {
     getIdolList () {
-      var url = this.GLOBAL.STATIC_URL + "json/merchants.json";  
+      var url = this.staticURL + "json/merchants.json";  
       this.$axios.get(url).then((res) => {
           this.merchants = res.data;
       })

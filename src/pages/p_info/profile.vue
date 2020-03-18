@@ -12,7 +12,7 @@
   <el-main>
     <p type="info">基础信息</p>
     <mt-cell title="头像" is-link @click.native="actionSheet">
-      <img :src="this.GLOBAL.STATIC_URL + accountInfo.pic" class="round_icon" />
+      <img :src="this.staticURL + accountInfo.pic" class="round_icon" />
     </mt-cell>
         <mt-cell title="用户名" is-link>
       <span style="color:#909399;">{{accountInfo.nickName}}</span>
@@ -99,7 +99,7 @@
       },
     methods:{
       getAccountInfo () {
-      var url = this.GLOBAL.STATIC_URL + "json/account_info.json";  
+      var url = this.staticURL + "json/account_info.json";  
       this.$axios.get(url).then((res) => {this.accountInfo = res.data;});
       },
       replacePhone: function (str) { // should be handed to the backstage

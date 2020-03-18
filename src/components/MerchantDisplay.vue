@@ -1,7 +1,7 @@
 <template>
   <el-row type="flex">
       <el-col :span="6">
-        <img :src="this.GLOBAL.STATIC_URL + merchant.pic" class="logo">
+        <img :src="this.staticURL + merchant.pic" class="logo">
       </el-col>
       <el-col :span="18">
         <span>{{merchant.title}}</span>

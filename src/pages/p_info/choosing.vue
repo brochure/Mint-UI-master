@@ -1,7 +1,7 @@
 <template>
   <div id="index">
     <figure class="figure">
-      <img :src="this.GLOBAL.STATIC_URL+'canteen_bg/bg_mcd.jpg'" style="height:150px;width:100%;" class="figure-img img-fluid rounded">
+      <img :src="this.staticURL+'canteen_bg/bg_mcd.jpg'" style="height:150px;width:100%;" class="figure-img img-fluid rounded">
       <figcaption class="figure-caption text-center font-weight-bold text-dark" style="font-size:1.25em;">{{this.$route.params.merchant.title}}</figcaption>
       <figcaption class="text-muted text-center small"><span>评价&nbsp;{{this.$route.params.merchant.rate}}</span>&nbsp;&nbsp;&nbsp;&nbsp;<span>月售&nbsp;{{this.$route.params.merchant.sale}}</span></figcaption>
     </figure>
