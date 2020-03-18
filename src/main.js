@@ -11,6 +11,9 @@ import 'mint-ui/lib/style.css'
 import 'element-ui/lib/theme-chalk/index.css'
 import './icons'
 
+import global_ from '../config/global.js'
+Vue.prototype.GLOBAL = global_;
+
 Vue.prototype.$axios=axios;
 Vue.config.productionTip = false
 Vue.use(ElementUI)

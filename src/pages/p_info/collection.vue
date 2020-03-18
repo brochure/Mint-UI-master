@@ -70,51 +70,6 @@
           flrsc: [true, false],
           flrtype: [0, 1]
         }
-        /*
-        canteens: [
-          { title: '麦当劳',
-            pic:'../../static/canteen_logos/mcd.jpg',
-            isSelfCollectable: false,
-            isFav: false,
-            link: '',
-            rate: 4.9,
-            sale: 4446,
-            initfee: 0,
-            postage: 9
-           },
-          { title: '肯德基',
-            pic:'../../static/canteen_logos/kfc.jpg',
-            isSelfCollectable: true,
-            isFav: false,
-            link: '',
-            rate: 4.9,
-            sale: 8926,
-            initfee: 0,
-            postage: 5
-           },
-          { title: '棒！约翰',
-            pic:'../../static/canteen_logos/ppj.jpg',
-            isSelfCollectable: false,
-            isFav: true,
-            link: '',
-            rate: 4.7,
-            sale: 1520,
-            initfee: 20,
-            postage: 5
-           },
-           {
-             title: '必胜客',
-            pic:'../../static/canteen_logos/psh.jpg',
-            isSelfCollectable: true,
-            isFav: true,
-            link: '',
-            rate: 4.9,
-            sale: 2850,
-            initfee: 0,
-            postage: 5
-           }
-        ],
-        */
       }
       },
     methods:{
