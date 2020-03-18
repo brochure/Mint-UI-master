@@ -20,7 +20,7 @@
       <p style="font-size:0.7em;color:#777777;margin-top:-10px;">再忙，也要记得吃饭哟～</p>
     </el-col>
     <el-col :span="6">
-      <img src="../assets/user_portrait.jpg" class="round_icon" alt="" style="float:right;">
+      <img src="../../static/user_portrait.jpg" class="round_icon" alt="" style="float:right;">
     </el-col>
     </div>
   </el-row>

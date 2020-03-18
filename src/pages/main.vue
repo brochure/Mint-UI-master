@@ -302,13 +302,13 @@ import SearchBar from '../components/SearchBar.vue'
         },
         banners: [
           {
-            pic: "../assets/banners/1.jpg",
+            pic: '../../static/banners/1.jpg',
           },
           {
-            pic: '../assets/banners/2.jpg',
+            pic: '../../static/banners/2.jpg',
           },
           {
-            pic: '../assets/banners/3.jpg',
+            pic: '../../static/banners/3.jpg',
           }
         ],
        
@@ -316,17 +316,17 @@ import SearchBar from '../components/SearchBar.vue'
           {
             title: '白桃气泡饮套餐',
             origin: 38,
-            pic: '/discounts/1.jpg'
+            pic: '../../static/discounts/1.jpg'
           },
           {
             title: '海鲜芝士比萨',
             origin: 78,
-            pic: 'discounts/2.jpg'
+            pic: '../../static/discounts/2.jpg'
           },
           {
             title: '鲜蛋牛肉粥',
             origin: 20,
-            pic: '../../src/assets/discounts/3.jpg'
+            pic: '../../static/discounts/3.jpg'
           }
         ],
         selected: "1",
@@ -348,10 +348,8 @@ import SearchBar from '../components/SearchBar.vue'
     });
   }else{
     this.$router.push(link);
-      }
-    }
-  },
-  beforeCreate(){
+  }
+}
   }
 
   }
