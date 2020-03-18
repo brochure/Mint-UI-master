@@ -1,7 +1,7 @@
 <template>
     <mt-header fixed :title="headerTitle" :style="styleObject">
     <router-link to="/" slot="left">
-        <i class="el-icon-arrow-left" @click="prev" style="font-size:1.5em;color:white;"/>
+        <mt-button icon="back" @click="prev"></mt-button>
     </router-link>
     </mt-header>
 </template>
