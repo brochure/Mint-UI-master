@@ -1,16 +1,17 @@
 <template>
 <div>
-    <el-container style="background-color:#209bff">
-        <el-header>
-            <el-row style="padding-top:10px;">
-                <el-col :span="2">
+    <el-container>
+        <el-header style="background-color:#209bff;height:95px;padding-top:15px">
+            <el-row>
+                <el-col :span="1">
+                    <i class="el-icon-arrow-left" style="font-size:1.5em;color:white;"/>
                     <!-- <mt-button icon="back" @click="prev"></mt-button> -->
                 </el-col>
-                <el-col :span="4" :offset="11">
+                <el-col :span="4" :offset="10">
                     <h5>红包</h5>
                 </el-col>
                 <el-col :span="5" :offset="4">
-                    <span class="txtcorner">兑换红包</span>
+                    <span class="txtcorner" style="float:right;">兑换红包</span>
                 </el-col>
             </el-row>
             <!-- <el-row type="flex" justify="space-between"> -->
@@ -42,8 +43,7 @@
                 <div id="divcoupon">
                 <el-tabs v-model="activeName" stretch="true">
                     <el-tab-pane label="红包" name="first">
-                        <h1>adad</h1>
-                        <h2>daadw</h2>
+                        <h1>红包</h1>
                     </el-tab-pane>
                     <el-tab-pane label="店铺红包" name="second">店铺红包</el-tab-pane>
                     <el-tab-pane label="抵用券" name="third">抵用券</el-tab-pane>
@@ -83,7 +83,7 @@ export default {
 .headermenu .el-menu-item {
     height: 46px;
 }
-/* #divcoupon .el-submenu__title {
+#divcoupon .el-submenu__title {
     color:white !important;
   float:none !important;
 }
@@ -92,7 +92,7 @@ export default {
     color: white !important;
   font-size: 1em !important;
 }
-.el-tabs__nav-wrap{} */
+.el-tabs__nav-wrap{}
 
 h5, .txtcorner {
     color:white;
