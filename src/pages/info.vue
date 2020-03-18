@@ -1,12 +1,14 @@
 <template>
   <div id="info">
     <el-header>
-      <el-row style="padding-top:10px;">
+      <el-row style="padding-top:10px;" type="flex" :gutter="30">
           <el-col :span="2" :offset="20">
-            <i class="mintui mintui-setting"/>
+            <i class="el-icon-setting" style="font-size:1.5em;float:right;" @click="jumpto(urlmsgctr)" />
+            <!-- <i class="mintui mintui-setting"/> -->
           </el-col>
           <el-col :span="2">
-            <i class="mintui mintui-message" @click="jumpto(urlmsgctr)"/>
+            <i class="el-icon-chat-line-square" style="font-size:1.5em;float:right;" @click="jumpto(urlmsgctr)" />
+            <!-- <i class="mintui mintui-message" @click="jumpto(urlmsgctr)"/> -->
           </el-col>
       </el-row>
     </el-header>
@@ -153,6 +155,7 @@ import { Toast} from 'mint-ui'
     },
     data () {
       return {
+        urlmsgctr: "messageCenter",
         userscopes: [
           { title: '我的收藏',
             icon:'collection',
