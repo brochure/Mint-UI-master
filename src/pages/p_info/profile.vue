@@ -12,7 +12,8 @@
   <el-main>
     <p type="info">基础信息</p>
     <mt-cell title="头像" is-link @click.native="actionSheet">
-      <img src="/static/user_portrait.jpg" class="round_icon" />
+      <img :src="accountInfo.pic" class="round_icon" />
+      <!-- <img src="../../../src/assets/user_portrait.jpg" class="round_icon" /> -->
     </mt-cell>
         <mt-cell title="用户名" is-link>
       <span style="color:#909399;">{{accountInfo.nickName}}</span>
