@@ -23,7 +23,7 @@
             <i class="mintui mintui-scan"/>
           </el-col>
           <el-col :span="2">
-            <i class="mintui mintui-message" @click="jumpto(urlmsgctr)"/>
+            <i class="el-icon-chat-line-square" style="font-size:1.5em;float:right;" @click="jumpto(urlmsgctr)"/>
           </el-col>
         </el-row>
         <el-row style="margin-top:10px;">
