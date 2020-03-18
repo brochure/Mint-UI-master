@@ -80,9 +80,11 @@
 
       <!-- <el-row type="flex" :gutter="100"> -->
         <div id="divrecm" style="margin-top:25px;">
-          <el-tabs v-model="activeName" @tab-click="handleClick">
+          <!-- <el-tabs v-model="activeName" @tab-click="handleClick"> -->
+          <el-tabs v-model="activeName">
             <el-tab-pane label="推荐" name="first">
-                <el-menu :default-active="activeIndex" mode="horizontal" @select="handleSelect" style="margin-top:-16px;">
+                <!-- <el-menu :default-active="activeIndex" mode="horizontal" @select="handleSelect" style="margin-top:-16px;"> -->
+                <el-menu :default-active="activeIndex" mode="horizontal" style="margin-top:-16px;">
                 <el-submenu index="1">
                   <template slot="title">综合排序</template>
                   <el-menu-item index="1-1">好评优先</el-menu-item>
@@ -268,13 +270,12 @@
 
 <script>
 import FileSaver from 'file-saver'
-import { Header, TabContainer, TabContainerItem} from 'mint-ui'
+import {TabContainer, TabContainerItem} from 'mint-ui'
 import MerchantsList from '../components/MerchantsList.vue'
 import SearchBar from '../components/SearchBar.vue'
    export default{
     name:'index',
     components: {
-      'header': Header,
       MerchantsList,
       SearchBar
     },
@@ -285,6 +286,7 @@ import SearchBar from '../components/SearchBar.vue'
         activeName: "first",
         searchContent: "",
         urlmsgctr: "messageCenter",
+        activeIndex: "1",
         filters1:{
           flrfav: [true,false],
           flrsc: [true, false],
@@ -340,24 +342,16 @@ import SearchBar from '../components/SearchBar.vue'
       FileSaver.saveAs(blob, 'merchants.json')
     },
     jumpto(link){
-  if(link==''){
-    Toast({
-      message: '功能开发中',
-      position: 'middle',
-      duration: 1000
-    });
-  }else{
-    this.$router.push(link);
+      if(link==''){
+        Toast({
+          message: '功能开发中',
+          position: 'middle',
+          duration: 1000
+        });
+      }else{
+        this.$router.push(link);
+      }
+    }
   }
-}
-  },
-  created(){
-    console.log("created: ");
-    
-        const baseUrl=this.GLOBAL.BASE_URL
-    // const classId=this.$route.query.classId
-    console.log(baseUrl)
-  }
-
   }
 </script>
