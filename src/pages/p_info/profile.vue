@@ -99,12 +99,13 @@
       },
     methods:{
       getAccountInfo () {
-      var url = this.staticURL + "json/account_info.json";  
-      this.$axios.get(url).then((res) => {this.accountInfo = res.data;});
+        // var url = this.staticURL + "json/account_info.json";
+        var url = this.HOST + "/dmorder/account";
+        this.$axios.get(url).then((res) => {this.accountInfo = res.data;});
       },
       replacePhone: function (str) { // should be handed to the backstage
-        if(!str){return ''}
-        return str.replace(/(\d{3})\d{5}(\d{3})/, '$1****$2');
+          if(!str){return ''}
+          return str.replace(/(\d{3})\d{5}(\d{3})/, '$1****$2');
       },
       actionSheet(){this.sheetVisible = true;},
       getCamera(){

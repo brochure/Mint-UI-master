@@ -19,6 +19,8 @@ Vue.prototype.$axios=axios;
 Vue.config.productionTip = false
 Vue.use(ElementUI)
 Vue.use(VueResource)
+Vue.prototype.HOST = '/api'
+
 
 // 引入全部组件 
 
