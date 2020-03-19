@@ -10,6 +10,7 @@ import VueResource from 'vue-resource';
 import 'mint-ui/lib/style.css'
 import 'element-ui/lib/theme-chalk/index.css'
 import './icons'
+// import 'element-ui/lib/theme-default/index.css'
 
 // import global_ from '../config/global.js'
 // Vue.prototype.GLOBAL = global_;

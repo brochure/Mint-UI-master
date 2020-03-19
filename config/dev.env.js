@@ -4,5 +4,5 @@ const prodEnv = require('./prod.env')
 
 module.exports = merge(prodEnv, {
   NODE_ENV: '"development"',
-  STATIC_URL: '"http://localhost:8084/static/"'
+  STATIC_URL: '"http://localhost:8080/static/"'
 })
