@@ -7,7 +7,8 @@
     "thirdPartyAccount":{
         "taobao":{
             "title": "淘宝",
-            "isBound": false
+            "isBound": false,
+            "accountNo": "000"
         },
         "alipay":{
             "title": "支付宝",
@@ -16,15 +17,18 @@
         },
         "weibo":{
             "title": "微博",
-            "isBound": false
+            "isBound": false,
+            "accountNo": "000"
         },
         "wechat":{
             "title": "微信",
-            "isBound": false
+            "isBound": false,
+            "accountNo": "000"
         },
         "qq":{
             "title": "QQ",
-            "isBound": false
+            "isBound": false,
+            "accountNo": "000"
         }
     }
 }
