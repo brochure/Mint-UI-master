@@ -53,8 +53,27 @@ export default{
       },
       methods:{
         savePhoneNo(){
-          alert(this.phoneNo)
-          // modify in the local json file - account_info.json
+          var url = this.HOST + "/modifyPhoneNo";
+          var that = this;
+          // var param = {
+          //   phoneNo: that.phoneNo
+          // }
+          that.$axios({
+            url: url,
+            method: 'POST',
+            data: that.phoneNo
+          }).then(ref => {
+            if (ref.result) {
+              alert("success");
+              // that.$message({
+              //   message: "", //
+              //   type: "success"
+              // })
+            } else {
+              alert("failed");
+              //me.$message.error(ref.msg)
+            }
+          })
         }
       }
   }

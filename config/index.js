@@ -11,11 +11,11 @@ module.exports = {
     assetsSubDirectory: 'static',
     assetsPublicPath: '/',
     proxyTable: {
-      '/api': {
-        target: 'http://localhost:8083',
+      '/dmorder': {
+        target: 'http://localhost:8083/dmorder',
         changeOrigin: true,
         pathRewrite: {
-            '^/api': ''
+            '^/dmorder': ''
         }
       }
     },
@@ -59,6 +59,15 @@ module.exports = {
     assetsRoot: path.resolve(__dirname, '../dist'),
     assetsSubDirectory: '',
     assetsPublicPath: '',
+    // proxyTable: {
+    //   '/dmorder': {
+    //     target: 'http://localhost:8083',
+    //     changeOrigin: true,
+    //     pathRewrite: {
+    //         '^/dmorder': ''
+    //     }
+    //   }
+    // },
 
     /**
      * Source Maps

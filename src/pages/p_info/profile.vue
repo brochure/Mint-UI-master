@@ -100,7 +100,7 @@
     methods:{
       getAccountInfo () {
         // var url = this.staticURL + "json/account_info.json";
-        var url = this.HOST + "/dmorder/account";
+        var url = this.HOST + "/account";
         this.$axios.get(url).then((res) => {this.accountInfo = res.data;});
       },
       replacePhone: function (str) { // should be handed to the backstage
@@ -115,80 +115,34 @@
         this.$refs.filElem.dispatchEvent(new MouseEvent('click'))
       },
       getFile(){
-        function getObjectURL(file) { 
-            var url = null; 
-            if (window.createObjcectURL != undefined) { 
-                url = window.createOjcectURL(file); 
-            } else if (window.URL != undefined) { 
-                url = window.URL.createObjectURL(file); 
-            } else if (window.webkitURL != undefined) { 
-                url = window.webkitURL.createObjectURL(file); 
-            } 
-            return url; 
-        }
-        var url = getObjectURL(this.$refs.filElem.files[0]);
-        console.log(url);
-            // 应该用canvas编辑和保存图片
-            var downloadLink = document.createElement("a");
-            downloadLink.setAttribute("href", url);
-            downloadLink.setAttribute("download", "new.png");
-            downloadLink.click();
-        // this.$axios({
-        //   url: url,
-        //   type: "POST",
-        //   dataType: 'binary',
-        //   headers:{'Content-Type':'image/jpeg','X-Requested-With':'XMLHttpRequest'},
-        //   processData: false,
-        //   success: function(result){
-        //     console.log('wawad');
-            
-        //   }
-        // });
-        
-        // this.$http({
-        //   url: url,
-        //   method: "POST",
-        //   headers:{'Content-Type':'image/jpeg','X-Requested-With':'XMLHttpRequest'},
-        //   responseType: "blob"
-        // }).then(function(response){
-        //   console.log('awsdawd');
-          
-        // }).catch(function(error){
-        //   console.log('error33');
-          
-        //   console.log(error);
-          
-        // })
-
-  //         this.$axios.get(url).then((res) => {
-  //           const blob = new Blob([res.data], {type: 'image/jpeg'})
-  //           FileSaver.saveAs(blob, 'new.jpg')
-  //         })
-        
-        // var that = this;
-        // const inputFile = this.$refs.filElem.files[0];
-        // console.log(inputFile);
-        
-        // if(inputFile){
-        //     if(inputFile.type !== 'image/jpeg' && inputFile.type !== 'image/png' && inputFile.type !== 'image/gif'){
-        //         alert('不是有效的图片文件！');
-        //         return;
-        //     }
-        //     // this.imgInfo = Object.assign({}, this.imgInfo, {
-        //     //     name: inputFile.name,
-        //     //     size: inputFile.size,
-        //     //     lastModifiedDate: inputFile.lastModifiedDate.toLocaleString()
-        //     // })
-        //     // const reader = new FileReader();
-        //     // reader.readAsDataURL(inputFile);
-        //     // reader.onload = function (e) {
-        //     //     that.imgSrc = this.result;
-        //     // }
-
-
-        // } else {
-        //     return;
+        // function getObjectURL(file) { 
+        //     var url = null; 
+        //     if (window.createObjcectURL != undefined) { 
+        //         url = window.createOjcectURL(file); 
+        //     } else if (window.URL != undefined) { 
+        //         url = window.URL.createObjectURL(file); 
+        //     } else if (window.webkitURL != undefined) { 
+        //         url = window.webkitURL.createObjectURL(file); 
+        //     } 
+        //     return url; 
         // }
+        // var url = getObjectURL(this.$refs.filElem.files[0]);
+        // console.log(url);
+        //     // 应该用canvas编辑和保存图片
+        //     var downloadLink = document.createElement("a");
+        //     downloadLink.setAttribute("href", url);
+        //     downloadLink.setAttribute("download", "new.png");
+        //     downloadLink.click();
+        // // this.$axios({
+        // //   url: url,
+        // //   type: "POST",
+        // //   dataType: 'binary',
+        // //   headers:{'Content-Type':'image/jpeg','X-Requested-With':'XMLHttpRequest'},
+        // //   processData: false,
+        // //   success: function(result){
+        // //     console.log('wawad');  
+        // //   }
+        // // });
       },
     fileUpload(event){
       // formData.append('file', document.querySelector('input[type=file]').files[0]) // 'file' 这个名字要和后台获取文件的名字一样;
