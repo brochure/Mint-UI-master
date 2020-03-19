@@ -62,17 +62,11 @@ export default{
             url: url,
             method: 'POST',
             data: that.phoneNo
-          }).then(ref => {
-            if (ref.result) {
-              alert("success");
-              // that.$message({
-              //   message: "", //
-              //   type: "success"
-              // })
-            } else {
-              alert("failed");
-              //me.$message.error(ref.msg)
-            }
+          }).then(res => {
+            alert(res.data); // ! change to component of message
+            console.log(res);
+          }).catch(err =>{
+            reject(err.data);
           })
         }
       }
