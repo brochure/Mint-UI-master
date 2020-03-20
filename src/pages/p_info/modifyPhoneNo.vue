@@ -62,15 +62,22 @@ export default{
             url: url,
             method: 'POST',
             data: param
-          }).then(res => {
-            alert(res.data); // todo | change to component of message
-            console.log(res);
-            // todo | return to the previous page
+          }).then(resp => {
+            var data = resp.data;
+            console.log(resp);
+            console.log(data);
+            if(data.success){
+              alert(data.msg);
+              that.prev();
+            }else{
+              alert(data.msg);
+            }
           }).catch(err =>{
             console.log(err);
             // reject(err.data);
           })
-        }
+        },
+        prev(){this.$router.go(-1)}
       }
   }
 </script>
