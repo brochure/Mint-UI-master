@@ -102,11 +102,12 @@
         // var url = this.staticURL + "json/account_info.json";
         var that = this;
         var url = that.HOST + "/account";
-        console.log("accessing /account");
-        that.$axios.get(url).then((res) => {
-          that.accountInfo = res.data;
-          console.log(typeof(that.accountInfo));
-          console.log(that.accountInfo);
+        that.$axios.get(url).then((resp) => {
+          if(resp.data.success){
+            that.accountInfo = resp.data.content;
+          }else{
+            alert(resp.data.msg);
+          }
       });
       },
       replacePhone: function (str) { // should be handed to the backstage

@@ -336,11 +336,11 @@ import SearchBar from '../components/SearchBar.vue'
       }
     },
   methods: {
-    exportJSON () {
-      const data = JSON.stringify(this.merchants) //this.merchants has been deleted
-      const blob = new Blob([data], {type: ''})
-      FileSaver.saveAs(blob, 'merchants.json')
-    },
+    // exportJSON () {
+    //   const data = JSON.stringify(this.merchants) //this.merchants has been deleted
+    //   const blob = new Blob([data], {type: ''})
+    //   FileSaver.saveAs(blob, 'merchants.json')
+    // },
     jumpto(link){
       if(link==''){
         Toast({

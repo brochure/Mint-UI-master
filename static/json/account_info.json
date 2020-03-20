@@ -7,27 +7,27 @@
     "thirdPartyAccount":{
         "taobao":{
             "title": "淘宝",
-            "isBound": false,
+            "bound": false,
             "accountNo": "000"
         },
         "alipay":{
             "title": "支付宝",
-            "isBound": true,
+            "bound": true,
             "accountNo": "12932111"
         },
         "weibo":{
             "title": "微博",
-            "isBound": false,
+            "bound": false,
             "accountNo": "000"
         },
         "wechat":{
             "title": "微信",
-            "isBound": false,
+            "bound": false,
             "accountNo": "000"
         },
         "qq":{
             "title": "QQ",
-            "isBound": false,
+            "bound": false,
             "accountNo": "000"
         }
     }

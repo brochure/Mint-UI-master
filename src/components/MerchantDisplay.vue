@@ -26,12 +26,14 @@ export default {
       rate:0,
       sale:0,
       initfee:0,
-      postage:0
+      postage:0,
+      isFav: false,
+      isSelfCollectable: false
     }
   },
   data () {
     return {
-      title: "MerchantDisplay",
+      // title: "MerchantDisplay",
     }
   },
   methods: {
