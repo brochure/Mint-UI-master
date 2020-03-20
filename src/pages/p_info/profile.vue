@@ -100,8 +100,14 @@
     methods:{
       getAccountInfo () {
         // var url = this.staticURL + "json/account_info.json";
-        var url = this.HOST + "/account";
-        this.$axios.get(url).then((res) => {this.accountInfo = res.data;});
+        var that = this;
+        var url = that.HOST + "/account";
+        console.log("accessing /account");
+        that.$axios.get(url).then((res) => {
+          that.accountInfo = res.data;
+          console.log(typeof(that.accountInfo));
+          console.log(that.accountInfo);
+      });
       },
       replacePhone: function (str) { // should be handed to the backstage
           if(!str){return ''}
