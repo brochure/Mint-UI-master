@@ -22,29 +22,14 @@
     <p type="info" class="mt-4">账号绑定</p>
     <mt-cell title="手机" is-link to="/p_info/modifyPhoneNo">
     <!-- <mt-cell title="手机" is-link @click.native="modifyPhoneNo"> -->
-      <span style="color:#909399;">{{replacePhone(accountInfo.phoneNo)}}</span>
+      <span style="color:#909399;">{{replacePhoneNo(accountInfo.phoneNo)}}</span>
     </mt-cell>
     <div v-for="item in accountInfo.thirdPartyAccount" :key="item.title">
       <mt-cell :title=item.title is-link>
-        <span v-if="item.isBound" class="bound">已绑定</span>
+        <span v-if="item.bound" class="bound">已绑定</span>
         <span v-else class="bound" style="color:#409EFF;">未绑定</span>
       </mt-cell>
     </div>
-    <!-- <mt-cell title="淘宝" is-link>
-      <span style="color:#409EFF;font-size:0.8em;">未绑定</span>
-    </mt-cell>
-    <mt-cell title="支付宝" is-link>
-      <span style="color:#409EFF;font-size:0.8em;">未绑定</span>
-    </mt-cell>
-    <mt-cell title="微博" is-link>
-      <span style="color:#409EFF;font-size:0.8em;">未绑定</span>
-    </mt-cell>
-    <mt-cell title="微信" is-link>
-      <span style="color:#409EFF;font-size:0.8em;">未绑定</span>
-    </mt-cell>
-    <mt-cell title="QQ" is-link>
-      <span style="color:#409EFF;font-size:0.8em;">未绑定</span>
-    </mt-cell> -->
   </el-main>
   <mt-actionsheet
     :actions="actions"
@@ -101,8 +86,8 @@
       getAccountInfo () {
         // var url = this.staticURL + "json/account_info.json";
         var that = this;
-        var url = that.HOST + "/account";
-        that.$axios.get(url).then((resp) => {
+        var req_map = that.HOST + "/account";
+        that.$axios.get(req_map).then((resp) => {
           if(resp.data.success){
             that.accountInfo = resp.data.content;
           }else{
@@ -110,7 +95,7 @@
           }
       });
       },
-      replacePhone: function (str) { // should be handed to the backstage
+      replacePhoneNo (str) { // should be handed to the backstage
           if(!str){return ''}
           return str.replace(/(\d{3})\d{5}(\d{3})/, '$1****$2');
       },

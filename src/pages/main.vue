@@ -34,7 +34,7 @@
         <el-row style="margin-top:20px;">
           <el-carousel height="100px" trigger="click">
             <el-carousel-item v-for="item in banners" :key="item.pic">
-              <img :src="item.pic" class="banner"/>
+              <img :src="genPicURL(item.pic)" class="banner"/>
             </el-carousel-item>
           </el-carousel>
         </el-row>
@@ -68,11 +68,12 @@
             <p class="text-danger d-inline-block">新人专属</p><p class="text-danger d-inline-block font-weight-bold hight-amt">1</p><p class="text-danger d-inline-block">元起</p>
             <p class="small font-weight-light" style="float:right;margin-top:2px;">更多 ></p>
             </div>
-            <div class="card col-4 p-0 d-inline-block card-ad" v-for="value in discounts" :title="value.title" :key="value.title">
-              <img :src="value.pic" class="card-img-top discountimg">
+            <div class="card col-4 p-0 d-inline-block card-ad" v-for="item in discountContent" :title="item.title" :key="item.title">
+              <!-- <img src="http://localhost:8083/dmorder/image/banners/3" class="card-img-top discountimg"> -->
+              <img :src="genPicURL(item.pic)" class="card-img-top discountimg">
                 <div class="card-body p-2">
-                  <p class="card-title text-nowrap small m-1">{{value.title}}</p>
-                  <p class="card-text text-muted mt-1"><del class="small">¥{{value.origin}}</del><a href="#" class="badge badge-info mt-1" style="float:right;">1元抢</a></p>
+                  <p class="card-title text-nowrap small m-1">{{item.title}}</p>
+                  <p class="card-text text-muted mt-1"><del class="small">¥{{item.origin}}</del><a href="#" class="badge badge-info mt-1" style="float:right;">1元抢</a></p>
                 </div>
             </div>
           </div>
@@ -109,31 +110,6 @@
             </el-tab-pane>
           </el-tabs>
         </div>
-        <!-- <mt-navbar v-model="selected">
-          <mt-tab-item id="1">
-            <el-col>推荐</el-col>
-          </mt-tab-item>
-          <mt-tab-item id="2">
-            <el-col>果蔬商超
-            </el-col>
-            </mt-tab-item>
-          <mt-tab-item id="3">
-            <el-col>到店自取
-            </el-col>
-            </mt-tab-item>
-        </mt-navbar> -->
-      <!-- </el-row> -->
-        <!-- <mt-tab-container v-model="selected">
-          <mt-tab-container-item id="1">
-            <merchants-list :filters="filters1"></merchants-list>
-          </mt-tab-container-item>
-          <mt-tab-container-item id="2">
-            <merchants-list :filters="filters2"></merchants-list>
-          </mt-tab-container-item>
-          <mt-tab-container-item id="3">
-            <merchants-list :filters="filters3"></merchants-list>
-          </mt-tab-container-item>
-        </mt-tab-container> -->
       </el-main>
     </el-container>
   </div>
@@ -231,10 +207,10 @@
     border: 10px solid #fff;
   } */
 
-  /* .banner{
+  .banner{
     width: 100%;
     height: 150px;
-  } */
+  }
 
 /* .cpanel div.icon span{-moz-transition-duration: 0.8s;
     background-color: #FF0000;
@@ -273,67 +249,38 @@ import FileSaver from 'file-saver'
 import {TabContainer, TabContainerItem} from 'mint-ui'
 import MerchantsList from '../components/MerchantsList.vue'
 import SearchBar from '../components/SearchBar.vue'
-   export default{
+  export default{
     name:'index',
     components: {
       MerchantsList,
       SearchBar
-    },
-    data () {
-      return {
-        name: "index",
-        // selected: 1,
-        activeName: "first",
-        searchContent: "",
-        urlmsgctr: "messageCenter",
-        activeIndex: "1",
-        filters1:{
-          flrfav: [true,false],
-          flrsc: [true, false],
-          flrtype: [0, 1]
-        },
-        filters2:{
-          flrfav: [true,false],
-          flrsc: [true, false],
-          flrtype: [1]
-        },
-        filters3:{
-          flrfav: [true,false],
-          flrsc: [true],
-          flrtype: [0, 1]
-        },
-        banners: [
-          {
-            pic: this.staticURL + 'banners/1.jpg',
-          },
-          {
-            pic: this.staticURL + 'banners/2.jpg',
-          },
-          {
-            pic: this.staticURL + 'banners/3.jpg',
-          }
-        ],
-       
-        discounts: [
-          {
-            title: '白桃气泡饮套餐',
-            origin: 38,
-            pic: this.staticURL + 'discounts/1.jpg'
-          },
-          {
-            title: '海鲜芝士比萨',
-            origin: 78,
-            pic: this.staticURL + 'discounts/2.jpg'
-          },
-          {
-            title: '鲜蛋牛肉粥',
-            origin: 20,
-            pic: this.staticURL + 'discounts/3.jpg'
-          }
-        ],
-        selected: "1",
-        // userNickName: 'CheetoMan'
-      }
+  },
+  data () {
+    return {
+      name: "index",
+      activeName: "first",
+      searchContent: "",
+      urlmsgctr: "messageCenter",
+      activeIndex: "1",
+      filters1:{
+        flrfav: [true,false],
+        flrsc: [true, false],
+        flrtype: [0, 1]
+      },
+      filters2:{
+        flrfav: [true,false],
+        flrsc: [true, false],
+        flrtype: [1]
+      },
+      filters3:{
+        flrfav: [true,false],
+        flrsc: [true],
+        flrtype: [0, 1]
+      },
+      discountContent:{},
+      banners: {},
+      selected: "1",
+    }
     },
   methods: {
     // exportJSON () {
@@ -351,12 +298,38 @@ import SearchBar from '../components/SearchBar.vue'
       }else{
         this.$router.push(link);
       }
+    },
+    getBanners () {
+      var that = this;
+      var req_map = that.HOST + "/banners";
+      that.$axios.get(req_map).then((resp) => {
+        if(resp.data.success){
+          that.banners = resp.data.content;
+        }else{
+          alert(resp.data.msg);
+        }
+      });
+    },
+    getDiscounts () {
+      var that = this;
+      var req_map = that.HOST + "/discounts";
+      that.$axios.get(req_map).then((resp) => {
+        if(resp.data.success){
+          that.discountContent = resp.data.content;
+        }else{
+          alert(resp.data.msg);
+        }
+      });
+    },
+    genPicURL(pic) {
+      return this.SERVER_BASE_URL + "/image/" + pic;
     }
   },
   created(){
-    console.log("baseURL: ");
-    
-    console.log(this.staticURL);
+    // console.log("baseURL: ");
+    // console.log(this.staticURL);
+    this.getDiscounts ();
+    this.getBanners ();
   }
-  }
+}
 </script>

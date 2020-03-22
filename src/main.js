@@ -19,6 +19,7 @@ Vue.prototype.$axios=axios;
 Vue.config.productionTip = false
 Vue.use(ElementUI)
 Vue.use(VueResource)
+Vue.prototype.SERVER_BASE_URL = 'http://localhost:8083/dmorder'
 Vue.prototype.HOST = '/dmorder'
 
 
