@@ -34,7 +34,7 @@
         <el-row style="margin-top:20px;">
           <el-carousel height="100px" trigger="click">
             <el-carousel-item v-for="item in banners" :key="item.pic">
-              <img :src="this.genPicURL(item.pic)" class="banner"/>
+              <img :src="genPicURL(item.pic)" class="banner"/>
             </el-carousel-item>
           </el-carousel>
         </el-row>
@@ -70,7 +70,7 @@
             </div>
             <div class="card col-4 p-0 d-inline-block card-ad" v-for="item in discountContent" :title="item.title" :key="item.title">
               <!-- <img src="http://localhost:8083/dmorder/image/banners/3" class="card-img-top discountimg"> -->
-              <img :src="this.genPicURL(item.pic)" class="card-img-top discountimg">
+              <img :src="genPicURL(item.pic)" class="card-img-top discountimg">
                 <div class="card-body p-2">
                   <p class="card-title text-nowrap small m-1">{{item.title}}</p>
                   <p class="card-text text-muted mt-1"><del class="small">¥{{item.origin}}</del><a href="#" class="badge badge-info mt-1" style="float:right;">1元抢</a></p>
@@ -277,12 +277,16 @@ import SearchBar from '../components/SearchBar.vue'
         flrsc: [true],
         flrtype: [0, 1]
       },
-      discountContent:{},
-      banners: {},
+      discountContent:[],
+      banners: [],
       selected: "1",
     }
     },
   methods: {
+    genPicURL(pic) {
+      console.log(this.SERVER_BASE_URL + "/image/" + pic);
+      return this.SERVER_BASE_URL + "/image/" + pic;
+    },
     // exportJSON () {
     //   const data = JSON.stringify(this.merchants) //this.merchants has been deleted
     //   const blob = new Blob([data], {type: ''})
@@ -303,7 +307,9 @@ import SearchBar from '../components/SearchBar.vue'
       var that = this;
       var req_map = that.HOST + "/banners";
       that.$axios.get(req_map).then((resp) => {
-        if(resp.data.success){
+        if(resp.data.success) {
+          console.log(resp);
+          
           that.banners = resp.data.content;
         }else{
           alert(resp.data.msg);
@@ -314,6 +320,7 @@ import SearchBar from '../components/SearchBar.vue'
       var that = this;
       var req_map = that.HOST + "/discounts";
       that.$axios.get(req_map).then((resp) => {
+        console.log(resp);
         if(resp.data.success){
           that.discountContent = resp.data.content;
         }else{
@@ -324,13 +331,20 @@ import SearchBar from '../components/SearchBar.vue'
     // source:function(){
     //   this.$source.genPicURL()
     // }
-    genPicURL(pic) {
-      return this.SERVER_BASE_URL + "/image/" + pic;
-    }
   },
   created(){
     this.getDiscounts ();
     this.getBanners ();
-  }
+  },
+  // watch: {
+  //   accountInfo(val,oldVal) {
+  //     this.$nextTick(() => {
+  //       console.log("nextTick");
+  //       console.log(this.accountInfo.pic);
+  //       //当数据到来的时候， DOM 更新循环结束之后，立即执行函数
+  //       this.profileImgUrl = this.genPicURL(this.accountInfo.pic);
+  //     })
+  //   }
+  // }
 }
 </script>

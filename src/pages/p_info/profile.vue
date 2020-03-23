@@ -248,7 +248,7 @@
           this.profileImgUrl = this.genPicURL(this.accountInfo.pic);
         })
     }
-  }  
+  }
   }
 
 </script>
