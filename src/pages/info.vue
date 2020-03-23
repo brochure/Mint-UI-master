@@ -213,6 +213,8 @@ import { Toast} from 'mint-ui'
           //this.popupVisible = !this.popupVisible;
         //},
         genPicURL(pic) {
+          console.log(this.SERVER_BASE_URL + "/image/" + pic);
+          
           return this.SERVER_BASE_URL + "/image/" + pic;
         },
         jumpto(link){
