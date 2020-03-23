@@ -321,13 +321,14 @@ import SearchBar from '../components/SearchBar.vue'
         }
       });
     },
+    // source:function(){
+    //   this.$source.genPicURL()
+    // }
     genPicURL(pic) {
       return this.SERVER_BASE_URL + "/image/" + pic;
     }
   },
   created(){
-    // console.log("baseURL: ");
-    // console.log(this.staticURL);
     this.getDiscounts ();
     this.getBanners ();
   }

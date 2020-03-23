@@ -10,6 +10,8 @@ import VueResource from 'vue-resource';
 import 'mint-ui/lib/style.css'
 import 'element-ui/lib/theme-chalk/index.css'
 import './icons'
+// import source from './assets/js/source.js'
+// Vue.prototype.$source = source
 // import 'element-ui/lib/theme-default/index.css'
 
 // import global_ from '../config/global.js'
@@ -34,3 +36,7 @@ new Vue({
 	components: { App },
 	template: '<App/>'
 })
+
+// Vue.prototype.genPicURL = function(pic) {
+// 	return this.GLOBAL.SSERVER_BASE_URL + "/image/" + pic;
+// }

@@ -1,7 +1,7 @@
 <template>
   <el-row type="flex">
       <el-col :span="6">
-        <img :src="this.staticURL + merchant.pic" class="logo">
+        <img :src="genPicURL(merchant.pic)" class="logo">
       </el-col>
       <el-col :span="18">
         <span>{{merchant.title}}</span>
@@ -37,7 +37,9 @@ export default {
     }
   },
   methods: {
-
+    genPicURL(pic) {
+      return this.SERVER_BASE_URL + "/image/" + pic;
+    }
   },
   components: {
 

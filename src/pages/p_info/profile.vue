@@ -12,7 +12,7 @@
   <el-main>
     <p type="info">基础信息</p>
     <mt-cell title="头像" is-link @click.native="actionSheet">
-      <img :src="this.staticURL + accountInfo.pic" class="round_icon" />
+      <img :src="genPicURL(accountInfo.pic)" class="round_icon" />
     </mt-cell>
         <mt-cell title="用户名" is-link>
       <span style="color:#909399;">{{accountInfo.nickName}}</span>
@@ -83,6 +83,9 @@
         }
       },
     methods:{
+      genPicURL(pic) {
+          return this.SERVER_BASE_URL + "/image/" + pic;
+        },
       getAccountInfo () {
         // var url = this.staticURL + "json/account_info.json";
         var that = this;

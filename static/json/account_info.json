@@ -1,7 +1,7 @@
 
 {
     "nickName": "Cheetos",
-    "pic": "user_portrait.jpg",
+    "pic": "users/user_portrait.jpg",
     "phoneNo": "13912345678",
     "diliverAddress":"",
     "thirdPartyAccount":{
