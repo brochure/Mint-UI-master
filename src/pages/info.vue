@@ -20,7 +20,7 @@
       <p style="font-size:0.7em;color:#777777;margin-top:-10px;">再忙，也要记得吃饭哟～</p>
     </el-col>
     <el-col :span="6">
-      <img :src="genPicURL('users/user_portrait.jpg')" class="round_icon" alt="" style="float:right;">
+      <img :src="profileImgUrl" class="round_icon" alt="" style="float:right;">
     </el-col>
     </div>
   </el-row>
@@ -155,7 +155,9 @@ import { Toast} from 'mint-ui'
     },
     data () {
       return {
+        profileImgUrl: "",
         urlmsgctr: "messageCenter",
+        accountInfo: {},
         userscopes: [
           { title: '我的收藏',
             icon:'collection',
@@ -213,9 +215,19 @@ import { Toast} from 'mint-ui'
           //this.popupVisible = !this.popupVisible;
         //},
         genPicURL(pic) {
-          console.log(this.SERVER_BASE_URL + "/image/" + pic);
-          
           return this.SERVER_BASE_URL + "/image/" + pic;
+        },
+        getAccountInfo () {
+          // var url = this.staticURL + "json/account_info.json";
+          var that = this;
+          var req_map = that.HOST + "/account";
+          that.$axios.get(req_map).then((resp) => {
+            if(resp.data.success){
+              that.accountInfo = resp.data.content;
+            }else{
+              alert(resp.data.msg);
+            }
+        });
         },
         jumpto(link){
           if(link==''){
@@ -230,9 +242,22 @@ import { Toast} from 'mint-ui'
           }
         }
     },
-      mounted: function(){
-        // .mintui color == blue
-        }
+    created(){
+      this.getAccountInfo();
+    },
+    mounted(){
+      // .mintui color == blue
+    },
+    watch: {
+      accountInfo(val,oldVal) {
+        this.$nextTick(() => {
+          console.log("nextTick");
+          console.log(this.accountInfo.pic);
+          //当数据到来的时候， DOM 更新循环结束之后，立即执行函数
+          this.profileImgUrl = this.genPicURL(this.accountInfo.pic);
+        })
+    }
+  }  
 
   }
 </script>

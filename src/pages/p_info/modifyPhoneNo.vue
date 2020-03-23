@@ -55,17 +55,13 @@ export default{
         savePhoneNo(){
           var url = this.HOST + "/modifyPhoneNo";
           var that = this;
-          var param = {
-            phoneNo: that.phoneNo
-          }
+          var param = {phoneNo: that.phoneNo};
           that.$axios({
             url: url,
             method: 'POST',
             data: param
           }).then(resp => {
             var data = resp.data;
-            console.log(resp);
-            console.log(data);
             if(data.success){
               alert(data.msg);
               that.prev();

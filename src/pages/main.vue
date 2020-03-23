@@ -34,7 +34,7 @@
         <el-row style="margin-top:20px;">
           <el-carousel height="100px" trigger="click">
             <el-carousel-item v-for="item in banners" :key="item.pic">
-              <img :src="genPicURL(item.pic)" class="banner"/>
+              <img :src="this.genPicURL(item.pic)" class="banner"/>
             </el-carousel-item>
           </el-carousel>
         </el-row>
@@ -70,7 +70,7 @@
             </div>
             <div class="card col-4 p-0 d-inline-block card-ad" v-for="item in discountContent" :title="item.title" :key="item.title">
               <!-- <img src="http://localhost:8083/dmorder/image/banners/3" class="card-img-top discountimg"> -->
-              <img :src="genPicURL(item.pic)" class="card-img-top discountimg">
+              <img :src="this.genPicURL(item.pic)" class="card-img-top discountimg">
                 <div class="card-body p-2">
                   <p class="card-title text-nowrap small m-1">{{item.title}}</p>
                   <p class="card-text text-muted mt-1"><del class="small">¥{{item.origin}}</del><a href="#" class="badge badge-info mt-1" style="float:right;">1元抢</a></p>

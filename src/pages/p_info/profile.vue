@@ -12,7 +12,7 @@
   <el-main>
     <p type="info">基础信息</p>
     <mt-cell title="头像" is-link @click.native="actionSheet">
-      <img :src="genPicURL(accountInfo.pic)" class="round_icon" />
+      <img v-if="update" :src="profileImgUrl" class="round_icon" />
     </mt-cell>
         <mt-cell title="用户名" is-link>
       <span style="color:#909399;">{{accountInfo.nickName}}</span>
@@ -71,6 +71,8 @@
       },
       data () {
         return {
+          update: true,
+          profileImgUrl: "users/user_profile.jpg",
           accountInfo:{},
           sheetVisible: false,
           actions: [{
@@ -80,13 +82,27 @@
             name: '从相册中选择', 
             method : this.getLibrary
           }],
+          imgData: {
+            accept: 'image/jpeg, image/png, image/jpg',
+          },
         }
       },
     methods:{
-      genPicURL(pic) {
-        console.log(this.SERVER_BASE_URL + "/image/" + pic);
-          return this.SERVER_BASE_URL + "/image/" + pic;
+      reloadProfileImg() {
+        console.log("reloadProfileImg");
+        
+            // 移除组件
+            this.update = false;
+            // 在组件移除后，重新渲染组件
+            // this.$nextTick可实现在DOM 状态更新后，执行传入的方法。
+            this.$nextTick(() => {
+              this.profileImgUrl = this.genPicURL(this.accountInfo.pic)
+              this.update = true;
+            });
         },
+      genPicURL(pic) {        
+        return this.SERVER_BASE_URL + "/image/" + pic;
+      },
       getAccountInfo () {
         // var url = this.staticURL + "json/account_info.json";
         var that = this;
@@ -111,34 +127,69 @@
         this.$refs.filElem.dispatchEvent(new MouseEvent('click'))
       },
       getFile(){
-        // function getObjectURL(file) { 
-        //     var url = null; 
-        //     if (window.createObjcectURL != undefined) { 
-        //         url = window.createOjcectURL(file); 
-        //     } else if (window.URL != undefined) { 
-        //         url = window.URL.createObjectURL(file); 
-        //     } else if (window.webkitURL != undefined) { 
-        //         url = window.webkitURL.createObjectURL(file); 
-        //     } 
-        //     return url; 
-        // }
-        // var url = getObjectURL(this.$refs.filElem.files[0]);
-        // console.log(url);
-        //     // 应该用canvas编辑和保存图片
-        //     var downloadLink = document.createElement("a");
-        //     downloadLink.setAttribute("href", url);
-        //     downloadLink.setAttribute("download", "new.png");
-        //     downloadLink.click();
-        // // this.$axios({
-        // //   url: url,
-        // //   type: "POST",
-        // //   dataType: 'binary',
-        // //   headers:{'Content-Type':'image/jpeg','X-Requested-With':'XMLHttpRequest'},
-        // //   processData: false,
-        // //   success: function(result){
-        // //     console.log('wawad');  
-        // //   }
-        // // });
+        let that = this;
+        function getObjectURL(file) { 
+            var url = null; 
+            if (window.createObjcectURL != undefined) { 
+                url = window.createOjcectURL(file); 
+            } else if (window.URL != undefined) { 
+                url = window.URL.createObjectURL(file); 
+            } else if (window.webkitURL != undefined) { 
+                url = window.webkitURL.createObjectURL(file); 
+            } 
+            return url; 
+        }
+        let img = that.$refs.filElem.files[0];
+        let type = img.type; //文件的类型，判断是否是图片
+        let size = img.size;        
+        if (that.imgData.accept.indexOf(type) == -1 || type == '') {
+					that.$toast("图片格式错误，请重新上传。");
+					return false;
+				}
+				if (size > 3145728) {
+					that.$toast("请上传小于10M的图片");
+					return false;
+        }
+        // let url = getObjectURL(this.$refs.filElem.files[0]);
+
+            // 应该用canvas编辑和保存图片
+        // this.$axios({
+        //   url: url,
+        //   type: "POST",
+        //   dataType: 'binary',
+        //   headers:{'Content-Type':'image/jpeg','X-Requested-With':'XMLHttpRequest'},
+        //   processData: false,
+        //   success: function(result){
+        //     console.log('wawad');  
+        //   }
+        // });
+
+        var uri = ''
+				let form = new FormData();
+        form.append('file', img, img.name);
+        console.log(form);
+        let req_map = that.HOST + "/uploads/profile";
+				that.$axios.post(req_map, form, {
+					headers: {
+						'Content-Type': 'multipart/form-data'
+					}
+				}).then(response => {
+          console.log(response)
+          // that.profileImgUrl = that.genPicURL(accountInfo.pic);
+          this.reloadProfileImg();
+					// uri = "http://www.t1.qidianjinfu.com" + response.data.result
+					// reader.readAsDataURL(img1);
+					// var that = this;
+					// reader.onloadend = function() {
+					// 	that.imgs = uri;
+					// 	console.log(uri)
+					// }
+					// this.$toast("上传成功");
+					// this.udate = false;
+					// this.btnShow = true
+				}).catch(function(err) {
+					console.log(err);
+				});
       },
     fileUpload(event){
       // formData.append('file', document.querySelector('input[type=file]').files[0]) // 'file' 这个名字要和后台获取文件的名字一样;
@@ -184,10 +235,20 @@
         // }
     },
     created(){
-      this.getAccountInfo()
+      this.getAccountInfo();
+      // this.profileImgUrl = this.genPicURL(this.accountInfo.pic);      
       // this.actionSheet()
+    },
+    watch: {
+      accountInfo(val,oldVal) {
+        this.$nextTick(() => {
+          console.log("nextTick");
+          console.log(this.accountInfo.pic);
+          //当数据到来的时候， DOM 更新循环结束之后，立即执行函数
+          this.profileImgUrl = this.genPicURL(this.accountInfo.pic);
+        })
     }
-
+  }  
   }
 
 </script>
