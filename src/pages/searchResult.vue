@@ -4,8 +4,7 @@
       <el-header>
       <el-row type="flex" justify="space-between" style="margin-top:10px;">
           <el-col :span="21">
-              <!-- <el-button>edwed</el-button> -->
-            <el-input :autofocus="true" :placeholder="phcontent" v-model="iptContent" @change="execSearch" class="searchClass">
+            <el-input :autofocus="true" :placeholder="phcontent" v-model="iptContent" @change="searchCmmd" class="searchClass">
                 <el-button slot="prepend" icon="el-icon-search" style="width:30px;margin-left:-27px;"></el-button>
             </el-input>
           </el-col>
@@ -14,27 +13,54 @@
           </el-col>
       </el-row>
       </el-header>
+      <el-main>
+          <sort-panel v-if="showResult" :sortkey="sortkey"></sort-panel>
+      </el-main>
   </el-container>
 </div>
 </template>
 
 <script>
+import SortPanel from '../components/SortPanel.vue'
+
 export default {
   data () {
     return {
         name:'index',
+        showResult: false,
         phcontent: "星巴克",
-        iptContent: ""
+        iptContent: "",
+        merchants: [],
+        sortkey: "zh"
     }
   },
   methods: {
     prev(){this.$router.go(-1)},
-    execSearch(){
-        
+    searchCmmd(){
+        var that = this;
+        var req_map = that.HOST + "/searchCmmd";
+        var param = {iptContent: that.iptContent};
+        that.$axios.post(req_map).then((resp) => {
+        console.log(resp);
+        that.$axios({
+            url: req_map,
+            method: 'POST',
+            data: param
+          }).then(resp => {
+            console.log(resp);
+            if(resp.data.success){
+              that.$toast(resp.data.msg);
+            }else{
+              that.$toast(resp.data.msg);
+            }
+          }).catch(err =>{
+            that.$toast(err.data);
+          })
+      });
     }
   },
   components: {
-
+      SortPanel
   }
 }
 </script>

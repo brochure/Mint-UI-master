@@ -61,12 +61,11 @@ export default{
             method: 'POST',
             data: param
           }).then(resp => {
-            var data = resp.data;
-            if(data.success){
-              alert(data.msg);
+            if(resp.data.success){
+              that.$toast(resp.data.msg);
               that.prev();
             }else{
-              alert(data.msg);
+              that.$toast(resp.data.msg);
             }
           }).catch(err =>{
             console.log(err);

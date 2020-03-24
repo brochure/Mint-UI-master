@@ -1,13 +1,13 @@
 <template>
     <ul class="list-group list-group-flush">
       <div v-for="item in merchants" :key="item.title">
-        <div v-if="filters.flrfav.includes(item.fav) && filters.flrsc.includes(item.selfCollectable) && filters.flrtype.includes(item.type)">
+        <!-- <div v-if="filters.flrfav.includes(item.fav) && filters.flrsc.includes(item.selfCollectable) && filters.flrtype.includes(item.type)"> -->
             <li class="list-group-item">
                   <div @click="routerTo(item)">
                     <merchant-display :merchant="item"></merchant-display>
                   </div>
               </li>
-        </div>
+        <!-- </div> -->
       </div>
     </ul>
 </template>
@@ -16,15 +16,22 @@
 import MerchantDisplay from '../components/MerchantDisplay.vue'
 export default {
   props: {
-    sortkey: "",
-    filters:{}
+    sortkey: {
+      type: String,
+      default: "zh"
+    },
+    merchants: {
+      type: Array,
+      default:function(){
+        return []
+      }
+    }
   },
   components: {
     MerchantDisplay
   },
   data () {
     return {
-      merchants: []
     }
   },
   computed: {
@@ -53,21 +60,11 @@ export default {
           break;
       }
     },
-    getIdolList () {      
-      var that = this;
-      var url = that.HOST + "/merchant";
-      that.$axios.get(url).then((resp) => {   
-        if(resp.data.success) {
-          that.merchants = resp.data.content;
-        }else{that.$toast(resp.data.msg);}
-      });
-    },
     routerTo(merchant){
       this.$router.push({ name: 'choosing', params: { merchant }});
     },
   },
   created () {
-    this.getIdolList();
   }
 }
 </script>

@@ -83,7 +83,7 @@
         <div id="divrecm" style="margin-top:25px;">
           <!-- <el-tabs v-model="activeName" @tab-click="handleClick"> -->
           <el-tabs v-model="activeName">
-            <el-tab-pane label="推荐" name="first">
+            <!-- <el-tab-pane label="推荐" name="first">
                 <el-menu :default-active="activeIndex" mode="horizontal" @select="handleSelect" style="margin-top:-16px;">
                 <el-submenu index="zh">
                   <template slot="title">{{dictSort[sortkey]}}</template>
@@ -99,16 +99,17 @@
                 <el-menu-item index="xl">销量</el-menu-item>
                 <el-menu-item index="sx">筛选</el-menu-item>
               </el-menu>
-              <!-- <merchants-list :filters="filters1"></merchants-list> -->
               <merchants-list :sortkey="sortkey" :filters="filters1"></merchants-list>
+            </el-tab-pane> -->
+            <el-tab-pane label="推荐" name="first">
+              <sort-panel></sort-panel>
             </el-tab-pane>
-
             <el-tab-pane label="果蔬商超" name="second">
-              <merchants-list :sortkey="sortkey" :filters="filters2"></merchants-list>
+              <merchants-list :merchants="merchants2"></merchants-list>
             </el-tab-pane>
             
             <el-tab-pane label="到店自取" name="third">
-              <merchants-list :sortkey="sortkey" :filters="filters3"></merchants-list>
+              <merchants-list :merchants="merchants3"></merchants-list>
             </el-tab-pane>
           </el-tabs>
         </div>
@@ -251,11 +252,14 @@ import FileSaver from 'file-saver'
 import {TabContainer, TabContainerItem} from 'mint-ui'
 import MerchantsList from '../components/MerchantsList.vue'
 import SearchBar from '../components/SearchBar.vue'
+import SortPanel from '../components/SortPanel.vue'
+
   export default{
     name:'index',
     components: {
       MerchantsList,
-      SearchBar
+      SearchBar,
+      SortPanel
   },
   data () {
     return {
@@ -263,57 +267,66 @@ import SearchBar from '../components/SearchBar.vue'
       activeName: "first",
       searchContent: "",
       urlmsgctr: "messageCenter",
-      activeIndex: "1",
-      sortkey: "zh",
-      dictSort: {
-        "zh":"综合排序",
-        "hp":"好评优先",
-        "qs":"起送价最低",
-        "psk":"配送最快",
-        "psf":"配送费最低",
-        "rja":"人均从低到高",
-        "rjb":"人均从高到低",
-        "ty":"综合排序",
-        "jl": "综合排序",
-        "xl": "综合排序"
-      },
-      filters1:{
-        flrfav: [true,false],
-        flrsc: [true, false],
-        flrtype: [0, 1]
-      },
-      filters2:{
-        flrfav: [true,false],
-        flrsc: [true, false],
-        flrtype: [1]
-      },
-      filters3:{
-        flrfav: [true,false],
-        flrsc: [true],
-        flrtype: [0, 1]
-      },
+      // sortkey: "zh",
+      allMerchants: [],
+      merchants2: [],
+      merchants3: [],
+      // dictSort: {
+      //   "zh":"综合排序",
+      //   "hp":"好评优先",
+      //   "qs":"起送价最低",
+      //   "psk":"配送最快",
+      //   "psf":"配送费最低",
+      //   "rja":"人均从低到高",
+      //   "rjb":"人均从高到低",
+      //   "ty":"综合排序",
+      //   "jl": "综合排序",
+      //   "xl": "综合排序"
+      // },
+      // filters1:{
+      //   flrfav: [true,false],
+      //   flrsc: [true, false],
+      //   flrtype: [0, 1]
+      // },
+      // filters2:{
+      //   flrfav: [true,false],
+      //   flrsc: [true, false],
+      //   flrtype: [1]
+      // },
+      // filters3:{
+      //   flrfav: [true,false],
+      //   flrsc: [true],
+      //   flrtype: [0, 1]
+      // },
       discountContent:[],
       banners: [],
       selected: "1",
     }
     },
   methods: {
-    handleSelect(key, keyPath) {      
-      switch(keyPath[0]){
-        case "zh":
-          this.sortkey = key; 
-          break;
-        case "jl":
-        case "xl":
-          this.sortkey = key; 
-          break;
-        case "sx":
-          break;
-      }
+    // handleSelect(key, keyPath) {      
+    //   switch(keyPath[0]){
+    //     case "zh":
+    //       this.sortkey = key; 
+    //       break;
+    //     case "jl":
+    //     case "xl":
+    //       this.sortkey = key; 
+    //       break;
+    //     case "sx":
+    //       break;
+    //   }
+    // },
+    getAllMerchants() {      
+      var that = this;
+      var url = that.HOST + "/merchant";
+      that.$axios.get(url).then((resp) => {   
+        if(resp.data.success) {
+          that.allMerchants = resp.data.content;
+        }else{that.$toast(resp.data.msg);}
+      });
     },
-    genPicURL(pic) {
-      return this.SERVER_BASE_URL + "/image/" + pic;
-    },
+    genPicURL(pic) {return this.SERVER_BASE_URL + "/image/" + pic;},
     // exportJSON () {
     //   const data = JSON.stringify(this.merchants) //this.merchants has been deleted
     //   const blob = new Blob([data], {type: ''})
@@ -335,7 +348,6 @@ import SearchBar from '../components/SearchBar.vue'
       var req_map = that.HOST + "/banners";
       that.$axios.get(req_map).then((resp) => {
         if(resp.data.success) {
-          // console.log(resp);
           that.banners = resp.data.content;
         }else{that.$toast(resp.data.msg);}
       });
@@ -357,16 +369,38 @@ import SearchBar from '../components/SearchBar.vue'
   created(){
     this.getDiscounts ();
     this.getBanners ();
+    this.getAllMerchants();
   },
-  // watch: {
-  //   accountInfo(val,oldVal) {
-  //     this.$nextTick(() => {
-  //       console.log("nextTick");
-  //       console.log(this.accountInfo.pic);
-  //       //当数据到来的时候， DOM 更新循环结束之后，立即执行函数
-  //       this.profileImgUrl = this.genPicURL(this.accountInfo.pic);
-  //     })
-  //   }
-  // }
+  watch: {
+    allMerchants(val,oldVal) {
+      var that = this;
+      that.$nextTick(() => {
+        let filters2 = {
+          flrfav: [true,false],
+          flrsc: [true, false],
+          flrtype: [1]
+        };
+        var tmpMerchants = new Array();
+        val.forEach(element => {
+          if(filters2.flrfav.includes(element.fav)&&filters2.flrsc.includes(element.selfCollectable)&&filters2.flrtype.includes(element.type)){
+            tmpMerchants.push(element);
+          }
+        });
+        that.merchants2 = tmpMerchants;
+        let filters3 = {
+          flrfav: [true,false],
+          flrsc: [true],
+          flrtype: [0, 1]
+        };
+        var tmpMerchants = new Array();
+        val.forEach(element => {
+          if(filters3.flrfav.includes(element.fav)&&filters3.flrsc.includes(element.selfCollectable)&&filters3.flrtype.includes(element.type)){
+            tmpMerchants.push(element);
+          }
+        });
+        that.merchants3 = tmpMerchants;
+      });
+    }
+  }
 }
 </script>
