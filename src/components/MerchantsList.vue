@@ -16,48 +16,44 @@
 import MerchantDisplay from '../components/MerchantDisplay.vue'
 export default {
   props: {
-    filters:{
-      flrfav: [true, false],
-      flrsc: [true, false],
-      flrtype: [0, 1]
-    }
+    sortkey: "",
+    filters:{}
   },
   components: {
     MerchantDisplay
   },
   data () {
     return {
-      // title: "MerchantsList",
       merchants: []
     }
   },
   computed: {
   },
   watch: {
+    sortkey(val,oldVal){this.$nextTick(()=>{this.sortByKey(this.sortkey);})}
   },
   methods: {
-    getIdolList () {
-      // var url = this.HOST + "/merchant";
-      //     var that = this;
-      //     that.$axios({
-      //       url: url,
-      //       method: 'POST'
-      //     }).then(resp => {
-      //       var data = resp.data;
-      //       console.log(resp);
-      //       console.log(data);
-      //       if(data.success){
-      //         alert(data.msg);
-      //         that.prev();
-      //       }else{
-      //         alert(data.msg);
-      //       }
-      //     }).catch(err =>{
-      //       console.log(err);
-      //       // reject(err.data);
-      //     })
-
-
+    sortByKey(sortkey) {
+      var that = this;
+      switch (sortkey){
+        case "xl":
+          that.merchants.sort((a,b)=>(b.sale-a.sale));
+          break;
+        case "hp":
+          that.merchants.sort((a,b)=>(b.rate-a.rate));
+          break;
+        case "qs":
+          that.merchants.sort((a,b)=>(a.initfee-b.initfee));
+          break;
+        case "psf":
+          that.merchants.sort((a,b)=>(a.postage-b.postage));
+          break;
+        default:
+          that.merchants.sort((a,b)=>(a.title<b.title));
+          break;
+      }
+    },
+    getIdolList () {      
       var that = this;
   //     var url = this.staticURL + "json/merchants.json";
   //     that.$axios.get(url).then((resp) => {
@@ -65,7 +61,6 @@ export default {
   //     })
       var url = that.HOST + "/merchant";
       that.$axios.get(url).then((resp) => {   
-        // console.log(resp);
         if(resp.data.success) {
           that.merchants = resp.data.content;
         }else{
@@ -77,12 +72,8 @@ export default {
       this.$router.push({ name: 'choosing', params: { merchant }});
     },
   },
-  beforeCreated () {
-  },
   created () {
     this.getIdolList();
-  },
-  mounted () {
   }
 }
 </script>

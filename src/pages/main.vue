@@ -84,29 +84,31 @@
           <!-- <el-tabs v-model="activeName" @tab-click="handleClick"> -->
           <el-tabs v-model="activeName">
             <el-tab-pane label="推荐" name="first">
-                <!-- <el-menu :default-active="activeIndex" mode="horizontal" @select="handleSelect" style="margin-top:-16px;"> -->
-                <el-menu :default-active="activeIndex" mode="horizontal" style="margin-top:-16px;">
-                <el-submenu index="1">
-                  <template slot="title">综合排序</template>
-                  <el-menu-item index="1-1">好评优先</el-menu-item>
-                  <el-menu-item index="1-2">起送价最低</el-menu-item>
-                  <el-menu-item index="1-3">配送最快</el-menu-item>
-                  <el-menu-item index="1-4">配送费最低</el-menu-item>
-                  <el-menu-item index="1-5">人均从低到高</el-menu-item>
-                  <el-menu-item index="1-6">人均从高到低</el-menu-item>
-                  <el-menu-item index="1-7">通用排序</el-menu-item>
+                <el-menu :default-active="activeIndex" mode="horizontal" @select="handleSelect" style="margin-top:-16px;">
+                <el-submenu index="zh">
+                  <template slot="title">{{dictSort[sortkey]}}</template>
+                  <el-menu-item index="hp">好评优先</el-menu-item>
+                  <el-menu-item index="qs">起送价最低</el-menu-item>
+                  <el-menu-item index="psk">配送最快</el-menu-item>
+                  <el-menu-item index="psf">配送费最低</el-menu-item>
+                  <el-menu-item index="rja">人均从低到高</el-menu-item>
+                  <el-menu-item index="rjb">人均从高到低</el-menu-item>
+                  <el-menu-item index="ty">通用排序</el-menu-item>
                 </el-submenu>
-                <el-menu-item index="2">距离</el-menu-item>
-                <el-menu-item index="3">销量</el-menu-item>
-                <el-menu-item index="4">筛选</el-menu-item>
+                <el-menu-item index="jl">距离</el-menu-item>
+                <el-menu-item index="xl">销量</el-menu-item>
+                <el-menu-item index="sx">筛选</el-menu-item>
               </el-menu>
-              <merchants-list :filters="filters1"></merchants-list>
+              <!-- <merchants-list :filters="filters1"></merchants-list> -->
+              <merchants-list :sortkey="sortkey" :filters="filters1"></merchants-list>
             </el-tab-pane>
+
             <el-tab-pane label="果蔬商超" name="second">
-              <merchants-list :filters="filters2"></merchants-list>
+              <merchants-list :sortkey="sortkey" :filters="filters2"></merchants-list>
             </el-tab-pane>
+            
             <el-tab-pane label="到店自取" name="third">
-              <merchants-list :filters="filters3"></merchants-list>
+              <merchants-list :sortkey="sortkey" :filters="filters3"></merchants-list>
             </el-tab-pane>
           </el-tabs>
         </div>
@@ -262,6 +264,19 @@ import SearchBar from '../components/SearchBar.vue'
       searchContent: "",
       urlmsgctr: "messageCenter",
       activeIndex: "1",
+      sortkey: "zh",
+      dictSort: {
+        "zh":"综合排序",
+        "hp":"好评优先",
+        "qs":"起送价最低",
+        "psk":"配送最快",
+        "psf":"配送费最低",
+        "rja":"人均从低到高",
+        "rjb":"人均从高到低",
+        "ty":"综合排序",
+        "jl": "综合排序",
+        "xl": "综合排序"
+      },
       filters1:{
         flrfav: [true,false],
         flrsc: [true, false],
@@ -283,8 +298,21 @@ import SearchBar from '../components/SearchBar.vue'
     }
     },
   methods: {
+    handleSelect(key, keyPath) {      
+      switch(keyPath[0]){
+        case "zh":
+          this.sortkey = key; 
+          break;
+        case "jl":
+        case "xl":
+          this.sortkey = key; 
+          break;
+        case "sx":
+          break;
+      }
+    },
     genPicURL(pic) {
-      console.log(this.SERVER_BASE_URL + "/image/" + pic);
+      // console.log(this.SERVER_BASE_URL + "/image/" + pic);
       return this.SERVER_BASE_URL + "/image/" + pic;
     },
     // exportJSON () {
@@ -308,8 +336,7 @@ import SearchBar from '../components/SearchBar.vue'
       var req_map = that.HOST + "/banners";
       that.$axios.get(req_map).then((resp) => {
         if(resp.data.success) {
-          console.log(resp);
-          
+          // console.log(resp);
           that.banners = resp.data.content;
         }else{
           alert(resp.data.msg);
@@ -320,7 +347,7 @@ import SearchBar from '../components/SearchBar.vue'
       var that = this;
       var req_map = that.HOST + "/discounts";
       that.$axios.get(req_map).then((resp) => {
-        console.log(resp);
+        // console.log(resp);
         if(resp.data.success){
           that.discountContent = resp.data.content;
         }else{
