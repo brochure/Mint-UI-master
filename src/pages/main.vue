@@ -312,7 +312,6 @@ import SearchBar from '../components/SearchBar.vue'
       }
     },
     genPicURL(pic) {
-      // console.log(this.SERVER_BASE_URL + "/image/" + pic);
       return this.SERVER_BASE_URL + "/image/" + pic;
     },
     // exportJSON () {

@@ -10,7 +10,7 @@ import Profile from '../pages/p_info/profile.vue'
 import ModifyPhoneNo from '../pages/p_info/modifyPhoneNo.vue'
 import MessageCenter from '../pages/messageCenter.vue'
 import CouponSpot from '../pages/p_info/couponSpot.vue'
-
+import SearchResult from '../pages/searchResult.vue'
 
 
 Vue.use(Router);
@@ -50,6 +50,9 @@ export default new Router({
     },
     {
       path: '/p_info/couponSpot', component: CouponSpot
+    },
+    {
+      path: '/searchResult', component: SearchResult
     }
   ]
 })

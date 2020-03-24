@@ -1,44 +1,47 @@
 <template>
-  <div id="index">
-    <el-input :placeholder="phcontent" v-model="input" @focus="handleFocus" class="searchClass">
-      <!-- <div slot="prepend">
-        <div class="centerClass">
-          <el-select v-model="select" placeholder="请选择" style="width: 90px">
-            <el-option label="餐厅" value="1"></el-option>
-            <el-option label="订单" value="2"></el-option>
-            <el-option label="用户" value="3"></el-option>
-          </el-select>
-        </div>
-        <div class="centerClass">
-          <div class="line"></div>
-        </div>
-      </div> -->
-      <el-button slot="prepend" icon="el-icon-search"></el-button>
-    </el-input>
-  </div>
+<div id="index">
+  <el-container>
+      <el-header>
+      <el-row type="flex" justify="space-between" style="margin-top:10px;">
+          <el-col :span="21">
+              <!-- <el-button>edwed</el-button> -->
+            <el-input :autofocus="true" :placeholder="phcontent" v-model="iptContent" @change="execSearch" class="searchClass">
+                <el-button slot="prepend" icon="el-icon-search" style="width:30px;margin-left:-27px;"></el-button>
+            </el-input>
+          </el-col>
+          <el-col :span="3">
+              <p @click="prev" style="float:right;font-size:0.9em;margin:2px;color:#409EFF;">取消</p>
+          </el-col>
+      </el-row>
+      </el-header>
+  </el-container>
+</div>
 </template>
- 
+
 <script>
 export default {
   data () {
     return {
-      name:"index",
-      input: '',
-      select: '',
-      phcontent: "我爱专星送"
-    };
-  },
-  methods:{
-    handleFocus(event) {
-      // console.log(event);
-      this.$router.push("searchResult");
+        name:'index',
+        phcontent: "星巴克",
+        iptContent: ""
     }
+  },
+  methods: {
+    prev(){this.$router.go(-1)},
+    execSearch(){
+        
+    }
+  },
+  components: {
+
   }
-};
+}
 </script>
 
 <style scoped>
 .searchClass >>>{
+    /* width: 100%; */
   /* border: 1px solid #c5c5c5; */
   border-radius: 20px;
   background: #f4f4f4;
@@ -46,14 +49,14 @@ export default {
 .searchClass >>> .el-input-group__prepend {
   border: none;
   background-color: transparent;
-  padding: 0 10px 0 30px;
+  /* padding: 0 10px 0 30px; */
 }
 .searchClass >>> .el-input-group__append {
   border: none;
   background-color: transparent;
 }
 .searchClass >>> .el-input__inner {
-  height: 26px;
+  height: 28px;
   line-height: 36px;
   border: none;
   background-color: transparent;
