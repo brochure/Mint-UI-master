@@ -15,7 +15,7 @@
     <el-menu-item index="xl">销量</el-menu-item>
     <el-menu-item index="sx">筛选</el-menu-item>
     </el-menu>
-    <merchants-list :sortkey="sortkey" :merchants="allMerchants"></merchants-list>
+    <merchants-list :sortkey="sortkey" :merchants="merchants"></merchants-list>
 </div>
 </template>
 
@@ -24,6 +24,12 @@ import MerchantsList from '../components/MerchantsList.vue'
 
 export default {
     props: {
+        merchants: {
+            type: Array,
+            default:function(){
+                return []
+            }
+        }
         // sortkey: {
         //     type: String,
         //     default: "zh"
@@ -32,7 +38,7 @@ export default {
     data () {
         return {
             sortkey: "zh",
-            allMerchants: [],
+            // allMerchants: [],
             activeIndex: "1",
             dictSort: {
                 "zh":"综合排序",
@@ -62,21 +68,21 @@ export default {
           break;
       }
     },
-    getAllMerchants() {      
-      var that = this;
-      var url = that.HOST + "/merchant";
-      that.$axios.get(url).then((resp) => {   
-        if(resp.data.success) {
-          that.allMerchants = resp.data.content;
-        }else{that.$toast(resp.data.msg);}
-      });
-    },
+    // getAllMerchants() {      
+    //   var that = this;
+    //   var url = that.HOST + "/merchant";
+    //   that.$axios.get(url).then((resp) => {   
+    //     if(resp.data.success) {
+    //       that.allMerchants = resp.data.content;
+    //     }else{that.$toast(resp.data.msg);}
+    //   });
+    // },
   },
   components: {
     MerchantsList
   },
   created(){
-    this.getAllMerchants();
+    // this.getAllMerchants();
   },
 //   watch: {
 //     allMerchants(val,oldVal) {

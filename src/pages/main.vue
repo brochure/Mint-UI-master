@@ -102,7 +102,7 @@
               <merchants-list :sortkey="sortkey" :filters="filters1"></merchants-list>
             </el-tab-pane> -->
             <el-tab-pane label="推荐" name="first">
-              <sort-panel></sort-panel>
+              <sort-panel :merchants="allMerchants"></sort-panel>
             </el-tab-pane>
             <el-tab-pane label="果蔬商超" name="second">
               <merchants-list :merchants="merchants2"></merchants-list>

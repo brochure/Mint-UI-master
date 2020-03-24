@@ -14,7 +14,7 @@
       </el-row>
       </el-header>
       <el-main>
-          <sort-panel v-if="showResult" :sortkey="sortkey"></sort-panel>
+          <sort-panel v-if="showResult" :sortkey="sortkey" :merchants="merchants"></sort-panel>
       </el-main>
   </el-container>
 </div>
@@ -49,7 +49,8 @@ export default {
           }).then(resp => {
             console.log(resp);
             if(resp.data.success){
-              that.$toast(resp.data.msg);
+              that.merchants = resp.data.content;
+              that.showResult = true;
             }else{
               that.$toast(resp.data.msg);
             }
