@@ -224,19 +224,13 @@ import { Toast} from 'mint-ui'
           that.$axios.get(req_map).then((resp) => {
             if(resp.data.success){
               that.accountInfo = resp.data.content;
-            }else{
-              alert(resp.data.msg);
-            }
+            }else{that.$toast(resp.data.msg);}
         });
         },
         jumpto(link){
           if(link==''){
             //this.switchPopup();
-            Toast({
-              message: '功能开发中',
-              position: 'middle',
-              duration: 1000
-            });
+            this.$toast("功能开发中");
           }else{
             this.$router.push(link);
           }

@@ -110,9 +110,7 @@
         that.$axios.get(req_map).then((resp) => {
           if(resp.data.success){
             that.accountInfo = resp.data.content;
-          }else{
-            alert(resp.data.msg);
-          }
+          }else{that.$toast(resp.data.msg);}
       });
       },
       replacePhoneNo (str) { // should be handed to the backstage

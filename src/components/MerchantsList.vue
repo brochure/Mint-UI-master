@@ -55,17 +55,11 @@ export default {
     },
     getIdolList () {      
       var that = this;
-  //     var url = this.staticURL + "json/merchants.json";
-  //     that.$axios.get(url).then((resp) => {
-  //       that.merchants = resp.data;
-  //     })
       var url = that.HOST + "/merchant";
       that.$axios.get(url).then((resp) => {   
         if(resp.data.success) {
           that.merchants = resp.data.content;
-        }else{
-          // alert(resp.msg);
-        }
+        }else{that.$toast(resp.data.msg);}
       });
     },
     routerTo(merchant){

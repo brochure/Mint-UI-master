@@ -338,9 +338,7 @@ import SearchBar from '../components/SearchBar.vue'
         if(resp.data.success) {
           // console.log(resp);
           that.banners = resp.data.content;
-        }else{
-          alert(resp.data.msg);
-        }
+        }else{that.$toast(resp.data.msg);}
       });
     },
     getDiscounts () {
@@ -350,9 +348,7 @@ import SearchBar from '../components/SearchBar.vue'
         // console.log(resp);
         if(resp.data.success){
           that.discountContent = resp.data.content;
-        }else{
-          alert(resp.data.msg);
-        }
+        }else{that.$toast(resp.data.msg);}
       });
     },
     // source:function(){
