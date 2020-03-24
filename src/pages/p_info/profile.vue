@@ -89,16 +89,12 @@
       },
     methods:{
       reloadProfileImg() {
-        console.log("reloadProfileImg");
-        
+        // console.log("reloadProfileImg");
             // 移除组件
             this.update = false;
             // 在组件移除后，重新渲染组件
             // this.$nextTick可实现在DOM 状态更新后，执行传入的方法。
-            this.$nextTick(() => {
-              this.profileImgUrl = this.genPicURL(this.accountInfo.pic)
-              this.update = true;
-            });
+            this.getAccountInfo ();
         },
       genPicURL(pic) {        
         return this.SERVER_BASE_URL + "/image/" + pic;
@@ -172,7 +168,7 @@
 						'Content-Type': 'multipart/form-data'
 					}
 				}).then(response => {
-          console.log(response)
+          // console.log(response)
           // that.profileImgUrl = that.genPicURL(accountInfo.pic);
           this.reloadProfileImg();
 					// uri = "http://www.t1.qidianjinfu.com" + response.data.result
@@ -240,10 +236,11 @@
     watch: {
       accountInfo(val,oldVal) {
         this.$nextTick(() => {
-          console.log("nextTick");
-          console.log(this.accountInfo.pic);
+          // console.log("nextTick");
+          // console.log(this.accountInfo.pic);
           //当数据到来的时候， DOM 更新循环结束之后，立即执行函数
           this.profileImgUrl = this.genPicURL(this.accountInfo.pic);
+          this.update = true;
         })
     }
   }
