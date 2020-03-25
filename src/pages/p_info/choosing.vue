@@ -12,7 +12,8 @@
       <el-main>
         <el-tabs v-model="activeName" @tab-click="handleClick" :stretch="true">
           <el-tab-pane :span="8" name="first">
-            <span slot="label"><router-link to="/p_info/choosing/menuServe">点餐</router-link></span>
+            <!-- <span slot="label"><router-link to="/p_info/choosing/menuServe">点餐</router-link></span> -->
+            <span slot="label"><router-link :to="{path:'/p_info/choosing/menuServe',query:{id:merchant.id}}">点餐</router-link></span>
           </el-tab-pane>
           <el-tab-pane :span="8" name="second">
             <span slot="label"><router-link to="/p_info/choosing/commentRate">评价</router-link></span>
@@ -77,7 +78,7 @@
         if(resp.data.success){
             console.log(resp);
             that.merchant = resp.data.content;
-            that.showResult = true;
+            // that.showResult = true;
         }else{that.$toast(resp.data.msg);}
         }).catch(err =>{
           that.$toast(err.data);

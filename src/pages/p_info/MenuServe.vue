@@ -4,13 +4,16 @@
       <el-col :span="4">
         <el-menu>
           <el-menu-item index="0" class="text-wrap" style="padding:0px;">
-            <router-link to="/p_info/choosing/menuServe/menuList">
+            <!-- :to="{path:'/p_info/choosing/menuServe',query:{id:merchant.id}}" -->
+            <router-link :to="{path:'/p_info/choosing/menuServe/menuList',query:{id:$route.query.id,part:'0'}}">
             <p style="font-size:0.8em;line-height:1.1em;padding-top:20px;padding-bottom:10px;">
               <i class="el-icon-location" style="margin-right:0px;"></i>优惠</p>
             </router-link>
           </el-menu-item>
           <el-menu-item :index="item.index" class="text-wrap" style="padding:0px;" v-for="item in menu" :key="item.index">
+            <router-link :to="{path:'/p_info/choosing/menuServe/menuList',query:{id:$route.query.id,contents:item.contents}}">
             <p style="font-size:0.8em;line-height:1.1em;padding-top:20px;padding-bottom:10px;">{{item.title}}</p>
+            </router-link>
           </el-menu-item>
         </el-menu>
       </el-col>
@@ -49,39 +52,33 @@
 export default {
   data () {
     return {
-      menu:[
-          {
-            index: "1",
-            title: '企业专送',
-            icon:'',
-            contents: [],
-          },
-          {
-            index: "2",
-            title: '早餐超值组合',
-            icon:'',
-            contents: [],
-          },
-          {
-            index: "3",
-            title: '早餐主食/小食',
-            icon:'',
-            contents: [],
-          },
-          {
-            index: "4",
-            title: '饮品',
-            icon:'',
-            contents: [],
-          },
-        ]
+      menu: {},
     }
   },
   methods: {
-
+    getMenu(){
+      var that = this;
+      var req_map = that.HOST + "/getMenu";
+      var param = {id: that.$route.query.id};
+      that.$axios({
+          url: req_map,
+          method: 'POST',
+          data: param
+      }).then(resp => {
+      if(resp.data.success){        
+          // console.log(resp);
+          that.menu = resp.data.content;
+      }else{that.$toast(resp.data.msg);}
+      }).catch(err =>{
+        that.$toast(err.data);
+      });
+    }
   },
   components: {
 
+  },
+  created(){
+    this.getMenu();
   }
 }
 </script>
