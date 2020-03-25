@@ -21,14 +21,10 @@
 export default {
   props: {
     merchant:{
-      title:"",
-      pic:"",
-      rate:0,
-      sale:0,
-      initfee:0,
-      postage:0,
-      isFav: false,
-      isSelfCollectable: false
+      type: Object,
+      default() {
+        return {};
+      }
     }
   },
   data () {

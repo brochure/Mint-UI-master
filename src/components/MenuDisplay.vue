@@ -20,10 +20,10 @@
 export default {
   props: {
     meal:{
-      type: Array,
-      default: function(){
-         return []
-     }
+      type: Object,
+      default() {
+        return {};
+      }
     }
   },
   data () {
@@ -40,8 +40,7 @@ export default {
 
   },
   mounted(){
-    console.log(this.meal);
-    
+    // console.log(this.meal);
   }
 }
 </script>

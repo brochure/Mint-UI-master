@@ -9,8 +9,14 @@
 <script>
 export default {
   props: {
-    headerTitle: "",
-    headerHeight: ""
+    headerTitle: {
+      type: String,
+      default: ""
+    },
+    headerHeight: {
+      type: String,
+      default: "40px"
+    }
   },
   data () {
     return {

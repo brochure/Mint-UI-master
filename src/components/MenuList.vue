@@ -33,16 +33,10 @@ export default {
   watch: {
   },
   methods: {
-    routerTo(merchant){
+    routerTo(menu){
       // this.$router.push({path: '/p_info/choosing', query:{id: merchant.id}});  
       // this.$router.push({ name: 'choosing', params: { merchant }});
     },
-  },
-  mounted () {
-    console.log("menulist");
-    
-    console.log(this.menulist);
-    
   }
 }
 </script>
