@@ -5,13 +5,13 @@
         <el-menu>
           <el-menu-item index="0" class="text-wrap" style="padding:0px;">
             <!-- :to="{path:'/p_info/choosing/menuServe',query:{id:merchant.id}}" -->
-            <router-link :to="{path:'/p_info/choosing/menuServe/menuList',query:{id:$route.query.id,part:'0'}}">
+            <router-link :to="{path:'/p_info/choosing/menuServe/menuBlock',query:{id:$route.query.id,part:'0'}}">
             <p style="font-size:0.8em;line-height:1.1em;padding-top:20px;padding-bottom:10px;">
               <i class="el-icon-location" style="margin-right:0px;"></i>优惠</p>
             </router-link>
           </el-menu-item>
           <el-menu-item :index="item.index" class="text-wrap" style="padding:0px;" v-for="item in menu" :key="item.index">
-            <router-link :to="{path:'/p_info/choosing/menuServe/menuList',query:{id:$route.query.id,contents:item.contents}}">
+            <router-link :to="{path:'/p_info/choosing/menuServe/menuBlock',query:{id:$route.query.id,contents:item.contents}}">
             <p style="font-size:0.8em;line-height:1.1em;padding-top:20px;padding-bottom:10px;">{{item.title}}</p>
             </router-link>
           </el-menu-item>

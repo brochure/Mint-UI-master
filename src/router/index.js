@@ -14,7 +14,7 @@ import SearchResult from '../pages/searchResult.vue'
 import MenuServe from '../pages/p_info/MenuServe.vue'
 import CommentRate from '../pages/p_info/CommentRate.vue'
 import MerchantInfo from '../pages/p_info/MerchantInfo.vue'
-import MenuList from '../pages/p_info/MenuList.vue'
+import MenuBlock from '../pages/p_info/MenuBlock.vue'
 
 
 Vue.use(Router);
@@ -68,8 +68,8 @@ export default new Router({
           component: MenuServe,
           children:[
             {
-              path: "menuList",
-              component: MenuList
+              path: "menuBlock",
+              component: MenuBlock
             }
           ]
         },
