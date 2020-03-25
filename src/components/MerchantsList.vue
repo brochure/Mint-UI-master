@@ -61,7 +61,9 @@ export default {
       }
     },
     routerTo(merchant){
-      this.$router.push({ name: 'choosing', params: { merchant }});
+      // this.$router.push({path: '/p_info/choosing', query:{id: "0010"}});  
+      this.$router.push({path: '/p_info/choosing', query:{id: merchant.id}});  
+      // this.$router.push({ name: 'choosing', params: { merchant }});
     },
   },
   created () {

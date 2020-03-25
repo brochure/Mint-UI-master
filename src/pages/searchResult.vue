@@ -40,24 +40,18 @@ export default {
         var that = this;
         var req_map = that.HOST + "/searchCmmd";
         var param = {iptContent: that.iptContent};
-        that.$axios.post(req_map).then((resp) => {
-        console.log(resp);
         that.$axios({
             url: req_map,
             method: 'POST',
             data: param
-          }).then(resp => {
-            console.log(resp);
-            if(resp.data.success){
-              that.merchants = resp.data.content;
-              that.showResult = true;
-            }else{
-              that.$toast(resp.data.msg);
-            }
-          }).catch(err =>{
-            that.$toast(err.data);
-          })
-      });
+        }).then(resp => {
+        if(resp.data.success){
+            that.merchants = resp.data.content;
+            that.showResult = true;
+        }else{that.$toast(resp.data.msg);}
+        }).catch(err =>{
+        that.$toast(err.data);
+        });
     }
   },
   components: {

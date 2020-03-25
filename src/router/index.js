@@ -11,6 +11,10 @@ import ModifyPhoneNo from '../pages/p_info/modifyPhoneNo.vue'
 import MessageCenter from '../pages/messageCenter.vue'
 import CouponSpot from '../pages/p_info/couponSpot.vue'
 import SearchResult from '../pages/searchResult.vue'
+import MenuServe from '../pages/p_info/MenuServe.vue'
+import CommentRate from '../pages/p_info/CommentRate.vue'
+import MerchantInfo from '../pages/p_info/MerchantInfo.vue'
+import MenuList from '../pages/p_info/MenuList.vue'
 
 
 Vue.use(Router);
@@ -18,18 +22,33 @@ Vue.use(Router);
 export default new Router({
   routes: [
     {
-      path: "/", component: Main
+      path: "/", component: Main,
+      meta: {
+        keepAlive: true
+      }
     },
     {
-      path: '/main', component: Main
+      path: '/main', component: Main,
+      meta: {
+        keepAlive: true
+      }
     }, {
-      path: '/life', component: Life
+      path: '/life', component: Life,
+      meta: {
+        keepAlive: true
+      }
     }, 
     {
-      path: '/order', component: Order
+      path: '/order', component: Order,
+      meta: {
+        keepAlive: true
+      }
     },
     {
-      path: '/info', component: Info
+      path: '/info', component: Info,
+      meta: {
+        keepAlive: true
+      }
     },
     {
       path: '/p_info/collection', component: Collection
@@ -37,22 +56,64 @@ export default new Router({
     {
       path: '/p_info/choosing',
       name: 'choosing',
-      component: Choosing
+      component: Choosing,
+      children:[
+        // {
+        //   path: '/', 
+        //   redirect: '/menuServe' 
+        // },
+        {
+          path: 'menuServe',
+          // name: 'menuServe',
+          component: MenuServe,
+          children:[
+            {
+              path: "menuList",
+              component: MenuList
+            }
+          ]
+        },
+        {
+          path: 'commentRate',
+          // name: 'commentRate',
+          component: CommentRate
+        },
+        {
+          path: 'merchantInfo',
+          // name: 'merchantInfo',
+          component: MerchantInfo
+        }
+      ],
+      meta: {
+        keepAlive: false
+      },
     },
     {
-      path: '/p_info/profile', component: Profile
+      path: '/p_info/profile', component: Profile,
+      meta: {
+        keepAlive: true
+      }
     },
     {
-      path: '/p_info/modifyPhoneNo', component: ModifyPhoneNo
+      path: '/p_info/modifyPhoneNo', component: ModifyPhoneNo,
+      meta: {
+        keepAlive: false
+      }
     },
     {
-      path: '/messageCenter', component: MessageCenter
+      path: '/messageCenter', component: MessageCenter,
+      meta: {
+        keepAlive: false
+      }
     },
     {
       path: '/p_info/couponSpot', component: CouponSpot
     },
     {
-      path: '/searchResult', component: SearchResult
-    }
+      path: '/searchResult', component: SearchResult,
+      meta: {
+        keepAlive: false
+      }
+    },
   ]
 })

@@ -2,10 +2,10 @@
   <div id="app">
     <div class="content-div">
       <!--<transition enter-active-class="animated zoomIn" leave-active-class="animated zoomOut">-->
-        <router-view/>
+        <router-view />
       <!--</transition>-->
     </div>
-    <footer-bar class="footer"></footer-bar>
+    <footer-bar v-if="$route.meta.keepAlive" class="footer"></footer-bar>
   </div>
 </template>
  
@@ -20,7 +20,7 @@
   }
 </script>
 <style scoped="">
-  .content-div {
+  /* .content-div {
     margin-bottom: 55px;
-  }
+  } */
 </style>

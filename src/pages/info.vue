@@ -245,8 +245,8 @@ import { Toast} from 'mint-ui'
     watch: {
       accountInfo(val,oldVal) {
         this.$nextTick(() => {
-          console.log("nextTick");
-          console.log(this.accountInfo.pic);
+          // console.log("nextTick");
+          // console.log(this.accountInfo.pic);
           //当数据到来的时候， DOM 更新循环结束之后，立即执行函数
           this.profileImgUrl = this.genPicURL(this.accountInfo.pic);
         })
