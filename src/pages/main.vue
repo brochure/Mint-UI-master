@@ -69,7 +69,6 @@
             <p class="small font-weight-light" style="float:right;margin-top:2px;">更多 ></p>
             </div>
             <div class="card col-4 p-0 d-inline-block card-ad" v-for="item in discountContent" :title="item.title" :key="item.title">
-              <!-- <img src="http://localhost:8083/dmorder/image/banners/3" class="card-img-top discountimg"> -->
               <img :src="genPicURL(item.pic)" class="card-img-top discountimg">
                 <div class="card-body p-2">
                   <p class="card-title text-nowrap small m-1">{{item.title}}</p>
@@ -80,38 +79,23 @@
         </el-row>
 
       <!-- <el-row type="flex" :gutter="100"> -->
-        <div id="divrecm" style="margin-top:25px;">
-          <!-- <el-tabs v-model="activeName" @tab-click="handleClick"> -->
-          <el-tabs v-model="activeName">
-            <!-- <el-tab-pane label="推荐" name="first">
-                <el-menu :default-active="activeIndex" mode="horizontal" @select="handleSelect" style="margin-top:-16px;">
-                <el-submenu index="zh">
-                  <template slot="title">{{dictSort[sortkey]}}</template>
-                  <el-menu-item index="hp">好评优先</el-menu-item>
-                  <el-menu-item index="qs">起送价最低</el-menu-item>
-                  <el-menu-item index="psk">配送最快</el-menu-item>
-                  <el-menu-item index="psf">配送费最低</el-menu-item>
-                  <el-menu-item index="rja">人均从低到高</el-menu-item>
-                  <el-menu-item index="rjb">人均从高到低</el-menu-item>
-                  <el-menu-item index="ty">通用排序</el-menu-item>
-                </el-submenu>
-                <el-menu-item index="jl">距离</el-menu-item>
-                <el-menu-item index="xl">销量</el-menu-item>
-                <el-menu-item index="sx">筛选</el-menu-item>
-              </el-menu>
-              <merchants-list :sortkey="sortkey" :filters="filters1"></merchants-list>
-            </el-tab-pane> -->
-            <el-tab-pane label="推荐" name="first">
-              <sort-panel :merchants="allMerchants"></sort-panel>
-            </el-tab-pane>
-            <el-tab-pane label="果蔬商超" name="second">
-              <merchants-list :merchants="merchants2"></merchants-list>
-            </el-tab-pane>
-            
-            <el-tab-pane label="到店自取" name="third">
-              <merchants-list :merchants="merchants3"></merchants-list>
-            </el-tab-pane>
-          </el-tabs>
+        <div id="divrecm" :class="{ 'drm': isfixTab }" style="margin-top:25px;">
+          <div :class='{ fixedNavbar: isfixTab }'>
+            <!-- <el-tabs v-model="activeName" @tab-click="handleClick"> -->
+            <el-tabs v-model="activeName">
+              <el-tab-pane label="推荐" name="first">
+                <div class="overhid">
+                <sort-panel :merchants="allMerchants"></sort-panel>
+                </div>
+              </el-tab-pane>
+              <el-tab-pane label="果蔬商超" name="second">
+                <merchants-list :merchants="merchants2"></merchants-list>
+              </el-tab-pane>
+              <el-tab-pane label="到店自取" name="third">
+                <merchants-list :merchants="merchants3"></merchants-list>
+              </el-tab-pane>
+            </el-tabs>
+          </div>
         </div>
       </el-main>
     </el-container>
@@ -119,6 +103,34 @@
 </template>
 
 <style>
+.overhid{
+  position: relative;
+  /* top: 100px; */
+  overflow:hidden;
+}
+
+.el-tabs__nav{
+  background-color: white;
+}
+
+ .drm .el-tabs__nav{
+  position:fixed;
+  top:0;
+}
+/* .fixedNavbar {
+  position: fixed;
+  top: 0px;
+  top: 2.25rem;
+  left: 0;
+  width: 100%;
+  border-top: 0.05rem solid #f5f5f5;
+  border-bottom: 0.05rem solid #f5f5f5;
+} */
+/* 
+#divrecm {
+  position: fixed;
+} */
+
 #divrecm .el-submenu__title {
   float:left;
   padding-left:0;
@@ -248,18 +260,16 @@
 </style>
 
 <script>
-import FileSaver from 'file-saver'
 import {TabContainer, TabContainerItem} from 'mint-ui'
 import MerchantsList from '../components/MerchantsList.vue'
 import SearchBar from '../components/SearchBar.vue'
 import SortPanel from '../components/SortPanel.vue'
 
-  export default{
-    name:'index',
-    components: {
-      MerchantsList,
-      SearchBar,
-      SortPanel
+export default {
+  components: {
+    MerchantsList,
+    SearchBar,
+    SortPanel
   },
   data () {
     return {
@@ -267,56 +277,31 @@ import SortPanel from '../components/SortPanel.vue'
       activeName: "first",
       searchContent: "",
       urlmsgctr: "messageCenter",
-      // sortkey: "zh",
       allMerchants: [],
       merchants2: [],
       merchants3: [],
-      // dictSort: {
-      //   "zh":"综合排序",
-      //   "hp":"好评优先",
-      //   "qs":"起送价最低",
-      //   "psk":"配送最快",
-      //   "psf":"配送费最低",
-      //   "rja":"人均从低到高",
-      //   "rjb":"人均从高到低",
-      //   "ty":"综合排序",
-      //   "jl": "综合排序",
-      //   "xl": "综合排序"
-      // },
-      // filters1:{
-      //   flrfav: [true,false],
-      //   flrsc: [true, false],
-      //   flrtype: [0, 1]
-      // },
-      // filters2:{
-      //   flrfav: [true,false],
-      //   flrsc: [true, false],
-      //   flrtype: [1]
-      // },
-      // filters3:{
-      //   flrfav: [true,false],
-      //   flrsc: [true],
-      //   flrtype: [0, 1]
-      // },
       discountContent:[],
       banners: [],
       selected: "1",
+      dfOffsetTop: 0,
+      isfixTab: false,
     }
-    },
+  },
   methods: {
-    // handleSelect(key, keyPath) {      
-    //   switch(keyPath[0]){
-    //     case "zh":
-    //       this.sortkey = key; 
-    //       break;
-    //     case "jl":
-    //     case "xl":
-    //       this.sortkey = key; 
-    //       break;
-    //     case "sx":
-    //       break;
-    //   }
-    // },
+      changeObjStyleToFixed(obj){
+        obj.style.setProperty("position", "fixed", "important");
+        obj.style.setProperty("top", "0", "important");
+      },
+      changeObjStyleToStatic(obj){
+        obj.style.setProperty("position", "static");
+      },
+
+    handleTabFix() {
+      var scrollTop = window.pageYOffset || document.documentElement.scrollTop || document.body.scrollTop;
+      // var offsetTop = document.querySelector('#divrecm').offsetTop;
+      // this.changeTabHeaderClassStyle(scrollTop > this.dfOffsetTop);
+      scrollTop > this.dfOffsetTop ? this.isfixTab = true : this.isfixTab = false;
+    },
     getAllMerchants() {      
       var that = this;
       var url = that.HOST + "/merchant";
@@ -327,11 +312,6 @@ import SortPanel from '../components/SortPanel.vue'
       });
     },
     genPicURL(pic) {return this.SERVER_BASE_URL + "/image/" + pic;},
-    // exportJSON () {
-    //   const data = JSON.stringify(this.merchants) //this.merchants has been deleted
-    //   const blob = new Blob([data], {type: ''})
-    //   FileSaver.saveAs(blob, 'merchants.json')
-    // },
     jumpto(link){
       if(link==''){
         Toast({
@@ -356,20 +336,25 @@ import SortPanel from '../components/SortPanel.vue'
       var that = this;
       var req_map = that.HOST + "/discounts";
       that.$axios.get(req_map).then((resp) => {
-        // console.log(resp);
         if(resp.data.success){
           that.discountContent = resp.data.content;
         }else{that.$toast(resp.data.msg);}
       });
     },
-    // source:function(){
-    //   this.$source.genPicURL()
-    // }
   },
   created(){
     this.getDiscounts ();
     this.getBanners ();
     this.getAllMerchants();
+  },
+  mounted(){
+    this.dfOffsetTop = document.querySelector('#divrecm').offsetTop;
+    // console.log(this.dfOffsetTop);
+    window.addEventListener('scroll', this.handleTabFix, true);
+  },
+  beforeRouteLeave (to, from, next) {
+    window.removeEventListener('scroll', this.handleTabFix, true);
+    next();
   },
   watch: {
     allMerchants(val,oldVal) {

@@ -58,18 +58,22 @@ export default new Router({
       name: 'choosing',
       component: Choosing,
       children:[
-        // {
-        //   path: '/', 
-        //   redirect: '/menuServe' 
-        // },
+        {
+          path: '/', 
+          redirect: 'menuServe' 
+        },
         {
           path: 'menuServe',
           // name: 'menuServe',
           component: MenuServe,
           children:[
+            // {
+            //   path: '/', 
+            //   redirect: 'menuBlock',
+            // },
             {
               path: "menuBlock",
-              component: MenuBlock
+              component: MenuBlock,
             }
           ]
         },

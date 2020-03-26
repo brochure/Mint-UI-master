@@ -5,7 +5,7 @@
         <el-menu>
           <el-menu-item index="0" class="text-wrap" style="padding:0px;">
             <!-- :to="{path:'/p_info/choosing/menuServe',query:{id:merchant.id}}" -->
-            <router-link :to="{path:'/p_info/choosing/menuServe/menuBlock',query:{id:$route.query.id,part:'0'}}" replace>
+            <router-link :to="{path:'/p_info/choosing/menuServe/menuBlock'}" replace>
             <p style="font-size:0.8em;line-height:1.1em;padding-top:20px;padding-bottom:10px;">
               <i class="el-icon-location" style="margin-right:0px;"></i>优惠</p>
             </router-link>
@@ -79,6 +79,17 @@ export default {
   },
   created(){
     this.getMenu();
+  },
+  watch:{
+    // menu(val,oldVal) {
+    //   this.$nextTick(() => {
+    //     console.log("nextTick");
+    //     console.log(this.menu);
+    //     //当数据到来的时候， DOM 更新循环结束之后，立即执行函数
+    //     $route.meta.df_id = that.$route.query.id;
+    //     $route.meta.df_contents = menu[0];
+    //   })
+    // }
   }
 }
 </script>

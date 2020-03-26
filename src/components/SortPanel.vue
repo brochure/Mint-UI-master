@@ -13,7 +13,7 @@
     </el-submenu>
     <el-menu-item index="jl">距离</el-menu-item>
     <el-menu-item index="xl">销量</el-menu-item>
-    <el-menu-item index="sx">筛选</el-menu-item>
+    <!-- <el-menu-item index="sx">筛选</el-menu-item> -->
     </el-menu>
     <merchants-list :sortkey="sortkey" :merchants="merchants"></merchants-list>
 </div>

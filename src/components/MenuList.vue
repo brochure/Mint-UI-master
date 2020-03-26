@@ -1,13 +1,13 @@
 <template>
-    <ul class="list-group list-group-flush">
-      <div v-for="item in menulist" :key="item.title">
-            <li class="list-group-item">
-                  <!-- <div @click="routerTo(item)"> -->
-                    <menu-display :meal="item"></menu-display>
-                  <!-- </div> -->
-              </li>
-      </div>
-    </ul>
+  <ul class="list-group list-group-flush">
+    <div v-for="item in menulist" :key="item.title">
+      <li class="list-group-item" style="padding-top:0px;padding-bottom:0px;margin-bottom:-10px;">
+        <!-- <div @click="routerTo(item)"> -->
+          <menu-display :meal="item"></menu-display>
+        <!-- </div> -->
+      </li>
+    </div>
+  </ul>
 </template>
 
 <script>

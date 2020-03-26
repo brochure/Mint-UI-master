@@ -3,15 +3,26 @@
       <el-col :span="6">
         <img :src="genPicURL(meal.pic)" class="logo">
       </el-col>
-      <el-col :span="18">
-        <span>{{meal.title}}</span>
-        <ul class="list-inline">
-            <!-- <li class="list-inline-item"><i class="mintui mintui-star" style="color:#ec6800;"></i><small style="color:#ec6800;">{{merchant.rate}}</small></li> -->
-            <li class="list-inline-item"><small class="text-muted">月售{{meal.month_sold}}</small></li>
-        </ul>
-        <ul class="list-inline" style='margin-top:-5px;'>
-            <li class="list-inline-item"><small class="text-muted">¥{{meal.price}}</small></li>
-        </ul>
+      <el-col :span="18" :offset="2">
+        <el-row>
+          <span><p style="font-size:0.86em;line-height:1.2em;">{{meal.title}}</p></span>
+          </el-row>
+          <el-row style="margin-top:-20px;">
+                <!-- <li class="list-inline-item"><i class="mintui mintui-star" style="color:#ec6800;"></i><small style="color:#ec6800;">{{merchant.rate}}</small></li> -->
+                <small class="text-muted">月售{{meal.month_sold}}</small>
+          </el-row>
+          <el-row>
+            <el-col :span="5">
+                <small class="text-muted">¥{{meal.price}}</small>
+            </el-col>
+            <el-col :span="3" :offset="0">
+              <mt-palette-button content="+" @expand="main_log('expand')" @expanded="main_log('expanded')" @collapse="main_log('collapse')"
+                direction="rt" :radius="80" ref="target_1" mainButtonStyle="font-size:2.8em;color:#fff;background-color:#26a2ff;transform:scale(0.5,0.5);"
+                style="left:90px;top:-40px;">
+                <div class="my-icon-button indexicon icon-popup" @touchstart="sub_log(1)"></div>
+              </mt-palette-button>
+            </el-col>
+        </el-row>
       </el-col>
   </el-row>
 </template>

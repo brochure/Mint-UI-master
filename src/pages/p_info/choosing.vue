@@ -26,7 +26,6 @@
       <el-main>
         <el-tabs v-model="activeName" @tab-click="handleClick" :stretch="true">
           <el-tab-pane :span="8" name="first">
-            <!-- <span slot="label"><router-link to="/p_info/choosing/menuServe">点餐</router-link></span> -->
             <span slot="label"><router-link :to="{path:'/p_info/choosing/menuServe',query:{id:merchant.id}}" replace>点餐</router-link></span>
           </el-tab-pane>
           <el-tab-pane :span="8" name="second">
@@ -57,7 +56,6 @@
         </el-row>
       </el-footer> -->
     </el-container>
-     <!--{{this.$route.params.merchant.title}}/static/canteen_bg/bg_mcd.jpg-->
   </div>
 </template>
 
