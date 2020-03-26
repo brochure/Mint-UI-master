@@ -24,7 +24,7 @@
               </div>
             </el-col>
             <el-col :span="1">
-              4
+              {{amt}}
             </el-col>
             <el-col :span="2">
               <div @click="main_log(1)">
@@ -53,13 +53,17 @@ export default {
   },
   data () {
     return {
+      amt: 0,
       // title: "MerchantDisplay",
     }
   },
   methods: {
     main_log(val) {
       // console.log('main_log', val);
-      this.$parent.addCount(val);
+      if((this.amt+val)>=0){
+        this.$parent.addCount(this.meal.title,val);
+        this.amt += val;
+      }
     },
     sub_log(val) {
       console.log('sub_log', val);

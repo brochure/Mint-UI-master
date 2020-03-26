@@ -20,8 +20,8 @@ export default {
     }
   },
   methods: {
-    addCount(val){
-      this.$emit("addCount", val);
+    addCount(title, val){
+      this.$emit("addCount", {title:title,val:val});
     },
   },
   components: {

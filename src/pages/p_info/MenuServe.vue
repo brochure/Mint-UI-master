@@ -34,7 +34,8 @@
                <small class="text-muted">另需配送费¥9</small>
           </el-col>
           <el-col :span="4" :offset="4">
-            <el-button><router-link to='/p_info/cart'>去结算</router-link></el-button>
+            <el-button><router-link to="/p_info/cart" >去结算</router-link></el-button>
+            <!-- <el-button><router-link :to="{path:'/p_info/cart',query:{basket:basket}}" >去结算</router-link></el-button> -->
           </el-col>
         </el-row>
         <!-- <mt-tab-item id="life">
@@ -51,7 +52,8 @@ export default {
   data () {
     return {
       menu: {},
-      menu_count:4,
+      menu_count:0,
+      basket:{}
       // numOfItems: 0
     }
   },
@@ -67,8 +69,14 @@ export default {
         this.$router.push(link);
       }
     },
-    receive(val){      
-      this.menu_count += val;
+    receive(bkt){
+      console.log(bkt);
+      this.menu_count += bkt.val;      
+      if(this.basket[bkt.title] == null){
+        this.basket[bkt.title] = bkt.val;
+      }else{
+        this.basket[bkt.title] += bkt.val;
+      }
     },
     getMenu(){
       var that = this;

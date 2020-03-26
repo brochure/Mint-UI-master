@@ -33,9 +33,9 @@ export default {
   watch: {
   },
   methods: {
-    addCount(val){
+    addCount(title,val){
       console.log("addCount in MenuList");
-      this.$parent.addCount(val);
+      this.$parent.addCount(title,val);
     },
     routerTo(menu){
       // this.$router.push({path: '/p_info/choosing', query:{id: merchant.id}});  
