@@ -59,9 +59,17 @@ export default {
   },
   methods: {
     main_log(val) {
-      // console.log('main_log', val);
+      console.log("MenuDisplay");
+      
+      console.log('main_log', val);
       if((this.amt+val)>=0){
-        this.$parent.addCount(this.meal.title,val);
+        var param = {
+          title:this.meal.title,
+          amount:val,
+          pic:this.meal.pic,
+          price:this.meal.price
+        }
+        this.$parent.addCount(param);
         this.amt += val;
       }
     },

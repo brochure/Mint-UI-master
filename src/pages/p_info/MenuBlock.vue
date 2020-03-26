@@ -20,8 +20,10 @@ export default {
     }
   },
   methods: {
-    addCount(title, val){
-      this.$emit("addCount", {title:title,val:val});
+    addCount(param){
+      console.log("MenuBlock");
+      
+      this.$emit("addCount", param);
     },
   },
   components: {

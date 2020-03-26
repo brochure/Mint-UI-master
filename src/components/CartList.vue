@@ -22,6 +22,10 @@
 import CartDisplay from '../components/CartDisplay.vue'
 export default {
   props: {
+    mid: {
+      type: String,
+      default: ""
+    },
     menulist: {
       type: Array,
       default:function(){
@@ -34,6 +38,7 @@ export default {
   },
   data () {
     return {
+      menuForCart: {},
     }
   },
   computed: {
@@ -50,6 +55,23 @@ export default {
   watch: {
   },
   methods: {
+    getMenuForCart() {
+      var that = this;
+      var req_map = that.HOST + "/getMenu";
+      var param = {id: that.mid};
+      that.$axios({
+          url: req_map,
+          method: 'POST',
+          data: param
+      }).then(resp => {
+      if(resp.data.success){        
+          console.log(resp);
+          that.menuForCart = resp.data.content;
+      }else{that.$toast(resp.data.msg);}
+      }).catch(err =>{
+        that.$toast(err.data);
+      });
+    },
     addCount(val){
       console.log("addCount in MenuList");
       this.$parent.addCount(val);
@@ -58,6 +80,9 @@ export default {
       // this.$router.push({path: '/p_info/choosing', query:{id: merchant.id}});  
       // this.$router.push({ name: 'choosing', params: { merchant }});
     },
+  },
+  created(){
+
   }
 }
 </script>

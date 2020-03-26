@@ -34,7 +34,8 @@
                <small class="text-muted">另需配送费¥9</small>
           </el-col>
           <el-col :span="4" :offset="4">
-            <el-button><router-link to="/p_info/cart" >去结算</router-link></el-button>
+            <el-button @click="submitCart">去结算</el-button>
+            <!-- <el-button><router-link to="/p_info/cart" >去结算</router-link></el-button> -->
             <!-- <el-button><router-link :to="{path:'/p_info/cart',query:{basket:basket}}" >去结算</router-link></el-button> -->
           </el-col>
         </el-row>
@@ -53,11 +54,52 @@ export default {
     return {
       menu: {},
       menu_count:0,
-      basket:{}
+      basket:{},
+      // cartContent:[]
       // numOfItems: 0
     }
   },
   methods: {
+    submitCart(){
+      console.log("basket");
+      console.log(this.basket);
+      
+      var that = this;
+      // var cartContent = new Array();
+      // for (var key in that.basket) {
+      //   cartContent.push({
+      //     title:key,
+      //     price:that.basket[key].price,
+      //     pic:that.basket[key].pic,
+      //     amount:that.basket[key].amount,
+      //   })
+      // }
+      // console.log("cartContent");
+      // console.log(cartContent);
+      
+      var url = that.HOST + "/submitCart";
+      // console.log(cartContent);
+      console.log(that.$route.query.id);
+      
+      var param = {
+        mid: that.$route.query.id,
+        contents: this.basket
+        };
+      that.$axios({
+        url: url,
+        method: 'POST',
+        data: param
+      }).then(resp => {
+        if(resp.data.success){
+          that.$toast(resp.data.msg);
+          that.$router.push("/p_info/cart");
+        }else{
+          that.$toast(resp.data.msg);
+        }
+      }).catch(err =>{
+        console.log(err);
+      })
+    },
     jumpto(link){
       if(link==''){
         Toast({
@@ -69,13 +111,22 @@ export default {
         this.$router.push(link);
       }
     },
-    receive(bkt){
-      console.log(bkt);
-      this.menu_count += bkt.val;      
-      if(this.basket[bkt.title] == null){
-        this.basket[bkt.title] = bkt.val;
+    receive(param){
+      console.log("recieve");
+      
+      console.log(param);
+      console.log(this.basket);
+      
+      this.menu_count += param.amount;      
+      if(this.basket[param.title] == null){
+        this.basket[param.title] = {
+            amount:param.amount,
+            pic:param.pic,
+            price:param.price
+          };
+
       }else{
-        this.basket[bkt.title] += bkt.val;
+        this.basket[param.title].amount += param.amount;
       }
     },
     getMenu(){

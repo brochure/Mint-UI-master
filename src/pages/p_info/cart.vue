@@ -5,7 +5,7 @@
         <el-main style="margin-top:40px;">
             <!-- <el-row>
             </el-row> -->
-    <cart-list v-for="item in cartGroups" :key="item.mid" :menulist="item.contents"></cart-list>
+    <cart-list v-for="item in cartGroups" :key="item.mid" :mid="item.mid" :menulist="item.contents"></cart-list>
         </el-main>
     </el-container>
   </div>
@@ -18,7 +18,8 @@ import CartList from '../../components/CartList.vue'
 export default {
   data () {
     return {
-        cartGroups: {}
+        cartGroups: {},
+
     }
   },
   methods: {
