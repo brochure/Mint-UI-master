@@ -18,25 +18,23 @@
         </el-menu>
       </el-col>
       <el-col :span="20">
-        <router-view></router-view>
+        <router-view @addCount="receive"></router-view>
       </el-col>
     </el-row>
     <el-footer>
       <mt-tabbar fixed style="background:none;border:none;">
         <el-row>
           <el-col :span="3">
-          <mt-badge type="error">10</mt-badge>
+          <el-badge :value="menu_count" class="item">
+            <i class="mintui mintui-life" style="font-size:2em;"/>
+          </el-badge>
           </el-col>
-          <el-col :span="10">
-             <ul class="list-inline">
-              <li class="list-inline-item"><small class="text-muted">¥45</small></li>
-            </ul>
-            <ul class="list-inline" style='margin-top:-25px;'>
-                <li class="list-inline-item"><small class="text-muted">另需配送费¥9</small></li>
-            </ul>
+          <el-col :span="10" :offset="3">
+              <small class="text-muted">¥45</small>
+               <small class="text-muted">另需配送费¥9</small>
           </el-col>
-          <el-col :span="4" :offset="7">
-            <el-button>去结算</el-button>
+          <el-col :span="4" :offset="4">
+            <el-button><router-link to='/p_info/cart'>去结算</router-link></el-button>
           </el-col>
         </el-row>
         <!-- <mt-tab-item id="life">
@@ -53,9 +51,25 @@ export default {
   data () {
     return {
       menu: {},
+      menu_count:4,
+      // numOfItems: 0
     }
   },
   methods: {
+    jumpto(link){
+      if(link==''){
+        Toast({
+          message: '功能开发中',
+          position: 'middle',
+          duration: 1000
+        });
+      }else{
+        this.$router.push(link);
+      }
+    },
+    receive(val){      
+      this.menu_count += val;
+    },
     getMenu(){
       var that = this;
       var req_map = that.HOST + "/getMenu";

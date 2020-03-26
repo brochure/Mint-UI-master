@@ -33,6 +33,10 @@ export default {
   watch: {
   },
   methods: {
+    addCount(val){
+      console.log("addCount in MenuList");
+      this.$parent.addCount(val);
+    },
     routerTo(menu){
       // this.$router.push({path: '/p_info/choosing', query:{id: merchant.id}});  
       // this.$router.push({ name: 'choosing', params: { merchant }});

@@ -20,7 +20,9 @@ export default {
     }
   },
   methods: {
-    
+    addCount(val){
+      this.$emit("addCount", val);
+    },
   },
   components: {
     MenuList

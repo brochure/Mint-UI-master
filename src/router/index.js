@@ -15,6 +15,7 @@ import MenuServe from '../pages/p_info/MenuServe.vue'
 import CommentRate from '../pages/p_info/CommentRate.vue'
 import MerchantInfo from '../pages/p_info/MerchantInfo.vue'
 import MenuBlock from '../pages/p_info/MenuBlock.vue'
+import Cart from '../pages/p_info/cart.vue'
 
 
 Vue.use(Router);
@@ -115,6 +116,12 @@ export default new Router({
     },
     {
       path: '/searchResult', component: SearchResult,
+      meta: {
+        keepAlive: false
+      }
+    },
+    {
+      path: '/p_info/cart', component: Cart,
       meta: {
         keepAlive: false
       }
