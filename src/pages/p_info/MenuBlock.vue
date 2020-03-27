@@ -7,7 +7,7 @@
   infinite-scroll-distance="10">
   <li v-for="item in $route.query.contents" :key="item.index">{{ item.title }}</li>
 </ul> -->
-<menu-list :menulist="$route.query.contents"></menu-list>
+<menu-list :menulist="$route.query.contents" :basket="$route.query.basket"></menu-list>
   </div>
 </template>
 
@@ -16,13 +16,14 @@ import MenuList from '../../components/MenuList.vue'
 export default {
   data () {
     return {
-
+      addedMenu:{}
     }
   },
   methods: {
     addCount(param){
-      console.log("MenuBlock");
-      
+      console.log("MenuBlock--");
+      this.addedMenu = param;
+      console.log(this.addedMenu);
       this.$emit("addCount", param);
     },
   },

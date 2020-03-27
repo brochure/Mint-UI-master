@@ -3,7 +3,7 @@
     <div v-for="item in menulist" :key="item.title">
       <li class="list-group-item" style="padding-top:0px;padding-bottom:0px;margin-bottom:-10px;">
         <!-- <div @click="routerTo(item)"> -->
-          <menu-display :meal="item"></menu-display>
+          <menu-display :meal="item" :basket="basket"></menu-display>
         <!-- </div> -->
       </li>
     </div>
@@ -14,6 +14,12 @@
 import MenuDisplay from '../components/MenuDisplay.vue'
 export default {
   props: {
+    basket:{
+      type: Object,
+      default:function(){
+        return []
+      }
+    },
     menulist: {
       type: Array,
       default:function(){

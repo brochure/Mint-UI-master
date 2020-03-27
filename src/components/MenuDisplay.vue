@@ -44,6 +44,12 @@ import { PaletteButton } from 'mint-ui';
 
 export default {
   props: {
+    basket:{
+      type: Object,
+      default:function(){
+        return []
+      }
+    },
     meal:{
       type: Object,
       default() {
@@ -84,8 +90,15 @@ export default {
   components: {
 
   },
+  created(){
+    this.amt = this.basket[this.meal.title].amount;
+  },
   mounted(){
     // console.log(this.meal);
+    // console.log("MenuDisplay Mounted");
+    
+    // console.log(this.basket);
+    
   }
 }
 </script>

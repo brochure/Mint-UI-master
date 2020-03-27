@@ -11,14 +11,16 @@
             </router-link>
           </el-menu-item>
           <el-menu-item :index="item.index" class="text-wrap" style="padding:0px;" v-for="item in menu" :key="item.index">
-            <router-link :to="{path:'/p_info/choosing/menuServe/menuBlock',query:{id:$route.query.id,contents:item.contents}}" replace>
+            <router-link :to="{path:'/p_info/choosing/menuServe/menuBlock',query:{id:$route.query.id,contents:item.contents,basket:basket}}" replace>
             <p style="font-size:0.8em;line-height:1.1em;padding-top:20px;padding-bottom:10px;">{{item.title}}</p>
             </router-link>
           </el-menu-item>
         </el-menu>
       </el-col>
       <el-col :span="20">
+        <keep-alive>
         <router-view @addCount="receive"></router-view>
+        </keep-alive>
       </el-col>
     </el-row>
     <el-footer>
