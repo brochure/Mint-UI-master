@@ -49,12 +49,6 @@ export default {
     genPicURL(pic) {
       return this.SERVER_BASE_URL + "/image/" + pic;
     }
-  },
-  components: {
-
-  },
-  mounted(){
-    // console.log(this.meal);
   }
 }
 </script>

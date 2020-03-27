@@ -11,7 +11,7 @@
             </router-link>
           </el-menu-item>
           <el-menu-item :index="item.index" class="text-wrap" style="padding:0px;" v-for="item in menu" :key="item.index">
-            <router-link :to="{path:'/p_info/choosing/menuServe/menuBlock',query:{id:$route.query.id,contents:item.contents,basket:basket}}" replace>
+            <router-link :to="{path:'/p_info/choosing/menuServe/menuBlock',query:{id:$route.query.id,contents:item.contents,basket:basket,cart:cart}}" replace>
             <p style="font-size:0.8em;line-height:1.1em;padding-top:20px;padding-bottom:10px;">{{item.title}}</p>
             </router-link>
           </el-menu-item>
@@ -57,14 +57,15 @@ export default {
       menu: {},
       menu_count:0,
       basket:{},
+      cart:{}
       // cartContent:[]
       // numOfItems: 0
     }
   },
   methods: {
     submitCart(){
-      console.log("basket");
-      console.log(this.basket);
+      // console.log("basket");
+      // console.log(this.basket);
       
       var that = this;
       // var cartContent = new Array();
@@ -93,7 +94,6 @@ export default {
         data: param
       }).then(resp => {
         if(resp.data.success){
-          // that.$toast(resp.data.msg);
           that.$router.push("/p_info/cart");
         }else{
           that.$toast(resp.data.msg);
@@ -114,11 +114,9 @@ export default {
       }
     },
     receive(param){
-      console.log("recieve");
-      
-      console.log(param);
-      console.log(this.basket);
-      
+      // console.log("recieve");
+      // console.log(param);
+      // console.log(this.basket);
       this.menu_count += param.amount;      
       if(this.basket[param.title] == null){
         this.basket[param.title] = {
@@ -126,7 +124,6 @@ export default {
             pic:param.pic,
             price:param.price
           };
-
       }else{
         this.basket[param.title].amount += param.amount;
       }
@@ -141,8 +138,25 @@ export default {
           data: param
       }).then(resp => {
       if(resp.data.success){        
-          // console.log(resp);
           that.menu = resp.data.content;
+      }else{that.$toast(resp.data.msg);}
+      }).catch(err =>{
+        that.$toast(err.data);
+      });
+    },
+    getCart(){
+      var that = this;
+      var req_map = that.HOST + "/getCart";
+      var param = {id: that.$route.query.id};
+      that.$axios({
+          url: req_map,
+          method: 'POST',
+          data: param
+      }).then(resp => {
+        console.log(resp);
+        
+      if(resp.data.success){   
+        that.cart = resp.data.content;
       }else{that.$toast(resp.data.msg);}
       }).catch(err =>{
         that.$toast(err.data);
@@ -154,6 +168,7 @@ export default {
   },
   created(){
     this.getMenu();
+    this.getCart();
   },
   watch:{
     // menu(val,oldVal) {

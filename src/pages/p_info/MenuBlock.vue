@@ -7,7 +7,7 @@
   infinite-scroll-distance="10">
   <li v-for="item in $route.query.contents" :key="item.index">{{ item.title }}</li>
 </ul> -->
-<menu-list :menulist="$route.query.contents" :basket="$route.query.basket"></menu-list>
+<menu-list :mid="$route.query.id" :menulist="$route.query.contents" :basket="$route.query.basket" :cart="$route.query.cart"></menu-list>
   </div>
 </template>
 

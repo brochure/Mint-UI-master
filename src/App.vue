@@ -5,7 +5,7 @@
         <router-view />
       <!--</transition>-->
     </div>
-    <footer-bar v-if="$route.meta.keepAlive" class="footer"></footer-bar>
+    <footer-bar v-if="$route.meta.showFootBar" class="footer"></footer-bar>
   </div>
 </template>
  

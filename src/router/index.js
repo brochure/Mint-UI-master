@@ -25,34 +25,37 @@ export default new Router({
     {
       path: "/", component: Main,
       meta: {
-        keepAlive: true
+        showFootBar: true
       }
     },
     {
       path: '/main', component: Main,
       meta: {
-        keepAlive: true
+        showFootBar: true
       }
     }, {
       path: '/life', component: Life,
       meta: {
-        keepAlive: true
+        showFootBar: true
       }
     }, 
     {
       path: '/order', component: Order,
       meta: {
-        keepAlive: true
+        showFootBar: true
       }
     },
     {
       path: '/info', component: Info,
       meta: {
-        keepAlive: true
+        showFootBar: true
       }
     },
     {
-      path: '/p_info/collection', component: Collection
+      path: '/p_info/collection', component: Collection,
+      meta: {
+        showFootBar: false
+      }
     },
     {
       path: '/p_info/choosing',
@@ -90,25 +93,26 @@ export default new Router({
         }
       ],
       meta: {
-        keepAlive: false
+        showFootBar: false,
+        keepAlive: true
       },
     },
     {
       path: '/p_info/profile', component: Profile,
       meta: {
-        keepAlive: true
+        showFootBar: true
       }
     },
     {
       path: '/p_info/modifyPhoneNo', component: ModifyPhoneNo,
       meta: {
-        keepAlive: false
+        showFootBar: false
       }
     },
     {
       path: '/messageCenter', component: MessageCenter,
       meta: {
-        keepAlive: false
+        showFootBar: false
       }
     },
     {
@@ -117,13 +121,13 @@ export default new Router({
     {
       path: '/searchResult', component: SearchResult,
       meta: {
-        keepAlive: false
+        showFootBar: false
       }
     },
     {
       path: '/p_info/cart', component: Cart,
       meta: {
-        keepAlive: false
+        showFootBar: false
       }
     },
   ]

@@ -3,7 +3,7 @@
     <div v-for="item in menulist" :key="item.title">
       <li class="list-group-item" style="padding-top:0px;padding-bottom:0px;margin-bottom:-10px;">
         <!-- <div @click="routerTo(item)"> -->
-          <menu-display :meal="item" :basket="basket"></menu-display>
+          <menu-display :meal="item" :basket="basket" :cart="cart"></menu-display>
         <!-- </div> -->
       </li>
     </div>
@@ -14,6 +14,16 @@
 import MenuDisplay from '../components/MenuDisplay.vue'
 export default {
   props: {
+    cart:{
+      type:Object,
+      default:function(){
+        return []
+      }
+    },
+    mid:{
+      type:String,
+      default:""
+    },
     basket:{
       type: Object,
       default:function(){
@@ -34,8 +44,6 @@ export default {
     return {
     }
   },
-  computed: {
-  },
   watch: {
   },
   methods: {
@@ -47,7 +55,12 @@ export default {
     routerTo(menu){
       // this.$router.push({path: '/p_info/choosing', query:{id: merchant.id}});  
       // this.$router.push({ name: 'choosing', params: { merchant }});
-    },
+    }
+  },
+  created(){
+    console.log("MenuList cart");
+    console.log(this.cart);
+    
   }
 }
 </script>

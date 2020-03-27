@@ -44,6 +44,12 @@ import { PaletteButton } from 'mint-ui';
 
 export default {
   props: {
+    cart:{
+      type: Object,
+      default:function(){
+        return []
+      }
+    },
     basket:{
       type: Object,
       default:function(){
@@ -91,7 +97,34 @@ export default {
 
   },
   created(){
-    this.amt = this.basket[this.meal.title].amount;
+    console.log("MenuDisplay");
+    console.log(this.basket);
+    this.amt=0;
+    console.log(JSON.stringify(this.basket));
+    
+    if (this.basket==null || JSON.stringify(this.basket) == "{}"){      
+      console.log(this.cart);
+      
+      if(this.cart!=null && JSON.stringify(this.cart) != "{}"){        
+        var carts = this.cart.contents;
+        carts.forEach(element => {
+          if(element.title==this.meal.title){
+            for(let i=0;i<element.amount;i++){
+              let param = {
+                title:this.meal.title,
+                amount:1,
+                pic:this.meal.pic,
+                price:this.meal.price
+              }
+              this.$parent.addCount(param);
+              this.amt += 1;
+            }
+          }
+        });
+      }
+    }else{
+      this.amt = this.basket[this.meal.title].amount;
+      }
   },
   mounted(){
     // console.log(this.meal);

@@ -35,7 +35,11 @@
             <span slot="label"><router-link to="/p_info/choosing/merchantInfo" replace>商家</router-link></span>
           </el-tab-pane>
         </el-tabs>
-        <router-view></router-view>
+        <transition>
+          <keep-alive>
+            <router-view></router-view>
+          </keep-alive>
+        </transition>
       </el-main>
       <!-- <el-footer>
         <el-row type="flex" justify="space-between" style="margin-top:20px;">
@@ -116,7 +120,9 @@
     created(){
       this.getMerchantInfo();
       // this.styleObject.background = this.genPicURL('canteen_bg/bg_mcd.jpg');
-      console.log(this.styleObject.background);
+      console.log("created .$route.query.id");
+      
+      console.log(this.$route.query.id);
       
     }
   }
