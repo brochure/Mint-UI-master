@@ -40,8 +40,8 @@ export default {
   },
   methods: {
     addCount(param){
-      console.log("addCount in MenuList");
-      console.log(param);
+      // console.log("addCount in MenuList");
+      // console.log(param);
       this.$parent.addCount(param);
     },
     routerTo(menu){

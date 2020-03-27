@@ -62,7 +62,7 @@ export default{
             data: param
           }).then(resp => {
             if(resp.data.success){
-              that.$toast(resp.data.msg);
+              // that.$toast(resp.data.msg);
               that.prev();
             }else{
               that.$toast(resp.data.msg);

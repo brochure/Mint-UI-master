@@ -109,11 +109,11 @@
   overflow:hidden;
 }
 
-.el-tabs__nav{
+#index .el-tabs__nav{
   background-color: white;
 }
 
- .drm .el-tabs__nav{
+ #index .drm .el-tabs__nav{
   position:fixed;
   top:0;
 }
@@ -349,7 +349,7 @@ export default {
   },
   mounted(){
     this.dfOffsetTop = document.querySelector('#divrecm').offsetTop;
-    // console.log(this.dfOffsetTop);
+    console.log(this.dfOffsetTop);
     window.addEventListener('scroll', this.handleTabFix, true);
   },
   beforeRouteLeave (to, from, next) {

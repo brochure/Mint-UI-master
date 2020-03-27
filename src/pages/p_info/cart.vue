@@ -30,7 +30,7 @@ export default {
             url: req_map,
             method: 'POST'
         }).then(resp => {
-        console.log(resp);
+        // console.log(resp);
         if(resp.data.success){
             that.cartGroups = resp.data.content;
         }else{that.$toast(resp.data.msg);}

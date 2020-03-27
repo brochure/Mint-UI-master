@@ -32,7 +32,7 @@
                   </div>
               </li>
           </ul-->
-        <merchants-list :filters="filters"></merchants-list>
+        <merchants-list :merchants="favMerchants"></merchants-list>
         <el-row>
             <!--p class="text-muted text-center small mt-3">当前位置暂无超出配送范围的商家</p-->
             <el-divider class="text-center text-nowrap" style="color:#909399;">当前位置暂无超出配送范围的商家</el-divider>
@@ -65,24 +65,37 @@
       name: 'index',
       data () {
       return {
-        filters:{
-          flrfav: [true],
-          flrsc: [true, false],
-          flrtype: [0, 1]
-        }
+        favMerchants: [],
       }
       },
     methods:{
-        routerTo(merchant){
-          this.$router.push({ name: 'choosing', params: { merchant }});
-        },
-        prev(){
-          this.$router.go(-1)
-        }
+      getAllMerchants() {      
+        var that = this;
+        var url = that.HOST + "/merchant";
+        that.$axios.get(url).then((resp) => {   
+          if(resp.data.success) {
+            var allMerchants = resp.data.content;
+            allMerchants.forEach(element => {
+              if(element.fav){
+                this.favMerchants.push(element);
+              }
+            });
+          }else{that.$toast(resp.data.msg);}
+        });
+      },
+      routerTo(merchant){
+        this.$router.push({ name: 'choosing', params: { merchant }});
+      },
+      prev(){
+        this.$router.go(-1)
+      }
     },
     components:{
       MerchantsList,
       HeaderBar
+    },
+    created(){
+      this.getAllMerchants();
     }
 
   }

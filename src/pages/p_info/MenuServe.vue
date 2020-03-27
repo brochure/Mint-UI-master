@@ -93,7 +93,7 @@ export default {
         data: param
       }).then(resp => {
         if(resp.data.success){
-          that.$toast(resp.data.msg);
+          // that.$toast(resp.data.msg);
           that.$router.push("/p_info/cart");
         }else{
           that.$toast(resp.data.msg);

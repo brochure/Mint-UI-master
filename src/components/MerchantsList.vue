@@ -15,6 +15,15 @@
 <script>
 import MerchantDisplay from '../components/MerchantDisplay.vue'
 export default {
+  components: {
+    MerchantDisplay
+  },
+  data () {
+    return {
+    }
+  },
+  computed: {
+  },
   props: {
     sortkey: {
       type: String,
@@ -26,15 +35,6 @@ export default {
         return []
       }
     }
-  },
-  components: {
-    MerchantDisplay
-  },
-  data () {
-    return {
-    }
-  },
-  computed: {
   },
   watch: {
     sortkey(val,oldVal){this.$nextTick(()=>{this.sortByKey(this.sortkey);})}

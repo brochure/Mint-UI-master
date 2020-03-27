@@ -1,6 +1,6 @@
 <template>
   <el-row type="flex">
-      <el-col :span="6">
+      <el-col :span="6" style="margin-left:0px;margin-right:10px;">
         <img :src="genPicURL(merchant.pic)" class="logo">
       </el-col>
       <el-col :span="18">
@@ -48,5 +48,8 @@ export default {
     width: 70px;
     height: 70px;
     float: left;
+    border-width: 0.55px;
+    border-style: solid;
+    border-color:#ddd;
   }
 </style>
