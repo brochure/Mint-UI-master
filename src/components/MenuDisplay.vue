@@ -27,13 +27,14 @@
               {{amt}}
             </el-col>
             <el-col :span="2">
-              <div @click="main_log(1)">
+              <div @click="main_log">
               <mt-palette-button content="+" direction="rt"
               :radius="80" ref="target_1" mainButtonStyle="font-size:2.8em;color:#fff;background-color:#26a2ff;transform:scale(0.35,0.35);" style="left:90px;top:-40px;">
                 <div class="" @touchstart="sub_log(1)"></div>
               </mt-palette-button>
               </div>
             </el-col>
+                <!-- <div id="ball"></div> -->
         </el-row>
       </el-col>
   </el-row>
@@ -70,24 +71,42 @@ export default {
     }
   },
   methods: {
-    main_log(val) {
+    main_log(evt) {
+      console.log('main_log', evt);
+      this.parabola(evt);
       console.log("MenuDisplay");
       
-      console.log('main_log', val);
-      if((this.amt+val)>=0){
+      if((this.amt+1)>=0){
         var param = {
           title:this.meal.title,
-          amount:val,
+          amount:1,
           pic:this.meal.pic,
           price:this.meal.price
         }
         this.$parent.addCount(param);
-        this.amt += val;
+        this.amt += 1;
       }
     },
     sub_log(val) {
       console.log('sub_log', val);
       this.$refs.target_1.collapse();
+    },
+    parabola(evt){
+      var ball = document.createElement("div"); 
+      ball.setAttribute("id","ball");
+      document.body.appendChild(ball);
+
+      // var $ball = document.getElementById('ball');
+      // $ball.style.hidden="";
+      console.log(evt.pageX,evt.pageY)
+        ball.style.top = evt.pageY+'px';
+        ball.style.left = evt.pageX+'px';
+        ball.style.transition = 'left 0s, top 0s';
+      setTimeout(()=>{
+          ball.style.top = window.innerHeight+'px';
+          ball.style.left = '0px';
+          ball.style.transition = 'left 1s linear, top 1s ease-in';
+      }, 20)
     },
     genPicURL(pic) {
       return this.SERVER_BASE_URL + "/image/" + pic;
@@ -137,6 +156,14 @@ export default {
 </script>
 
 <style scoped>
+#ball {
+  width:12px;
+  height:12px;
+  background: #5EA345;
+  border-radius: 50%;
+  position: fixed;
+  transition: left 1s linear, top 1s ease-in;
+}
  .logo{
     width: 70px;
     height: 70px;

@@ -27,7 +27,9 @@
           </el-col>
         </el-row>
         <el-row style="margin-top:10px;">
-          <search-bar></search-bar>
+          <div class="rmsb">
+          <search-bar class="fxSearchBar"></search-bar>
+          </div>
         </el-row>
       </el-header>
       <el-main>
@@ -103,7 +105,12 @@
 </template>
 
 <style>
-.overhid{
+/* .rmsb .fxSearchBar {
+  position:fixed;
+  top:0;
+} */
+
+.overhid {
   position: relative;
   /* top: 100px; */
   overflow:hidden;
@@ -257,6 +264,15 @@
     margin-left: 3px;
     margin-right: 3px;
   }
+
+#ball {
+    width:12px;
+    height:12px;
+    background: #5EA345;
+    border-radius: 50%;
+    position: fixed;
+    transition: left 1s linear, top 1s ease-in;
+}
 </style>
 
 <script>
@@ -284,23 +300,24 @@ export default {
       banners: [],
       selected: "1",
       dfOffsetTop: 0,
+      dfnavheight: 0,
       isfixTab: false,
     }
   },
   methods: {
-      changeObjStyleToFixed(obj){
-        obj.style.setProperty("position", "fixed", "important");
-        obj.style.setProperty("top", "0", "important");
-      },
-      changeObjStyleToStatic(obj){
-        obj.style.setProperty("position", "static");
-      },
-
     handleTabFix() {
       var scrollTop = window.pageYOffset || document.documentElement.scrollTop || document.body.scrollTop;
       // var offsetTop = document.querySelector('#divrecm').offsetTop;
       // this.changeTabHeaderClassStyle(scrollTop > this.dfOffsetTop);
-      scrollTop > this.dfOffsetTop ? this.isfixTab = true : this.isfixTab = false;
+      // scrollTop > this.dfOffsetTop ? this.isfixTab = true : this.isfixTab = false;
+      // let dfoffset = this.dfOffsetTop + this.dfnavheight;
+      this.dfnavheight = document.querySelector('.el-tabs__nav').scrollHeight;
+      
+      if(scrollTop > (this.dfOffsetTop + this.dfnavheight)){
+        this.isfixTab = true;        
+      }else if (scrollTop < this.dfOffsetTop) {
+        this.isfixTab = false;
+      }
     },
     getAllMerchants() {      
       var that = this;
@@ -348,8 +365,12 @@ export default {
     this.getAllMerchants();
   },
   mounted(){
+    // this.dfOffsetTop = 592;
     this.dfOffsetTop = document.querySelector('#divrecm').offsetTop;
+    this.dfnavheight = document.querySelector('.el-tabs__nav').scrollHeight;
     console.log(this.dfOffsetTop);
+    console.log(this.dfnavheight);
+    
     window.addEventListener('scroll', this.handleTabFix, true);
   },
   beforeRouteLeave (to, from, next) {

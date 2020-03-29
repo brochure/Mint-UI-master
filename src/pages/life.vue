@@ -1,22 +1,7 @@
 <template>
   <div>
-<el-menu :default-active="activeIndex" class="el-menu-demo" mode="horizontal" @select="handleSelect">
-  <!-- <el-menu-item index="1">处理中心</el-menu-item> -->
-  <el-submenu index="2">
-    <!-- <template slot="title">我的工作台</template> -->
-    <el-menu-item index="2-1">选项1</el-menu-item>
-    <el-menu-item index="2-2">选项2</el-menu-item>
-    <el-menu-item index="2-3">选项3</el-menu-item>
-    <!-- <el-submenu index="2-4">
-      <template slot="title">选项4</template>
-      <el-menu-item index="2-4-1">选项1</el-menu-item>
-      <el-menu-item index="2-4-2">选项2</el-menu-item>
-      <el-menu-item index="2-4-3">选项3</el-menu-item>
-    </el-submenu> -->
-  </el-submenu>
-  <!-- <el-menu-item index="3" disabled>消息中心</el-menu-item>
-  <el-menu-item index="4"><a href="https://www.ele.me" target="_blank">订单管理</a></el-menu-item> -->
-</el-menu>
+<div id="ball"></div>
+<el-button style="margin-left:100px;margin-top:50px;" @click="hjkl">asdad</el-button>
   </div>
 </template>
 
@@ -28,7 +13,18 @@ export default {
     }
   },
   methods: {
-
+    hjkl(evt){
+      var $ball = document.getElementById('ball');
+      console.log(evt.pageX,evt.pageY)
+        $ball.style.top = evt.pageY+'px';
+        $ball.style.left = evt.pageX+'px';
+        $ball.style.transition = 'left 0s, top 0s';
+      setTimeout(()=>{
+          $ball.style.top = window.innerHeight+'px';
+          $ball.style.left = '0px';
+          $ball.style.transition = 'left 1s linear, top 1s ease-in';
+      }, 20)
+    }
   },
   components: {
 
@@ -37,5 +33,16 @@ export default {
 </script>
 
 <style scoped>
-
+/* * {
+  padding: 0;
+  margin: 0;
+} */
+#ball {
+  width:12px;
+  height:12px;
+  background: #5EA345;
+  border-radius: 50%;
+  position: fixed;
+  transition: left 1s linear, top 1s ease-in;
+}
 </style>
