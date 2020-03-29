@@ -24,7 +24,8 @@
     "url-loader": "^0.5.9",
     "vue": "^2.5.2",
     "vue-resource": "^1.5.1",
-    "vue-router": "^3.0.1"
+    "vue-router": "^3.0.1",
+    "vux": "^2.9.4"
   },
   "devDependencies": {
     "autoprefixer": "^7.1.2",
@@ -47,7 +48,7 @@
     "cross-spawn": "^5.0.1",
     "css-loader": "^0.28.0",
     "element-ui": "^2.13.0",
-    "eslint": "^4.15.0",
+    "eslint": "^4.19.1",
     "eslint-config-standard": "^10.2.1",
     "eslint-friendly-formatter": "^3.0.0",
     "eslint-loader": "^1.7.1",
