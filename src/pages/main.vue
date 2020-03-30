@@ -26,9 +26,11 @@
             <i class="el-icon-chat-line-square" style="font-size:1.5em;float:right;" @click="jumpto(urlmsgctr)"/>
           </el-col>
         </el-row>
-        <el-row style="margin-top:10px;">
-          <div class="rmsb">
-          <search-bar class="fxSearchBar"></search-bar>
+        <el-row id="rowsb" style="margin-top:10px;">
+          <div :class="{'drm-sb': isFixSb}">
+          <div id="divsb" class="rmsb">
+            <search-bar class="fxSearchBar"></search-bar>
+          </div>
           </div>
         </el-row>
       </el-header>
@@ -82,7 +84,6 @@
 
       <!-- <el-row type="flex" :gutter="100"> -->
         <div id="divrecm" :class="{ 'drm': isfixTab }" style="margin-top:25px;">
-          <div :class='{ fixedNavbar: isfixTab }'>
             <!-- <el-tabs v-model="activeName" @tab-click="handleClick"> -->
             <el-tabs v-model="activeName">
               <el-tab-pane label="推荐" name="first">
@@ -97,7 +98,6 @@
                 <merchants-list :merchants="merchants3"></merchants-list>
               </el-tab-pane>
             </el-tabs>
-          </div>
         </div>
       </el-main>
     </el-container>
@@ -109,6 +109,19 @@
   position:fixed;
   top:0;
 } */
+.drm-sb .rmsb{
+  position:fixed;
+  top:0;
+  background-color: white;
+  /* color: #fff; */
+  z-index: 999;
+  height: 35px;
+  width:100%;
+  padding-top:15px;
+  padding-bottom:30px;
+  padding-left:10px;
+  padding-right:45px;
+}
 
 .overhid {
   position: relative;
@@ -123,20 +136,8 @@
  #index .drm .el-tabs__nav{
   position:fixed;
   top:0;
+  padding-top:45px;
 }
-/* .fixedNavbar {
-  position: fixed;
-  top: 0px;
-  top: 2.25rem;
-  left: 0;
-  width: 100%;
-  border-top: 0.05rem solid #f5f5f5;
-  border-bottom: 0.05rem solid #f5f5f5;
-} */
-/* 
-#divrecm {
-  position: fixed;
-} */
 
 #divrecm .el-submenu__title {
   float:left;
@@ -255,10 +256,6 @@
   height: 100px;
 }
 
-/* .qsort{
-  padding:10px;
-} */
-
   .hight-amt{
     font-size:1.3em;
     margin-left: 3px;
@@ -299,8 +296,11 @@ export default {
       discountContent:[],
       banners: [],
       selected: "1",
+      sbOffsetTop: 0,
+      sbNavHeight: 0,
       dfOffsetTop: 0,
-      dfnavheight: 0,
+      dfNavHeight: 0,
+      isFixSb: false,
       isfixTab: false,
     }
   },
@@ -311,9 +311,17 @@ export default {
       // this.changeTabHeaderClassStyle(scrollTop > this.dfOffsetTop);
       // scrollTop > this.dfOffsetTop ? this.isfixTab = true : this.isfixTab = false;
       // let dfoffset = this.dfOffsetTop + this.dfnavheight;
-      this.dfnavheight = document.querySelector('.el-tabs__nav').scrollHeight;
+      this.sbOffsetTop = document.querySelector('#rowsb').offsetTop;
+      this.sbNavHeight = document.querySelector('#divsb').scrollHeight;
+      if(scrollTop > (this.sbOffsetTop)){
+        this.isFixSb = true;        
+      }else if (scrollTop < this.sbOffsetTop) {
+        this.isFixSb = false;
+      }
+
+      this.dfNavHeight = document.querySelector('.el-tabs__nav').scrollHeight;
       
-      if(scrollTop > (this.dfOffsetTop + this.dfnavheight)){
+      if(scrollTop > (this.dfOffsetTop + this.dfNavHeight)){
         this.isfixTab = true;        
       }else if (scrollTop < this.dfOffsetTop) {
         this.isfixTab = false;
@@ -365,11 +373,12 @@ export default {
     this.getAllMerchants();
   },
   mounted(){
-    // this.dfOffsetTop = 592;
     this.dfOffsetTop = document.querySelector('#divrecm').offsetTop;
-    this.dfnavheight = document.querySelector('.el-tabs__nav').scrollHeight;
+    this.dfNavHeight = document.querySelector('.el-tabs__nav').scrollHeight;
+    this.sbOffsetTop = document.querySelector('#rowsb').offsetTop;
+    this.sbNavHeight = document.querySelector('#divsb').scrollHeight;
     console.log(this.dfOffsetTop);
-    console.log(this.dfnavheight);
+    console.log(this.dfNavHeight);
     
     window.addEventListener('scroll', this.handleTabFix, true);
   },
