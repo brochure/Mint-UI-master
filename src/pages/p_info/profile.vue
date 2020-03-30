@@ -2,11 +2,6 @@
   <div id="index">
 <el-container>
   <el-header>
-     <!-- <mt-header fixed title="个人资料">
-    <router-link to="/" slot="left">
-        <mt-button icon="back"></mt-button>
-    </router-link>
-    </mt-header> -->
     <header-bar header-title="个人资料"></header-bar>
   </el-header>
   <el-main>
@@ -21,7 +16,6 @@
 
     <p type="info" class="mt-4">账号绑定</p>
     <mt-cell title="手机" is-link to="/p_info/modifyPhoneNo">
-    <!-- <mt-cell title="手机" is-link @click.native="modifyPhoneNo"> -->
       <span style="color:#909399;">{{replacePhoneNo(accountInfo.phoneNo)}}</span>
     </mt-cell>
     <div v-for="item in accountInfo.thirdPartyAccount" :key="item.title">
@@ -36,28 +30,10 @@
     v-model="sheetVisible">
   </mt-actionsheet>
   <input ref="filElem" type="file" style="display:none" class="upload-file" @change="getFile">
-  <!-- <el-upload>
-
-</el-upload> -->
 </el-container>
 
   </div>
 </template>
-
-<style scoped>
- .round_icon{
-    width: 50px;
-    height: 50px;
-    display: flex;
-    border-radius: 50%;
-    align-items: center;
-    justify-content: center;
-    overflow: hidden;
-  }
-  .bound{
-    font-size:0.8em;
-  }
-</style>
 
 <script>
   import HeaderBar from '../../components/HeaderBar.vue'
@@ -89,20 +65,18 @@
       },
     methods:{
       reloadProfileImg() {
-        // console.log("reloadProfileImg");
-            // 移除组件
-            this.update = false;
-            // 在组件移除后，重新渲染组件
-            // this.$nextTick可实现在DOM 状态更新后，执行传入的方法。
-            this.getAccountInfo ();
-        },
+        // 移除组件
+        this.update = false;
+        // 在组件移除后，重新渲染组件
+        // this.$nextTick可实现在DOM 状态更新后，执行传入的方法。
+        this.getAccountInfo ();
+      },
       genPicURL(pic) {        
         return this.SERVER_BASE_URL + "/image/" + pic;
       },
       getAccountInfo () {
-        // var url = this.staticURL + "json/account_info.json";
         var that = this;
-        var req_map = that.HOST + "/account";
+        var req_map = that.HOST + "/account/id/1";
         that.$axios.get(req_map).then((resp) => {
           if(resp.data.success){
             that.accountInfo = resp.data.content;
@@ -134,7 +108,7 @@
             return url; 
         }
         let img = that.$refs.filElem.files[0];
-        let type = img.type; //文件的类型，判断是否是图片
+        let type = img.type;
         let size = img.size;        
         if (that.imgData.accept.indexOf(type) == -1 || type == '') {
 					that.$toast("图片格式错误，请重新上传。");
@@ -145,19 +119,7 @@
 					return false;
         }
         // let url = getObjectURL(this.$refs.filElem.files[0]);
-
-            // 应该用canvas编辑和保存图片
-        // this.$axios({
-        //   url: url,
-        //   type: "POST",
-        //   dataType: 'binary',
-        //   headers:{'Content-Type':'image/jpeg','X-Requested-With':'XMLHttpRequest'},
-        //   processData: false,
-        //   success: function(result){
-        //     console.log('wawad');  
-        //   }
-        // });
-
+        // TODO 应该用canvas编辑和保存图片
         var uri = ''
 				let form = new FormData();
         form.append('file', img, img.name);
@@ -168,82 +130,39 @@
 						'Content-Type': 'multipart/form-data'
 					}
 				}).then(response => {
-          // console.log(response)
           // that.profileImgUrl = that.genPicURL(accountInfo.pic);
           this.reloadProfileImg();
-					// uri = "http://www.t1.qidianjinfu.com" + response.data.result
-					// reader.readAsDataURL(img1);
-					// var that = this;
-					// reader.onloadend = function() {
-					// 	that.imgs = uri;
-					// 	console.log(uri)
-					// }
-					// this.$toast("上传成功");
-					// this.udate = false;
-					// this.btnShow = true
 				}).catch(function(err) {
 					console.log(err);
 				});
       },
-    fileUpload(event){
-      // formData.append('file', document.querySelector('input[type=file]').files[0]) // 'file' 这个名字要和后台获取文件的名字一样;
-      // formData.append('user',this.name)
-      // this.$axios({
-
-      // }
-
-      // )
-
-
-      // // 上传文件
-      // console.log(event);
-      
-      // let file = event.target.files
-      // let formData = new FormData()
-      // formData.append('category', 'settingPic')
-      // formData.append('file', file[0])
-      // console.log(formData);
-      // // 文件上传
-      // this.$axios({
-      //   method: "POST",
-      //   url: url_g + '/dcas/event/'+this.contrastId+'/importathlete',
-      //   data: formData
-      // }).then((res) => {
-      //   let data = res.data
-      //   if(data.success) {
-      //     console.log(data);
-          
-          
-      //   } else {
-      //     this.$message.error(data.message || '操作失败')
-      //   }
-      //   this.uploadLoading = false
-      // }).catch((e)=>{
-      //   this.uploadLoading = false
-      //   alert(e)
-      // })
-    }
-
-        // routerTo(merchant){
-        // this.$router.push({ name: 'choosing', params: { merchant }});
-        // }
     },
     created(){
       this.getAccountInfo();
-      // this.profileImgUrl = this.genPicURL(this.accountInfo.pic);      
-      // this.actionSheet()
     },
     watch: {
       accountInfo(val,oldVal) {
         this.$nextTick(() => {
-          // console.log("nextTick");
-          // console.log(this.accountInfo.pic);
-          //当数据到来的时候， DOM 更新循环结束之后，立即执行函数
-          this.profileImgUrl = this.genPicURL(this.accountInfo.pic);
-          this.update = true;
-        })
+        this.profileImgUrl = this.genPicURL(this.accountInfo.headPhotoAddress);
+        this.update = true;
+      })
     }
   }
   }
 
 </script>
+
+<style scoped>
+ .round_icon{
+    width: 50px;
+    height: 50px;
+    display: flex;
+    border-radius: 50%;
+    align-items: center;
+    justify-content: center;
+    overflow: hidden;
+  }
+  .bound{
+    font-size:0.8em;
+  }
+</style>

@@ -4,11 +4,9 @@
       <el-row style="padding-top:10px;" type="flex" :gutter="30">
           <el-col :span="2" :offset="20">
             <i class="el-icon-setting" style="font-size:1.5em;float:right;" @click="jumpto(urlmsgctr)" />
-            <!-- <i class="mintui mintui-setting"/> -->
           </el-col>
           <el-col :span="2">
             <i class="el-icon-chat-line-square" style="font-size:1.5em;float:right;" @click="jumpto(urlmsgctr)" />
-            <!-- <i class="mintui mintui-message" @click="jumpto(urlmsgctr)"/> -->
           </el-col>
       </el-row>
     </el-header>
@@ -16,7 +14,7 @@
   <el-row>
     <div  @click="jumpto(urlprofile)">
     <el-col :span="18">
-      <h1>Cheetos</h1>
+      <h1>{{accountInfo.nickName}}</h1>
       <p style="font-size:0.7em;color:#777777;margin-top:-10px;">再忙，也要记得吃饭哟～</p>
     </el-col>
     <el-col :span="6">
@@ -25,9 +23,7 @@
     </div>
   </el-row>
 
-<!-- <div class="container mb-2"> -->
 <el-row type="flex" :gutter="5">
-    <!-- <div class="col-4 p-1"> -->
       <el-col :span="8">
       <div class="card notice-card shadow-sm bg-white rounded" @click="jumpto(urlcouponspot)">
         <div class="card-body p-2">
@@ -37,8 +33,6 @@
         </div>
       </div>
       </el-col>
-    <!-- </div> -->
-    <!-- <div class="col-4 p-1"> -->
       <el-col :span="8">
             <div class="card notice-card shadow-sm bg-white rounded">
         <div class="card-body p-2">
@@ -47,8 +41,6 @@
         </div>
       </div>
       </el-col>
-    <!-- </div> -->
-    <!-- <div class="col-4 p-1"> -->
       <el-col :span="8">
             <div class="card notice-card shadow-sm bg-white rounded">
         <div class="card-body p-2">
@@ -57,8 +49,6 @@
         </div>
       </div>
       </el-col>
-    <!-- </div> -->
-  <!-- </div> -->
 </el-row>
 
   <ul class="list-group list-group-flush">
@@ -148,7 +138,6 @@
 </style>
 <script>
 import { Toast} from 'mint-ui'
-//import { Header, Toast} from 'mint-ui'
   export default{
     name:'info',
     components: {
@@ -204,7 +193,7 @@ import { Toast} from 'mint-ui'
         urlcouponspot: "/p_info/couponSpot",
         ncoupon: 6,
         balanceprm: 20,
-        userNickName: 'CheetoMan',
+        // userNickName: 'CheetoMan',
         //popupVisible: true
 
       }
@@ -220,7 +209,7 @@ import { Toast} from 'mint-ui'
         getAccountInfo () {
           // var url = this.staticURL + "json/account_info.json";
           var that = this;
-          var req_map = that.HOST + "/account";
+          var req_map = that.HOST + "/account/id/1";
           that.$axios.get(req_map).then((resp) => {
             if(resp.data.success){
               that.accountInfo = resp.data.content;
