@@ -41,10 +41,6 @@
             <!-- <el-button><router-link :to="{path:'/p_info/cart',query:{basket:basket}}" >去结算</router-link></el-button> -->
           </el-col>
         </el-row>
-        <!-- <mt-tab-item id="life">
-          <i class="mintui mintui-life" style="font-size:2em;"/>
-          <p class="foottxt">生活</p>
-        </mt-tab-item> -->
       </mt-tabbar>
     </el-footer>
   </div>

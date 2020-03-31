@@ -200,11 +200,17 @@ import {Toast} from 'mint-ui'
       getAccountInfo () {
         var that = this;
         var req_map = that.HOST + "/account/id/1";
-        that.$axios.get(req_map).then((resp) => {
+        that.$axios({
+          url: req_map,
+          method: 'POST'
+        }).then(resp => {            
           if(resp.data.success){
             that.accountInfo = resp.data.content;
           }else{that.$toast(resp.data.msg);}
-      });
+        }).catch(err =>{
+          console.log(err);
+          reject(err.data);
+        })
       },
       jumpto(link){
         if(link==''){
@@ -223,7 +229,6 @@ import {Toast} from 'mint-ui'
     watch: {
       accountInfo(val,oldVal) {        
         this.$nextTick(() => {
-          //当数据到来的时候， DOM 更新循环结束之后，立即执行函数
           this.profileImgUrl = this.genPicURL(this.accountInfo.headPhotoAddress);
         })
       }

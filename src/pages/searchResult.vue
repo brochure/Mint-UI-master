@@ -38,7 +38,7 @@ export default {
     prev(){this.$router.go(-1)},
     searchCmmd(){
         var that = this;
-        var req_map = that.HOST + "/searchCmmd";
+        var req_map = that.HOST + "/merchant/searchCmmd";
         var param = {iptContent: that.iptContent};
         that.$axios({
             url: req_map,

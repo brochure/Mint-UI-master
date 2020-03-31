@@ -34,7 +34,6 @@
               </mt-palette-button>
               </div>
             </el-col>
-                <!-- <div id="ball"></div> -->
         </el-row>
       </el-col>
   </el-row>
@@ -67,14 +66,12 @@ export default {
   data () {
     return {
       amt: 0,
-      // title: "MerchantDisplay",
     }
   },
   methods: {
     main_log(evt) {
       console.log('main_log', evt);
       this.parabola(evt);
-      console.log("MenuDisplay");
       
       if((this.amt+1)>=0){
         var param = {
@@ -112,18 +109,10 @@ export default {
       return this.SERVER_BASE_URL + "/image/" + pic;
     }
   },
-  components: {
-
-  },
   created(){
-    console.log("MenuDisplay");
-    console.log(this.basket);
-    this.amt=0;
-    console.log(JSON.stringify(this.basket));
-    
+    this.amt=0;    
     if (this.basket==null || JSON.stringify(this.basket) == "{}"){      
       console.log(this.cart);
-      
       if(this.cart!=null && JSON.stringify(this.cart) != "{}"){        
         var carts = this.cart.contents;
         carts.forEach(element => {
@@ -144,13 +133,6 @@ export default {
     }else{
       this.amt = this.basket[this.meal.title].amount;
       }
-  },
-  mounted(){
-    // console.log(this.meal);
-    // console.log("MenuDisplay Mounted");
-    
-    // console.log(this.basket);
-    
   }
 }
 </script>

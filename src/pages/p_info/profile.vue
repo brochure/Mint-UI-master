@@ -77,11 +77,17 @@
       getAccountInfo () {
         let that = this;
         let req_map = that.HOST + "/account/id/1";
-        that.$axios.get(req_map).then((resp) => {
+        that.$axios({
+          url: req_map,
+          method: 'POST'
+        }).then(resp => {            
           if(resp.data.success){
             that.accountInfo = resp.data.content;
           }else{that.$toast(resp.data.msg);}
-      });
+        }).catch(err =>{
+          console.log(err);
+          reject(err.data);
+        })
       },
       replacePhoneNo (str) { // should be handed to the backstage
           if(!str){return ''}
@@ -138,11 +144,17 @@
       getThirdpartyServiceProviderBound(){
         let that = this;
         let req_map = that.HOST + "/account/bound/1";
-        that.$axios.get(req_map).then((resp) => {
+        that.$axios({
+          url: req_map,
+          method: 'POST'
+        }).then(resp => {            
           if(resp.data.success){
             that.thirdpartyBound = resp.data.content;
           }else{that.$toast(resp.data.msg);}
-        });
+        }).catch(err =>{
+          console.log(err);
+          reject(err.data);
+        })
       }
     },
     created(){
