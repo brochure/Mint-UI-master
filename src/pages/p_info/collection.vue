@@ -71,7 +71,7 @@
     methods:{
       getAllMerchants() {      
         var that = this;
-        var url = that.HOST + "/merchant";
+        var url = that.HOST + "/merchant/all";
         that.$axios.get(url).then((resp) => {   
           if(resp.data.success) {
             var allMerchants = resp.data.content;

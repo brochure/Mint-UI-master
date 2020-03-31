@@ -1,37 +1,36 @@
 <template>
   <div id="index">
-<el-container>
-  <el-header>
-    <header-bar header-title="个人资料"></header-bar>
-  </el-header>
-  <el-main>
-    <p type="info">基础信息</p>
-    <mt-cell title="头像" is-link @click.native="actionSheet">
-      <img v-if="update" :src="profileImgUrl" class="round_icon" />
-    </mt-cell>
-        <mt-cell title="用户名" is-link>
-      <span style="color:#909399;">{{accountInfo.nickName}}</span>
-    </mt-cell>
-    <mt-cell title="收货地址" is-link />
-
-    <p type="info" class="mt-4">账号绑定</p>
-    <mt-cell title="手机" is-link to="/p_info/modifyPhoneNo">
-      <span style="color:#909399;">{{replacePhoneNo(accountInfo.phoneNo)}}</span>
-    </mt-cell>
-    <div v-for="item in accountInfo.thirdPartyAccount" :key="item.title">
-      <mt-cell :title=item.title is-link>
-        <span v-if="item.bound" class="bound">已绑定</span>
-        <span v-else class="bound" style="color:#409EFF;">未绑定</span>
+  <el-container>
+    <el-header>
+      <header-bar header-title="个人资料"></header-bar>
+    </el-header>
+    <el-main>
+      <p type="info">基础信息</p>
+      <mt-cell title="头像" is-link @click.native="actionSheet">
+        <img v-if="update" :src="profileImgUrl" class="round_icon" />
       </mt-cell>
-    </div>
-  </el-main>
-  <mt-actionsheet
-    :actions="actions"
-    v-model="sheetVisible">
-  </mt-actionsheet>
-  <input ref="filElem" type="file" style="display:none" class="upload-file" @change="getFile">
-</el-container>
+          <mt-cell title="用户名" is-link>
+        <span style="color:#909399;">{{accountInfo.nickName}}</span>
+      </mt-cell>
+      <mt-cell title="收货地址" is-link />
 
+      <p type="info" class="mt-4">账号绑定</p>
+      <mt-cell title="手机" is-link to="/p_info/modifyPhoneNo">
+        <span style="color:#909399;">{{replacePhoneNo(accountInfo.phoneNo)}}</span>
+      </mt-cell>
+      <div v-for="item in thirdpartyBound" :key="item.providerName">
+        <mt-cell :title="item.providerName" is-link>
+          <span v-if="item.bound" class="bound">已绑定</span>
+          <span v-else class="bound" style="color:#409EFF;">未绑定</span>
+        </mt-cell>
+      </div>
+    </el-main>
+    <mt-actionsheet
+      :actions="actions"
+      v-model="sheetVisible">
+    </mt-actionsheet>
+    <input ref="filElem" type="file" style="display:none" class="upload-file" @change="getFile">
+  </el-container>
   </div>
 </template>
 
@@ -47,6 +46,7 @@
       },
       data () {
         return {
+          thirdpartyBound: [],
           update: true,
           profileImgUrl: "users/user_profile.jpg",
           accountInfo:{},
@@ -75,8 +75,8 @@
         return this.SERVER_BASE_URL + "/image/" + pic;
       },
       getAccountInfo () {
-        var that = this;
-        var req_map = that.HOST + "/account/id/1";
+        let that = this;
+        let req_map = that.HOST + "/account/id/1";
         that.$axios.get(req_map).then((resp) => {
           if(resp.data.success){
             that.accountInfo = resp.data.content;
@@ -120,10 +120,9 @@
         }
         // let url = getObjectURL(this.$refs.filElem.files[0]);
         // TODO 应该用canvas编辑和保存图片
-        var uri = ''
+        let uri = ''
 				let form = new FormData();
         form.append('file', img, img.name);
-        console.log(form);
         let req_map = that.HOST + "/uploads/profile";
 				that.$axios.post(req_map, form, {
 					headers: {
@@ -136,20 +135,29 @@
 					console.log(err);
 				});
       },
+      getThirdpartyServiceProviderBound(){
+        let that = this;
+        let req_map = that.HOST + "/account/bound/1";
+        that.$axios.get(req_map).then((resp) => {
+          if(resp.data.success){
+            that.thirdpartyBound = resp.data.content;
+          }else{that.$toast(resp.data.msg);}
+        });
+      }
     },
     created(){
       this.getAccountInfo();
+      this.getThirdpartyServiceProviderBound();
     },
     watch: {
       accountInfo(val,oldVal) {
         this.$nextTick(() => {
-        this.profileImgUrl = this.genPicURL(this.accountInfo.headPhotoAddress);
-        this.update = true;
-      })
+          this.profileImgUrl = this.genPicURL(this.accountInfo.headPhotoAddress);
+          this.update = true;
+        })
+      }
     }
   }
-  }
-
 </script>
 
 <style scoped>

@@ -1,15 +1,13 @@
 <template>
-    <ul class="list-group list-group-flush">
-      <div v-for="item in merchants" :key="item.title">
-        <!-- <div v-if="filters.flrfav.includes(item.fav) && filters.flrsc.includes(item.selfCollectable) && filters.flrtype.includes(item.type)"> -->
-            <li class="list-group-item">
-                  <div @click="routerTo(item)">
-                    <merchant-display :merchant="item"></merchant-display>
-                  </div>
-              </li>
-        <!-- </div> -->
-      </div>
-    </ul>
+  <ul class="list-group list-group-flush">
+    <div v-for="item in merchants" :key="item.title">
+      <li class="list-group-item">
+        <div @click="routerTo(item)">
+          <merchant-display :merchant="item"></merchant-display>
+        </div>
+      </li>
+    </div>
+  </ul>
 </template>
 
 <script>
@@ -61,9 +59,7 @@ export default {
       }
     },
     routerTo(merchant){
-      // this.$router.push({path: '/p_info/choosing', query:{id: "0010"}});  
       this.$router.push({path: '/p_info/choosing', query:{id: merchant.id}});  
-      // this.$router.push({ name: 'choosing', params: { merchant }});
     },
   },
   created () {

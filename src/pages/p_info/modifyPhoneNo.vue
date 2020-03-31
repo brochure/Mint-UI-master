@@ -4,7 +4,7 @@
         <el-header>
         <header-bar header-title="修改手机"></header-bar>
       </el-header>
-      <p class="text-center text-nowrap small" style="">请输入手机号码</p>
+      <p style="text-align:center;font-size:0.9em;">请输入手机号码</p>
     <el-row>
       <el-col :span="22" :offset="1">
         <mt-field placeholder="手机号码" type="tel" v-model="phoneNo"></mt-field>
@@ -16,17 +16,14 @@
         </el-col>
       </el-row>
     </el-container>
-
-
   </div>
 </template>
 
 <style scoped>
-
 </style>
 
 <script>
-  import HeaderBar from '../../components/HeaderBar.vue'
+import HeaderBar from '../../components/HeaderBar.vue'
 export default{
       name: 'index',
       components:{
@@ -53,7 +50,7 @@ export default{
       },
       methods:{
         savePhoneNo(){
-          var url = this.HOST + "/modifyPhoneNo";
+          var url = this.HOST + "/account/modifyPhoneNo";
           var that = this;
           var param = {phoneNo: that.phoneNo};
           that.$axios({
@@ -61,8 +58,10 @@ export default{
             method: 'POST',
             data: param
           }).then(resp => {
+            console.log(resp);
+            
             if(resp.data.success){
-              // that.$toast(resp.data.msg);
+              that.$toast("修改成功");
               that.prev();
             }else{
               that.$toast(resp.data.msg);

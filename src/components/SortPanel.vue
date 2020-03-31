@@ -23,37 +23,32 @@
 import MerchantsList from '../components/MerchantsList.vue'
 
 export default {
-    props: {
-        merchants: {
-            type: Array,
-            default:function(){
-                return []
-            }
-        }
-        // sortkey: {
-        //     type: String,
-        //     default: "zh"
-        // },
-    },
-    data () {
-        return {
-            sortkey: "zh",
-            // allMerchants: [],
-            activeIndex: "1",
-            dictSort: {
-                "zh":"综合排序",
-                "hp":"好评优先",
-                "qs":"起送价最低",
-                "psk":"配送最快",
-                "psf":"配送费最低",
-                "rja":"人均从低到高",
-                "rjb":"人均从高到低",
-                "ty":"综合排序",
-                "jl": "综合排序",
-                "xl": "综合排序"
-            },
-        }
-    },
+  props: {
+    merchants: {
+      type: Array,
+      default:function(){
+          return []
+      }
+    }
+  },
+  data () {
+    return {
+        sortkey: "zh",
+        activeIndex: "1",
+        dictSort: {
+            "zh":"综合排序",
+            "hp":"好评优先",
+            "qs":"起送价最低",
+            "psk":"配送最快",
+            "psf":"配送费最低",
+            "rja":"人均从低到高",
+            "rjb":"人均从高到低",
+            "ty":"综合排序",
+            "jl": "综合排序",
+            "xl": "综合排序"
+        },
+    }
+  },
   methods: {
     handleSelect(key, keyPath) {      
       switch(keyPath[0]){
@@ -68,42 +63,12 @@ export default {
           break;
       }
     },
-    // getAllMerchants() {      
-    //   var that = this;
-    //   var url = that.HOST + "/merchant";
-    //   that.$axios.get(url).then((resp) => {   
-    //     if(resp.data.success) {
-    //       that.allMerchants = resp.data.content;
-    //     }else{that.$toast(resp.data.msg);}
-    //   });
-    // },
   },
   components: {
     MerchantsList
   },
   created(){
-    // this.getAllMerchants();
   },
-//   watch: {
-//     allMerchants(val,oldVal) {
-//       var that = this;
-//       that.$nextTick(() => {
-//         console.log("nextTick");
-//         let filters = {
-//                 flrfav: [true,false],
-//                 flrsc: [true, false],
-//                 flrtype: [0, 1]
-//             },
-//         var tmpMerchants = new Array();
-//         val.forEach(element => {
-//           if(filters.flrfav.includes(element.fav)&&filters.flrsc.includes(element.selfCollectable)&&filters.flrtype.includes(element.type)){
-//             tmpMerchants.push(element);
-//           }
-//         });
-//         that.merchants2 = tmpMerchants;
-//       });
-//     }
-//   }
 }
 </script>
 

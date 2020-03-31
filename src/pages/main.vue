@@ -38,7 +38,7 @@
         <el-row style="margin-top:20px;">
           <el-carousel height="100px" trigger="click">
             <el-carousel-item v-for="item in banners" :key="item.pic">
-              <img :src="genPicURL(item.pic)" class="banner"/>
+              <img :src="genPicURL(item.imgAddress)" class="banner"/>
             </el-carousel-item>
           </el-carousel>
         </el-row>
@@ -73,10 +73,10 @@
             <p class="small font-weight-light" style="float:right;margin-top:2px;">更多 ></p>
             </div>
             <div class="card col-4 p-0 d-inline-block card-ad" v-for="item in discountContent" :title="item.title" :key="item.title">
-              <img :src="genPicURL(item.pic)" class="card-img-top discountimg">
+              <img :src="genPicURL(item.imgAddress)" class="card-img-top discountimg">
                 <div class="card-body p-2">
                   <p class="card-title text-nowrap small m-1">{{item.title}}</p>
-                  <p class="card-text text-muted mt-1"><del class="small">¥{{item.origin}}</del><a href="#" class="badge badge-info mt-1" style="float:right;">1元抢</a></p>
+                  <p class="card-text text-muted mt-1"><del class="small">¥{{item.originPrice}}</del><a href="#" class="badge badge-info mt-1" style="float:right;">1元抢</a></p>
                 </div>
             </div>
           </div>
@@ -329,7 +329,7 @@ export default {
     },
     getAllMerchants() {      
       var that = this;
-      var url = that.HOST + "/merchant";
+      var url = that.HOST + "/merchant/all";
       that.$axios.get(url).then((resp) => {   
         if(resp.data.success) {
           that.allMerchants = resp.data.content;
@@ -359,8 +359,10 @@ export default {
     },
     getDiscounts () {
       var that = this;
-      var req_map = that.HOST + "/discounts";
+      var req_map = that.HOST + "/bannerdiscounts";
       that.$axios.get(req_map).then((resp) => {
+        console.log(resp);
+        
         if(resp.data.success){
           that.discountContent = resp.data.content;
         }else{that.$toast(resp.data.msg);}
@@ -377,9 +379,6 @@ export default {
     this.dfNavHeight = document.querySelector('.el-tabs__nav').scrollHeight;
     this.sbOffsetTop = document.querySelector('#rowsb').offsetTop;
     this.sbNavHeight = document.querySelector('#divsb').scrollHeight;
-    console.log(this.dfOffsetTop);
-    console.log(this.dfNavHeight);
-    
     window.addEventListener('scroll', this.handleTabFix, true);
   },
   beforeRouteLeave (to, from, next) {

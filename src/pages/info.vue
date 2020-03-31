@@ -137,11 +137,9 @@
     }
 </style>
 <script>
-import { Toast} from 'mint-ui'
+import {Toast} from 'mint-ui'
   export default{
     name:'info',
-    components: {
-    },
     data () {
       return {
         profileImgUrl: "",
@@ -162,68 +160,59 @@ import { Toast} from 'mint-ui'
             icon:'gift',
             link: '',
             extra: '得15元'
-           },
-           { title: '商务合作',
-            icon:'suitcase',
-            link: '',
-            extra: ''
-           },
-           { title: '办卡有礼',
-            icon:'cards',
-            link: '',
-            extra: ''
-           },
-           { title: '3小时公益',
-            icon:'pubbenefit',
-            link: '',
-            extra: ''
-           },
-           { title: '企业订餐',
-            icon:'building',
-            link: '',
-            extra: ''
-           },
-           { title: '话费充值',
-            icon:'bill',
-            link: '',
-            extra: '99折起'
-           },
+          },
+          { title: '商务合作',
+          icon:'suitcase',
+          link: '',
+          extra: ''
+          },
+          { title: '办卡有礼',
+          icon:'cards',
+          link: '',
+          extra: ''
+          },
+          { title: '3小时公益',
+          icon:'pubbenefit',
+          link: '',
+          extra: ''
+          },
+          { title: '企业订餐',
+          icon:'building',
+          link: '',
+          extra: ''
+          },
+          { title: '话费充值',
+          icon:'bill',
+          link: '',
+          extra: '99折起'
+          },
         ],
         urlprofile: "/p_info/profile",
         urlcouponspot: "/p_info/couponSpot",
         ncoupon: 6,
         balanceprm: 20,
-        // userNickName: 'CheetoMan',
-        //popupVisible: true
-
       }
-
     },
     methods:{
-        //switchPopup(){
-          //this.popupVisible = !this.popupVisible;
-        //},
-        genPicURL(pic) {
-          return this.SERVER_BASE_URL + "/image/" + pic;
-        },
-        getAccountInfo () {
-          // var url = this.staticURL + "json/account_info.json";
-          var that = this;
-          var req_map = that.HOST + "/account/id/1";
-          that.$axios.get(req_map).then((resp) => {
-            if(resp.data.success){
-              that.accountInfo = resp.data.content;
-            }else{that.$toast(resp.data.msg);}
-        });
-        },
-        jumpto(link){
-          if(link==''){
-            //this.switchPopup();
-            this.$toast("功能开发中");
-          }else{
-            this.$router.push(link);
-          }
+      genPicURL(pic) {
+        return this.SERVER_BASE_URL + "/image/" + pic;
+      },
+      getAccountInfo () {
+        var that = this;
+        var req_map = that.HOST + "/account/id/1";
+        that.$axios.get(req_map).then((resp) => {
+          if(resp.data.success){
+            that.accountInfo = resp.data.content;
+          }else{that.$toast(resp.data.msg);}
+      });
+      },
+      jumpto(link){
+        if(link==''){
+          this.$toast("功能开发中");
+        }else{
+          this.$router.push(link);
         }
+      }
     },
     created(){
       this.getAccountInfo();
@@ -232,15 +221,12 @@ import { Toast} from 'mint-ui'
       // .mintui color == blue
     },
     watch: {
-      accountInfo(val,oldVal) {
+      accountInfo(val,oldVal) {        
         this.$nextTick(() => {
-          // console.log("nextTick");
-          // console.log(this.accountInfo.pic);
           //当数据到来的时候， DOM 更新循环结束之后，立即执行函数
-          this.profileImgUrl = this.genPicURL(this.accountInfo.pic);
+          this.profileImgUrl = this.genPicURL(this.accountInfo.headPhotoAddress);
         })
+      }
     }
-  }  
-
   }
 </script>
