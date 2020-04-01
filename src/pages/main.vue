@@ -360,9 +360,7 @@ export default {
     getDiscounts () {
       var that = this;
       var req_map = that.HOST + "/bannerdiscounts";
-      that.$axios.get(req_map).then((resp) => {
-        console.log(resp);
-        
+      that.$axios.get(req_map).then((resp) => {        
         if(resp.data.success){
           that.discountContent = resp.data.content;
         }else{that.$toast(resp.data.msg);}

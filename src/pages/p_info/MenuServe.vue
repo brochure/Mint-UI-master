@@ -5,14 +5,14 @@
         <el-menu>
           <el-menu-item index="0" class="text-wrap" style="padding:0px;">
             <!-- :to="{path:'/p_info/choosing/menuServe',query:{id:merchant.id}}" -->
-            <router-link :to="{path:'/p_info/choosing/menuServe/menuBlock'}" replace>
+            <!-- <router-link :to="{path:'/p_info/choosing/menuServe/menuBlock'}" replace> -->
             <p style="font-size:0.8em;line-height:1.1em;padding-top:20px;padding-bottom:10px;">
               <i class="el-icon-location" style="margin-right:0px;"></i>优惠</p>
-            </router-link>
+            <!-- </router-link> -->
           </el-menu-item>
-          <el-menu-item :index="item.index" class="text-wrap" style="padding:0px;" v-for="item in menu" :key="item.index">
-            <router-link :to="{path:'/p_info/choosing/menuServe/menuBlock',query:{id:$route.query.id,contents:item.contents,basket:basket,cart:cart}}" replace>
-            <p style="font-size:0.8em;line-height:1.1em;padding-top:20px;padding-bottom:10px;">{{item.title}}</p>
+          <el-menu-item :index="String(item.ordinal)" class="text-wrap" style="padding:0px;" v-for="item in menu" :key="item.ordinal">
+            <router-link :to="{path:'/p_info/choosing/menuServe/menuBlock',query:{colOrdinal:item.ordinal}}" replace>
+              <p style="font-size:0.8em;line-height:1.1em;padding-top:20px;padding-bottom:10px;">{{item.title}}</p>
             </router-link>
           </el-menu-item>
         </el-menu>
@@ -47,22 +47,19 @@
 </template>
 
 <script>
+import Vue from 'vue'
 export default {
   data () {
     return {
-      menu: {},
+      menu: [],
       menu_count:0,
-      basket:{},
-      cart:{}
+      // basket:{},
+      // cart:{}
       // cartContent:[]
-      // numOfItems: 0
     }
   },
   methods: {
     submitCart(){
-      // console.log("basket");
-      // console.log(this.basket);
-      
       var that = this;
       // var cartContent = new Array();
       // for (var key in that.basket) {
@@ -76,14 +73,12 @@ export default {
       // console.log("cartContent");
       // console.log(cartContent);
       
-      var url = that.HOST + "/submitCart";
+      let url = that.HOST + "/submitCart";
       // console.log(cartContent);
-      console.log(that.$route.query.id);
-      
-      var param = {
-        mid: that.$route.query.id,
-        contents: this.basket
-        };
+      let param = {
+        mid: Vue.prototype.$merchantId,
+        contents: Vue.prototype.$basket
+      };
       that.$axios({
         url: url,
         method: 'POST',
@@ -91,28 +86,12 @@ export default {
       }).then(resp => {
         if(resp.data.success){
           that.$router.push("/p_info/cart");
-        }else{
-          that.$toast(resp.data.msg);
-        }
-      }).catch(err =>{
-        console.log(err);
-      })
-    },
-    jumpto(link){
-      if(link==''){
-        Toast({
-          message: '功能开发中',
-          position: 'middle',
-          duration: 1000
-        });
-      }else{
-        this.$router.push(link);
-      }
+        }else{that.$toast(resp.data.msg);}
+      }).catch(err =>{console.log(err);})
     },
     receive(param){
       // console.log("recieve");
       // console.log(param);
-      // console.log(this.basket);
       this.menu_count += param.amount;      
       if(this.basket[param.title] == null){
         this.basket[param.title] = {
@@ -125,55 +104,82 @@ export default {
       }
     },
     getMenu(){
-      var that = this;
-      var req_map = that.HOST + "/getMenu";
-      var param = {id: that.$route.query.id};
-      that.$axios({
-          url: req_map,
-          method: 'POST',
-          data: param
-      }).then(resp => {
-      if(resp.data.success){        
-          that.menu = resp.data.content;
-      }else{that.$toast(resp.data.msg);}
-      }).catch(err =>{
-        that.$toast(err.data);
-      });
-    },
-    getCart(){
-      var that = this;
-      var req_map = that.HOST + "/getCart";
-      var param = {id: that.$route.query.id};
+      let that = this;
+      let req_map = that.HOST + "/order/getMenu";
+      let param = {merchantId: Vue.prototype.$merchantId};
       that.$axios({
           url: req_map,
           method: 'POST',
           data: param
       }).then(resp => {
         console.log(resp);
-        
-      if(resp.data.success){   
-        that.cart = resp.data.content;
-      }else{that.$toast(resp.data.msg);}
+      if(resp.data.success){
+        let respContent = resp.data.content;
+        that.menu = respContent;
+        Vue.prototype.$menu = respContent;
+        console.log("Vue.prototype.$menu");
+        console.log(Vue.prototype.$menu);
+      }else{
+          that.$toast(resp.data.msg);
+        }
       }).catch(err =>{
         that.$toast(err.data);
       });
-    }
-  },
-  components: {
-
+    },
+    getCart(){
+      let that = this;
+      let req_map = that.HOST + "/order/getCart";
+      let param = {
+        accountId: 1,
+        merchantId: Vue.prototype.$merchantId
+        };
+      that.$axios({
+          url: req_map,
+          method: 'POST',
+          data: param
+      }).then(resp => {
+        console.log("getCart");
+        console.log(resp);
+        if(resp.data.success){
+          Vue.prototype.$cart = resp.data.content;
+        }else{that.$toast(resp.data.msg);}
+        }).catch(err =>{
+          that.$toast(err.data);
+        });
+      },
+      getMerchantCart(){
+        let that = this;
+        let req_map = that.HOST + "/order/getMerchantCart";
+        let param = {
+          accountId: 1,
+          merchantId: Vue.prototype.$merchantId
+          };
+        that.$axios({
+          url: req_map,
+          method: 'POST',
+          data: param
+        }).then(resp => {
+          console.log("getMerchantCart");
+          console.log(resp);
+          if(resp.data.success){
+            Vue.prototype.$merchantCart = resp.data.content;
+          }else{that.$toast(resp.data.msg);}
+          }).catch(err =>{
+            that.$toast(err.data);
+        });
+      }
   },
   created(){
     this.getMenu();
     this.getCart();
+    this.getMerchantCart();
   },
   watch:{
     // menu(val,oldVal) {
     //   this.$nextTick(() => {
-    //     console.log("nextTick");
-    //     console.log(this.menu);
-    //     //当数据到来的时候， DOM 更新循环结束之后，立即执行函数
-    //     $route.meta.df_id = that.$route.query.id;
-    //     $route.meta.df_contents = menu[0];
+    //     Vue.prototype.$menu = val;
+    //     console.log("watch menu:");
+    //     console.log(Vue.prototype.$menu);
     //   })
     // }
   }

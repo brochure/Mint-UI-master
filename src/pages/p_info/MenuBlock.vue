@@ -1,17 +1,17 @@
 <template>
   <div>
-<!-- <h3>{{$route.query.contents[0].title}}</h3> -->
 <!-- <ul
   v-infinite-scroll="loadMore"
   infinite-scroll-disabled="loading"
   infinite-scroll-distance="10">
   <li v-for="item in $route.query.contents" :key="item.index">{{ item.title }}</li>
 </ul> -->
-<menu-list :mid="$route.query.id" :menulist="$route.query.contents" :basket="$route.query.basket" :cart="$route.query.cart"></menu-list>
+    <menu-list :colOrdinal="$route.query.colOrdinal"></menu-list>
   </div>
 </template>
 
 <script>
+import Vue from 'vue'
 import MenuList from '../../components/MenuList.vue'
 export default {
   data () {

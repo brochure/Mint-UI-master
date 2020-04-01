@@ -4,7 +4,7 @@
       <el-header>
       <el-row type="flex" justify="space-between" style="margin-top:10px;">
           <el-col :span="21">
-            <el-input :autofocus="true" :placeholder="phcontent" v-model="iptContent" @change="searchCmmd" class="searchClass">
+            <el-input :autofocus="true" :placeholder="phcontent" v-model.trim="iptContent" @change="searchCmmd" class="searchClass">
                 <el-button slot="prepend" icon="el-icon-search" style="width:30px;margin-left:-27px;"></el-button>
             </el-input>
           </el-col>

@@ -18,7 +18,7 @@
       <el-main>
         <el-tabs v-model="activeName" @tab-click="handleClick" :stretch="true">
           <el-tab-pane :span="8" name="first">
-            <span slot="label"><router-link :to="{path:'/p_info/choosing/menuServe',query:{id:merchant.id}}" replace>点餐</router-link></span>
+            <span slot="label"><router-link :to="{path:'/p_info/choosing/menuServe'}" replace>点餐</router-link></span>
           </el-tab-pane>
           <el-tab-pane :span="8" name="second">
             <span slot="label"><router-link to="/p_info/choosing/commentRate" replace>评价</router-link></span>
@@ -38,6 +38,7 @@
 </template>
 
 <script>
+import Vue from 'vue'
   export default{
     name: 'choosing',
     data () {
@@ -68,7 +69,6 @@
         }).then(resp => {
         if(resp.data.success){
             that.merchant = resp.data.content;
-            // that.showResult = true;
         }else{that.$toast(resp.data.msg);}
         }).catch(err =>{
           that.$toast(err.data);
@@ -83,6 +83,8 @@
       prev(){this.$router.go(-1)}
     },
     created(){
+      Vue.prototype.$merchantId = this.$route.query.id;
+      Vue.prototype.$basket = [];
       this.getMerchantInfo();
       // this.styleObject.background = this.genPicURL('canteen_bg/bg_mcd.jpg');          
     }

@@ -48,7 +48,7 @@
         return {
           thirdpartyBound: [],
           update: true,
-          profileImgUrl: "users/user_profile.jpg",
+          profileImgUrl: "",
           accountInfo:{},
           sheetVisible: false,
           actions: [{

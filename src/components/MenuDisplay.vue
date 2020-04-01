@@ -1,22 +1,22 @@
 <template>
   <el-row type="flex">
       <el-col :span="6">
-        <img :src="genPicURL(meal.pic)" class="logo">
+        <img :src="genPicURL(menuItem.imgAddress)" class="logo">
       </el-col>
       <el-col :span="18" :offset="2">
         <el-row>
-          <span><p style="font-size:0.86em;line-height:1.2em;">{{meal.title}}</p></span>
+          <span><p style="font-size:0.86em;line-height:1.2em;">{{menuItem.title}}</p></span>
         </el-row>
           <el-row style="margin-top:-20px;">
-                <!-- <li class="list-inline-item"><i class="mintui mintui-star" style="color:#ec6800;"></i><small style="color:#ec6800;">{{merchant.rate}}</small></li> -->
-                <small class="text-muted">月售{{meal.month_sold}}</small>
+            <!-- <li class="list-inline-item"><i class="mintui mintui-star" style="color:#ec6800;"></i><small style="color:#ec6800;">{{merchant.rate}}</small></li> -->
+            <small class="text-muted">月售{{menuItem.monthSold}}</small>
           </el-row>
           <el-row>
             <el-col :span="5">
-                <small class="text-muted">¥{{meal.price}}</small>
+              <small class="text-muted">¥{{menuItem.price}}</small>
             </el-col>
             <el-col :span="2" :pull="6">
-              <div @click="main_log(-1)">
+              <div @click="inrement(-1)">
                 <mt-palette-button content="-" direction="rt" 
               :radius="80" ref="target_1" mainButtonStyle="font-size:2.8em;color:#fff;background-color:#26a2ff;transform:scale(0.35,0.35);" style="left:90px;top:-40px;">
                 <div class="my-icon-button indexicon icon-popup" @touchstart="sub_log(1)"></div>
@@ -28,10 +28,12 @@
             </el-col>
             <el-col :span="2">
               <div @click="main_log">
+              <div @click="inrement(1)">
               <mt-palette-button content="+" direction="rt"
               :radius="80" ref="target_1" mainButtonStyle="font-size:2.8em;color:#fff;background-color:#26a2ff;transform:scale(0.35,0.35);" style="left:90px;top:-40px;">
                 <div class="" @touchstart="sub_log(1)"></div>
               </mt-palette-button>
+              </div>
               </div>
             </el-col>
         </el-row>
@@ -40,23 +42,12 @@
 </template>
 
 <script>
+import Vue from 'vue'
 import { PaletteButton } from 'mint-ui';
 
 export default {
   props: {
-    cart:{
-      type: Object,
-      default:function(){
-        return []
-      }
-    },
-    basket:{
-      type: Object,
-      default:function(){
-        return []
-      }
-    },
-    meal:{
+    menuItem:{
       type: Object,
       default() {
         return {};
@@ -66,33 +57,41 @@ export default {
   data () {
     return {
       amt: 0,
+      itemOrdinal: 0,
+      colOrdinal: 0,
+      merchantCart: []
     }
   },
   methods: {
-    main_log(evt) {
-      console.log('main_log', evt);
-      this.parabola(evt);
-      
-      if((this.amt+1)>=0){
-        var param = {
-          title:this.meal.title,
-          amount:1,
-          pic:this.meal.pic,
-          price:this.meal.price
-        }
-        this.$parent.addCount(param);
-        this.amt += 1;
+    inrement(val){
+      if((this.amt+val) >= 0){
+        // var param = {
+        //   title:this.menuItem.title,
+        //   amount:val,
+        //   imgAddress:this.menuItem.imgAddress,
+        //   price:this.menuItem.price
+        // }
+        // this.$parent.addCount(param);
+        this.amt += val;
+        Vue.prototype.$merchantCart.forEach(element => {
+          if(element.colOrdinal==this.colOrdinal&&element.itemOrdinal==this.itemOrdinal){
+            element.amount += val;
+          }
+        });
       }
+      console.log(Vue.prototype.$merchantCart);
+      
+    },
+    main_log(evt) {
+      this.parabola(evt);
     },
     sub_log(val) {
-      console.log('sub_log', val);
       this.$refs.target_1.collapse();
     },
     parabola(evt){
       var ball = document.createElement("div"); 
       ball.setAttribute("id","ball");
       document.body.appendChild(ball);
-
       // var $ball = document.getElementById('ball');
       // $ball.style.hidden="";
       console.log(evt.pageX,evt.pageY)
@@ -107,32 +106,47 @@ export default {
     },
     genPicURL(pic) {
       return this.SERVER_BASE_URL + "/image/" + pic;
+    },
+    stringOrObjectIsNull(s){
+      return s == null || JSON.stringify(s) == "{}";
     }
   },
   created(){
-    this.amt=0;    
-    if (this.basket==null || JSON.stringify(this.basket) == "{}"){      
-      console.log(this.cart);
-      if(this.cart!=null && JSON.stringify(this.cart) != "{}"){        
-        var carts = this.cart.contents;
-        carts.forEach(element => {
-          if(element.title==this.meal.title){
-            for(let i=0;i<element.amount;i++){
-              let param = {
-                title:this.meal.title,
-                amount:1,
-                pic:this.meal.pic,
-                price:this.meal.price
-              }
-              this.$parent.addCount(param);
-              this.amt += 1;
-            }
-          }
-        });
-      }
-    }else{
-      this.amt = this.basket[this.meal.title].amount;
-      }
+    console.log("Vue.prototype.$merchantCart in MenuDisplay");
+    console.log(Vue.prototype.$merchantCart);
+    console.log(this.menuItem);
+    this.itemOrdinal = this.menuItem.ordinal;
+    this.colOrdinal = this.menuItem.colOrdinal;
+    this.merchantCart = Vue.prototype.$merchantCart;
+    if(!this.stringOrObjectIsNull(this.merchantCart)){
+      this.merchantCart.forEach(element => {
+        if(element.colOrdinal==this.colOrdinal && element.itemOrdinal==this.itemOrdinal){
+          this.amt = element.amount;
+        }
+      });
+    }
+
+    // if (this.basket==null || JSON.stringify(this.basket) == "{}"){      
+    //   if(Vue.prototype.$cart!=null && JSON.stringify(Vue.prototype.$cart) != "{}"){        
+    //     // var carts = this.cart.contents;
+    //     Vue.prototype.$cart.forEach(element => {
+    //       if(element.title==this.menuItem.title){
+    //         for(let i=0;i<element.amount;i++){
+    //           let param = {
+    //             title:this.menuItem.title,
+    //             amount:1,
+    //             imgAddress:this.menuItem.imgAddress,
+    //             price:this.menuItem.price
+    //           }
+    //           this.$parent.addCount(param);
+    //           this.amt += 1;
+    //         }
+    //       }
+    //     });
+    //   }
+    // }else{
+    //     this.amt = this.basket[this.menuItem.title].amount;
+    //   }
   }
 }
 </script>
