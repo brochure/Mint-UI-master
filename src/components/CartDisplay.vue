@@ -1,7 +1,7 @@
 <template>
   <el-row type="flex">
       <el-col :span="6">
-        <img :src="genPicURL(meal.pic)" class="logo">
+        <img :src="genPicURL(meal.imgAddress)" class="logo">
       </el-col>
       <el-col :span="18" :offset="2">
         <el-row>
@@ -34,18 +34,9 @@ export default {
   },
   data () {
     return {
-      // title: "MerchantDisplay",
     }
   },
   methods: {
-    main_log(val) {
-      // console.log('main_log', val);
-      this.$parent.addCount(val);
-    },
-    sub_log(val) {
-      console.log('sub_log', val);
-      this.$refs.target_1.collapse();
-    },
     genPicURL(pic) {
       return this.SERVER_BASE_URL + "/image/" + pic;
     }

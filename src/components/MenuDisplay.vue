@@ -59,28 +59,19 @@ export default {
       amt: 0,
       itemOrdinal: 0,
       colOrdinal: 0,
-      merchantCart: []
+      // merchantCart: []
     }
   },
   methods: {
     inrement(val){
       if((this.amt+val) >= 0){
-        // var param = {
-        //   title:this.menuItem.title,
-        //   amount:val,
-        //   imgAddress:this.menuItem.imgAddress,
-        //   price:this.menuItem.price
-        // }
-        // this.$parent.addCount(param);
         this.amt += val;
         Vue.prototype.$merchantCart.forEach(element => {
           if(element.colOrdinal==this.colOrdinal&&element.itemOrdinal==this.itemOrdinal){
             element.amount += val;
           }
         });
-      }
-      console.log(Vue.prototype.$merchantCart);
-      
+      }      
     },
     main_log(evt) {
       this.parabola(evt);
@@ -112,41 +103,23 @@ export default {
     }
   },
   created(){
-    console.log("Vue.prototype.$merchantCart in MenuDisplay");
+    console.log("MenuDisplay Vue.prototype.$merchantCart");
     console.log(Vue.prototype.$merchantCart);
-    console.log(this.menuItem);
+    
+    
     this.itemOrdinal = this.menuItem.ordinal;
     this.colOrdinal = this.menuItem.colOrdinal;
-    this.merchantCart = Vue.prototype.$merchantCart;
-    if(!this.stringOrObjectIsNull(this.merchantCart)){
-      this.merchantCart.forEach(element => {
+    // this.merchantCart = Vue.prototype.$merchantCart;
+    if(!this.stringOrObjectIsNull(Vue.prototype.$merchantCart)){
+      // for(int i=0;i<)
+      Vue.prototype.$merchantCart.forEach(element => {
         if(element.colOrdinal==this.colOrdinal && element.itemOrdinal==this.itemOrdinal){
           this.amt = element.amount;
+          console.log("amt");
+          console.log(element.amount);
         }
       });
     }
-
-    // if (this.basket==null || JSON.stringify(this.basket) == "{}"){      
-    //   if(Vue.prototype.$cart!=null && JSON.stringify(Vue.prototype.$cart) != "{}"){        
-    //     // var carts = this.cart.contents;
-    //     Vue.prototype.$cart.forEach(element => {
-    //       if(element.title==this.menuItem.title){
-    //         for(let i=0;i<element.amount;i++){
-    //           let param = {
-    //             title:this.menuItem.title,
-    //             amount:1,
-    //             imgAddress:this.menuItem.imgAddress,
-    //             price:this.menuItem.price
-    //           }
-    //           this.$parent.addCount(param);
-    //           this.amt += 1;
-    //         }
-    //       }
-    //     });
-    //   }
-    // }else{
-    //     this.amt = this.basket[this.menuItem.title].amount;
-    //   }
   }
 }
 </script>

@@ -61,7 +61,7 @@ import Vue from 'vue'
       getMerchantInfo(){
         let that = this;
         let req_map = that.HOST + "/merchant/id";
-        let param = {id: that.$route.query.id};
+        let param = {id: Vue.prototype.$merchantId};
         that.$axios({
             url: req_map,
             method: 'POST',
@@ -69,9 +69,11 @@ import Vue from 'vue'
         }).then(resp => {
         if(resp.data.success){
             that.merchant = resp.data.content;
-        }else{that.$toast(resp.data.msg);}
+        }else{
+          // that.$toast(resp.data.msg);
+          }
         }).catch(err =>{
-          that.$toast(err.data);
+          // that.$toast(err.data);
         });
       },
       genPicURL(pic) {
@@ -83,7 +85,7 @@ import Vue from 'vue'
       prev(){this.$router.go(-1)}
     },
     created(){
-      Vue.prototype.$merchantId = this.$route.query.id;
+      // Vue.prototype.$merchantId = this.$route.query.id;
       Vue.prototype.$basket = [];
       this.getMerchantInfo();
       // this.styleObject.background = this.genPicURL('canteen_bg/bg_mcd.jpg');          

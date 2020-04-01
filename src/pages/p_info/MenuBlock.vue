@@ -6,7 +6,7 @@
   infinite-scroll-distance="10">
   <li v-for="item in $route.query.contents" :key="item.index">{{ item.title }}</li>
 </ul> -->
-    <menu-list :colOrdinal="$route.query.colOrdinal"></menu-list>
+    <menu-list :colOrdinal="parseInt($route.query.colOrdinal)"></menu-list>
   </div>
 </template>
 
@@ -20,12 +20,6 @@ export default {
     }
   },
   methods: {
-    addCount(param){
-      console.log("MenuBlock--");
-      this.addedMenu = param;
-      console.log(this.addedMenu);
-      this.$emit("addCount", param);
-    },
   },
   components: {
     MenuList

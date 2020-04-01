@@ -2,7 +2,7 @@
   <div>
     <el-row>
       <el-col :span="4">
-        <el-menu>
+        <el-menu default-active="1">
           <el-menu-item index="0" class="text-wrap" style="padding:0px;">
             <!-- :to="{path:'/p_info/choosing/menuServe',query:{id:merchant.id}}" -->
             <!-- <router-link :to="{path:'/p_info/choosing/menuServe/menuBlock'}" replace> -->
@@ -19,7 +19,7 @@
       </el-col>
       <el-col :span="20">
         <keep-alive>
-        <router-view @addCount="receive"></router-view>
+          <router-view></router-view>
         </keep-alive>
       </el-col>
     </el-row>
@@ -27,7 +27,7 @@
       <mt-tabbar fixed style="background:none;border:none;">
         <el-row>
           <el-col :span="3">
-          <el-badge :value="menu_count" class="item">
+          <el-badge :value="getTotalNum" class="item">
             <i class="mintui mintui-life" style="font-size:2em;"/>
           </el-badge>
           </el-col>
@@ -52,32 +52,35 @@ export default {
   data () {
     return {
       menu: [],
-      menu_count:0,
-      // basket:{},
-      // cart:{}
-      // cartContent:[]
+      // menu_count: 0,
     }
+  },
+  computed: {
+    getTotalNum() {
+      let totalNum = 0;
+      // this.merchantCart.forEach(element => {
+      //   totalNum += element.amount;
+      // });
+      // console.log(Vue.prototype.$merchantCart);
+      
+      return totalNum;
+      // return function(merch){
+      //   var acc = 0;
+      //   merch.forEach(element => {
+      //     acc += element.price * element.amount;
+      //   });
+      //   return acc;
+      // };
+    },
   },
   methods: {
     submitCart(){
-      var that = this;
-      // var cartContent = new Array();
-      // for (var key in that.basket) {
-      //   cartContent.push({
-      //     title:key,
-      //     price:that.basket[key].price,
-      //     pic:that.basket[key].pic,
-      //     amount:that.basket[key].amount,
-      //   })
-      // }
-      // console.log("cartContent");
-      // console.log(cartContent);
-      
-      let url = that.HOST + "/submitCart";
-      // console.log(cartContent);
+      let that = this;
+      let url = that.HOST + "/order/submitCart";
       let param = {
-        mid: Vue.prototype.$merchantId,
-        contents: Vue.prototype.$basket
+        accountId: 1,
+        merchantId: Vue.prototype.$merchantId,
+        merchantCart: Vue.prototype.$merchantCart
       };
       that.$axios({
         url: url,
@@ -86,22 +89,10 @@ export default {
       }).then(resp => {
         if(resp.data.success){
           that.$router.push("/p_info/cart");
-        }else{that.$toast(resp.data.msg);}
+        }else{
+          // that.$toast(resp.data.msg); //
+        }
       }).catch(err =>{console.log(err);})
-    },
-    receive(param){
-      // console.log("recieve");
-      // console.log(param);
-      this.menu_count += param.amount;      
-      if(this.basket[param.title] == null){
-        this.basket[param.title] = {
-            amount:param.amount,
-            pic:param.pic,
-            price:param.price
-          };
-      }else{
-        this.basket[param.title].amount += param.amount;
-      }
     },
     getMenu(){
       let that = this;
@@ -112,18 +103,15 @@ export default {
           method: 'POST',
           data: param
       }).then(resp => {
-        console.log(resp);
       if(resp.data.success){
         let respContent = resp.data.content;
         that.menu = respContent;
         Vue.prototype.$menu = respContent;
-        console.log("Vue.prototype.$menu");
-        console.log(Vue.prototype.$menu);
       }else{
-          that.$toast(resp.data.msg);
+          // that.$toast(resp.data.msg); //
         }
       }).catch(err =>{
-        that.$toast(err.data);
+        // that.$toast(err.data);
       });
     },
     getCart(){
@@ -138,13 +126,13 @@ export default {
           method: 'POST',
           data: param
       }).then(resp => {
-        console.log("getCart");
-        console.log(resp);
         if(resp.data.success){
           Vue.prototype.$cart = resp.data.content;
-        }else{that.$toast(resp.data.msg);}
+        }else{
+          // that.$toast(resp.data.msg); //
+          }
         }).catch(err =>{
-          that.$toast(err.data);
+          // that.$toast(err.data); //
         });
       },
       getMerchantCart(){
@@ -160,12 +148,14 @@ export default {
           data: param
         }).then(resp => {
           console.log("getMerchantCart");
-          console.log(resp);
           if(resp.data.success){
             Vue.prototype.$merchantCart = resp.data.content;
-          }else{that.$toast(resp.data.msg);}
+            console.log(Vue.prototype.$merchantCart.length);
+          }else{
+            // that.$toast(resp.data.msg);
+            }
           }).catch(err =>{
-            that.$toast(err.data);
+            // that.$toast(err.data);
         });
       }
   },

@@ -29,15 +29,6 @@ export default {
     }
   },
   methods: {
-    addCount(param){
-      // console.log("addCount in MenuList");
-      // console.log(param);
-      this.$parent.addCount(param);
-    },
-    routerTo(menu){
-      // this.$router.push({path: '/p_info/choosing', query:{id: merchant.id}});  
-      // this.$router.push({ name: 'choosing', params: { merchant }});
-    }
   },
   created(){
     Vue.prototype.$menu.forEach(element => {
@@ -45,8 +36,6 @@ export default {
         this.menuItemGroup = element.listMenuCol;
       }
     });
-    console.log("this.menuItemGroup");
-    console.log(this.menuItemGroup);
   },
   watch: {
     colOrdinal(val,oldVal) {

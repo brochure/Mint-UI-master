@@ -11,6 +11,7 @@
 </template>
 
 <script>
+import Vue from 'vue'
 import MerchantDisplay from '../components/MerchantDisplay.vue'
 export default {
   components: {
@@ -59,6 +60,7 @@ export default {
       }
     },
     routerTo(merchant){
+      Vue.prototype.$merchantId = merchant.id;
       this.$router.push({path: '/p_info/choosing', query:{id: merchant.id}});  
     },
   },

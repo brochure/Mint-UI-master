@@ -24,6 +24,7 @@ Vue.use(VueResource)
 Vue.prototype.SERVER_BASE_URL = 'http://localhost:8083/dmorder'
 Vue.prototype.HOST = '/dmorder'
 
+// Vue.prototype.$merchantCart = []
 
 // 引入全部组件 
 
