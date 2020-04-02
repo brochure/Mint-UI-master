@@ -27,7 +27,7 @@
       <mt-tabbar fixed style="background:none;border:none;">
         <el-row>
           <el-col :span="3">
-          <el-badge :value="getTotalNum" class="item">
+          <el-badge :value="totalNum" class="item">
             <i class="mintui mintui-life" style="font-size:2em;"/>
           </el-badge>
           </el-col>
@@ -38,7 +38,6 @@
           <el-col :span="4" :offset="4">
             <el-button @click="submitCart">去结算</el-button>
             <!-- <el-button><router-link to="/p_info/cart" >去结算</router-link></el-button> -->
-            <!-- <el-button><router-link :to="{path:'/p_info/cart',query:{basket:basket}}" >去结算</router-link></el-button> -->
           </el-col>
         </el-row>
       </mt-tabbar>
@@ -48,6 +47,8 @@
 
 <script>
 import Vue from 'vue'
+import{ mapGetters } from 'vuex'
+
 export default {
   data () {
     return {
@@ -56,22 +57,7 @@ export default {
     }
   },
   computed: {
-    getTotalNum() {
-      let totalNum = 0;
-      // this.merchantCart.forEach(element => {
-      //   totalNum += element.amount;
-      // });
-      // console.log(Vue.prototype.$merchantCart);
-      
-      return totalNum;
-      // return function(merch){
-      //   var acc = 0;
-      //   merch.forEach(element => {
-      //     acc += element.price * element.amount;
-      //   });
-      //   return acc;
-      // };
-    },
+    ...mapGetters(['totalNum']),
   },
   methods: {
     submitCart(){
@@ -80,7 +66,7 @@ export default {
       let param = {
         accountId: 1,
         merchantId: Vue.prototype.$merchantId,
-        merchantCart: Vue.prototype.$merchantCart
+        merchantCart: this.$store.getters.merchantCart
       };
       that.$axios({
         url: url,
@@ -90,7 +76,7 @@ export default {
         if(resp.data.success){
           that.$router.push("/p_info/cart");
         }else{
-          // that.$toast(resp.data.msg); //
+          that.$toast(resp.data.msg);
         }
       }).catch(err =>{console.log(err);})
     },
@@ -108,10 +94,10 @@ export default {
         that.menu = respContent;
         Vue.prototype.$menu = respContent;
       }else{
-          // that.$toast(resp.data.msg); //
+          that.$toast(resp.data.msg);
         }
       }).catch(err =>{
-        // that.$toast(err.data);
+        that.$toast(err.data);
       });
     },
     getCart(){
@@ -129,10 +115,10 @@ export default {
         if(resp.data.success){
           Vue.prototype.$cart = resp.data.content;
         }else{
-          // that.$toast(resp.data.msg); //
+          that.$toast(resp.data.msg);
           }
         }).catch(err =>{
-          // that.$toast(err.data); //
+          that.$toast(err.data);
         });
       },
       getMerchantCart(){
@@ -147,15 +133,13 @@ export default {
           method: 'POST',
           data: param
         }).then(resp => {
-          console.log("getMerchantCart");
           if(resp.data.success){
-            Vue.prototype.$merchantCart = resp.data.content;
-            console.log(Vue.prototype.$merchantCart.length);
+            this.$store.commit('updateMerchantCart', {merchantCart: resp.data.content});
           }else{
-            // that.$toast(resp.data.msg);
+            that.$toast(resp.data.msg);
             }
           }).catch(err =>{
-            // that.$toast(err.data);
+            that.$toast(err.data);
         });
       }
   },
@@ -165,13 +149,6 @@ export default {
     this.getMerchantCart();
   },
   watch:{
-    // menu(val,oldVal) {
-    //   this.$nextTick(() => {
-    //     Vue.prototype.$menu = val;
-    //     console.log("watch menu:");
-    //     console.log(Vue.prototype.$menu);
-    //   })
-    // }
   }
 }
 </script>
@@ -180,7 +157,7 @@ export default {
 #ball {
   width:12px;
   height:12px;
-  background: #5EA345;
+  background: rgb(61, 176, 230);
   border-radius: 50%;
   position: fixed;
   transition: left 1s linear, top 1s ease-in;

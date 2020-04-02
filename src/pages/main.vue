@@ -265,7 +265,7 @@
 #ball {
     width:12px;
     height:12px;
-    background: #5EA345;
+    background: rgb(61, 176, 230);
     border-radius: 50%;
     position: fixed;
     transition: left 1s linear, top 1s ease-in;
@@ -336,7 +336,9 @@ export default {
         }else{that.$toast(resp.data.msg);}
       });
     },
-    genPicURL(pic) {return this.SERVER_BASE_URL + "/image/" + pic;},
+    genPicURL(pic) {
+      return this.SERVER_BASE_URL + "/image/" + pic;
+    },
     jumpto(link){
       if(link==''){
         Toast({

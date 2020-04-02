@@ -43,6 +43,7 @@
 
 <script>
 import Vue from 'vue'
+import{ mapGetters } from 'vuex'
 import { PaletteButton } from 'mint-ui';
 
 export default {
@@ -59,19 +60,25 @@ export default {
       amt: 0,
       itemOrdinal: 0,
       colOrdinal: 0,
-      // merchantCart: []
     }
   },
   methods: {
-    inrement(val){
-      if((this.amt+val) >= 0){
-        this.amt += val;
-        Vue.prototype.$merchantCart.forEach(element => {
-          if(element.colOrdinal==this.colOrdinal&&element.itemOrdinal==this.itemOrdinal){
-            element.amount += val;
+    inrement(num){
+      if((this.amt+num) >= 0){
+        this.$store.commit('incrementMerchantCart', 
+          {
+            num: num,
+            itemOrdinal: this.itemOrdinal,
+            colOrdinal: this.colOrdinal
           }
-        });
-      }      
+        );        
+        this.amt = this.$store.getters.amountByOrdinals(
+          {
+            itemOrdinal: this.itemOrdinal,
+            colOrdinal: this.colOrdinal
+          }
+        );
+      }
     },
     main_log(evt) {
       this.parabola(evt);
@@ -85,7 +92,7 @@ export default {
       document.body.appendChild(ball);
       // var $ball = document.getElementById('ball');
       // $ball.style.hidden="";
-      console.log(evt.pageX,evt.pageY)
+      // console.log(evt.pageX,evt.pageY)
         ball.style.top = evt.pageY+'px';
         ball.style.left = evt.pageX+'px';
         ball.style.transition = 'left 0s, top 0s';
@@ -102,23 +109,16 @@ export default {
       return s == null || JSON.stringify(s) == "{}";
     }
   },
-  created(){
-    console.log("MenuDisplay Vue.prototype.$merchantCart");
-    console.log(Vue.prototype.$merchantCart);
-    
-    
+  created(){    
     this.itemOrdinal = this.menuItem.ordinal;
     this.colOrdinal = this.menuItem.colOrdinal;
-    // this.merchantCart = Vue.prototype.$merchantCart;
-    if(!this.stringOrObjectIsNull(Vue.prototype.$merchantCart)){
-      // for(int i=0;i<)
-      Vue.prototype.$merchantCart.forEach(element => {
-        if(element.colOrdinal==this.colOrdinal && element.itemOrdinal==this.itemOrdinal){
-          this.amt = element.amount;
-          console.log("amt");
-          console.log(element.amount);
+    if(!this.stringOrObjectIsNull(this.$store.getters.merchantCart)){
+      this.amt = this.$store.getters.amountByOrdinals(
+        {
+          itemOrdinal: this.itemOrdinal,
+          colOrdinal: this.colOrdinal
         }
-      });
+      );
     }
   }
 }
@@ -128,7 +128,7 @@ export default {
 #ball {
   width:12px;
   height:12px;
-  background: #5EA345;
+  background: rgb(61, 176, 230);
   border-radius: 50%;
   position: fixed;
   transition: left 1s linear, top 1s ease-in;

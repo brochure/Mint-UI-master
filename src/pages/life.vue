@@ -40,7 +40,7 @@ export default {
 #ball {
   width:12px;
   height:12px;
-  background: #5EA345;
+  background: rgb(61, 176, 230);
   border-radius: 50%;
   position: fixed;
   transition: left 1s linear, top 1s ease-in;

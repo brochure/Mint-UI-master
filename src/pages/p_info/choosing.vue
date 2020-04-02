@@ -70,23 +70,24 @@ import Vue from 'vue'
         if(resp.data.success){
             that.merchant = resp.data.content;
         }else{
-          // that.$toast(resp.data.msg);
+          that.$toast(resp.data.msg);
           }
         }).catch(err =>{
-          // that.$toast(err.data);
+          that.$toast(err.data);
         });
       },
       genPicURL(pic) {
+        if(pic==null||pic==''){
+          return null;
+        }
         return this.SERVER_BASE_URL + "/image/" + pic;
       },
       handleClick(tab, event) {
-        // console.log(tab, event);
+        console.log(tab, event);
       },
       prev(){this.$router.go(-1)}
     },
     created(){
-      // Vue.prototype.$merchantId = this.$route.query.id;
-      Vue.prototype.$basket = [];
       this.getMerchantInfo();
       // this.styleObject.background = this.genPicURL('canteen_bg/bg_mcd.jpg');          
     }
