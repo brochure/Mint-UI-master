@@ -31,7 +31,7 @@ export default {
   methods: {
   },
   created(){
-    Vue.prototype.$menu.forEach(element => {
+    this.$store.getters.menu.forEach(element => {
       if(element.ordinal==this.colOrdinal){
         this.menuItemGroup = element.listMenuCol;
       }
@@ -40,7 +40,7 @@ export default {
   watch: {
     colOrdinal(val,oldVal) {
       this.$nextTick(() => {
-        Vue.prototype.$menu.forEach(element => {
+        this.$store.getters.menu.forEach(element => {
           if(element.ordinal==val){
             this.menuItemGroup = element.listMenuCol;
           }

@@ -12,6 +12,9 @@ import 'element-ui/lib/theme-chalk/index.css'
 import './icons'
 import Vuex from 'vuex'
 Vue.use(Vuex);
+Vue.use(ElementUI)
+Vue.use(VueResource)
+Vue.use(Mint);
 // import source from './assets/js/source.js'
 // Vue.prototype.$source = source
 // import 'element-ui/lib/theme-default/index.css'
@@ -21,20 +24,17 @@ Vue.use(Vuex);
 Vue.prototype.staticURL = process.env.STATIC_URL
 Vue.prototype.$axios=axios;
 Vue.config.productionTip = false
-Vue.use(ElementUI)
-Vue.use(VueResource)
 Vue.prototype.SERVER_BASE_URL = 'http://localhost:8083/dmorder'
 Vue.prototype.HOST = '/dmorder'
-Vue.use(Mint);
 
 var store = new Vuex.Store({
 	state: {
 	  merchantCart: [],
-	  testState: 42.3,
+	  menu: [],
 	},
 	getters:{
-		testState: state=>state.testState,
 		merchantCart: state=>state.merchantCart,
+		menu: state=>state.menu,
 		totalNum: function(state){
 				let totalNum = 0;
 				state.merchantCart.forEach(element => {
@@ -52,7 +52,10 @@ var store = new Vuex.Store({
 	},
 	mutations: {
 		updateMerchantCart: (state, playload)=>{
-			state.merchantCart=playload.merchantCart;
+			state.merchantCart = playload.merchantCart;
+		},
+		updateMenu: (state, playload)=>{
+			state.menu = playload.menu;
 		},
 		incrementMerchantCart: (state, playload)=>{
 			let num = playload.num;

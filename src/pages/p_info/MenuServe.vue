@@ -10,7 +10,7 @@
               <i class="el-icon-location" style="margin-right:0px;"></i>优惠</p>
             <!-- </router-link> -->
           </el-menu-item>
-          <el-menu-item :index="String(item.ordinal)" class="text-wrap" style="padding:0px;" v-for="item in menu" :key="item.ordinal">
+          <el-menu-item :index="String(item.ordinal)" class="text-wrap" style="padding:0px;" v-for="item in $store.getters.menu" :key="item.ordinal">
             <router-link :to="{path:'/p_info/choosing/menuServe/menuBlock',query:{colOrdinal:item.ordinal}}" replace>
               <p style="font-size:0.8em;line-height:1.1em;padding-top:20px;padding-bottom:10px;">{{item.title}}</p>
             </router-link>
@@ -24,23 +24,24 @@
       </el-col>
     </el-row>
     <el-footer>
-      <mt-tabbar fixed style="background:none;border:none;">
-        <el-row>
-          <el-col :span="3">
-          <el-badge :value="totalNum" class="item">
-            <i class="mintui mintui-life" style="font-size:2em;"/>
-          </el-badge>
-          </el-col>
-          <el-col :span="10" :offset="3">
-              <small class="text-muted">¥45</small>
-               <small class="text-muted">另需配送费¥9</small>
-          </el-col>
-          <el-col :span="4" :offset="4">
-            <el-button @click="submitCart">去结算</el-button>
-            <!-- <el-button><router-link to="/p_info/cart" >去结算</router-link></el-button> -->
-          </el-col>
-        </el-row>
-      </mt-tabbar>
+      <div style="position:fixed;bottom:0;">
+        <!-- <mt-tabbar fixed style="background:none;border:none;"> -->
+          <el-row type="flex" justify="space-between">
+            <el-col :span="3">
+            <el-badge :value="totalNum" class="item">
+              <i class="mintui mintui-life" style="font-size:2em;"/>
+            </el-badge>
+            </el-col>
+            <el-col :span="10" :offset="3">
+                <small class="text-muted">¥45</small>
+                <small class="text-muted">另需配送费¥9</small>
+            </el-col>
+            <el-col :span="4" :offset="4">
+              <el-button @click="submitCart">去结算</el-button>
+            </el-col>
+          </el-row>
+        <!-- </mt-tabbar> -->
+      </div>
     </el-footer>
   </div>
 </template>
@@ -52,8 +53,6 @@ import{ mapGetters } from 'vuex'
 export default {
   data () {
     return {
-      menu: [],
-      // menu_count: 0,
     }
   },
   computed: {
@@ -90,9 +89,7 @@ export default {
           data: param
       }).then(resp => {
       if(resp.data.success){
-        let respContent = resp.data.content;
-        that.menu = respContent;
-        Vue.prototype.$menu = respContent;
+        that.$store.commit('updateMenu', {menu: resp.data.content});
       }else{
           that.$toast(resp.data.msg);
         }
@@ -147,8 +144,6 @@ export default {
     this.getMenu();
     this.getCart();
     this.getMerchantCart();
-  },
-  watch:{
   }
 }
 </script>
