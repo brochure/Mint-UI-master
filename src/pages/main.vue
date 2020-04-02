@@ -99,6 +99,9 @@
               </el-tab-pane>
             </el-tabs>
         </div>
+        <div style="position:fixed;right:0;bottom:80px;">
+          <el-button icon="el-icon-shopping-cart-1" circle style="font-size:1.6em;" @click="jumpto('/p_info/cart')"></el-button>
+        </div>
       </el-main>
     </el-container>
   </div>

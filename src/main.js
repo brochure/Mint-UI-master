@@ -11,6 +11,9 @@ import 'mint-ui/lib/style.css'
 import 'element-ui/lib/theme-chalk/index.css'
 import './icons'
 import Vuex from 'vuex'
+import Confirm from './components/confirm'
+
+Vue.use(Confirm)
 Vue.use(Vuex);
 Vue.use(ElementUI)
 Vue.use(VueResource)

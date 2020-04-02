@@ -26,7 +26,7 @@ export default {
     }
   },
   methods:{
-      prev(){this.$router.go(-1)}
+    prev(){this.$router.go(-1)}
   },
   created(){
     this.styleObject.height = this.headerHeight;

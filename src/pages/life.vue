@@ -1,7 +1,7 @@
 <template>
   <div>
 <div id="ball"></div>
-<el-button style="margin-left:100px;margin-top:50px;" @click="hjkl">asdad</el-button>
+<el-button style="margin-left:100px;margin-top:50px;" @click="setConfirm">asdad</el-button>
   </div>
 </template>
 
@@ -13,6 +13,13 @@ export default {
     }
   },
   methods: {
+    setConfirm(){
+      this.$Confirm({
+        title:'自定义标题'
+      }).then(res=>{
+        console.log(res)
+      })
+    },
     hjkl(evt){
       var $ball = document.getElementById('ball');
       console.log(evt.pageX,evt.pageY)
@@ -24,10 +31,9 @@ export default {
           $ball.style.left = '0px';
           $ball.style.transition = 'left 1s linear, top 1s ease-in';
       }, 20)
-    }
+    },
   },
   components: {
-
   }
 }
 </script>

@@ -98,7 +98,6 @@ export default {
       let req_map = that.HOST + "/order/getCart";
       let param = {
         accountId: 1,
-        merchantId: that.$store.getters.merchantId
         };
       that.$axios({
           url: req_map,
