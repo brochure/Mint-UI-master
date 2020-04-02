@@ -76,6 +76,8 @@ export default {
       }).catch(err =>{console.log(err);})
     },
     getMenu(){
+      console.log("getMenu");
+      
       let that = this;
       let req_map = that.HOST + "/order/getMenu";
       let param = {merchantId: that.$store.getters.merchantId};
@@ -84,6 +86,7 @@ export default {
           method: 'POST',
           data: param
       }).then(resp => {
+      console.log(resp.data.content);
       if(resp.data.success){
         that.$store.commit('updateMenu', {menu: resp.data.content});
       }else{
@@ -94,6 +97,7 @@ export default {
       });
     },
     getCart(){
+      console.log("getCart");
       let that = this;
       let req_map = that.HOST + "/order/getCart";
       let param = {
@@ -104,6 +108,7 @@ export default {
           method: 'POST',
           data: param
       }).then(resp => {
+        console.log(resp.data.content);
         if(resp.data.success){
           that.$store.commit('updateCart',
             {
@@ -129,6 +134,7 @@ export default {
           method: 'POST',
           data: param
         }).then(resp => {
+          console.log(resp.data.content);
           if(resp.data.success){
             that.$store.commit('updateMerchantCart', {merchantCart: resp.data.content});
           }else{

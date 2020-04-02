@@ -36,15 +36,26 @@ export default {
   },
   methods: {
     clearCart(){
-
+      let that = this;
+      let url = that.HOST + "/order/clearCart";
+      let param = {
+        accountId: 1,
+      };
+      that.$axios({
+        url: url,
+        method: 'POST',
+        data: param
+      }).then(resp => {}).catch(err =>{console.log(err);})
     },
     setConfirm(){
       this.$confirm('确定清空购物车所有商品？', {
         confirmButtonText: '确定',
         cancelButtonText: '取消',
       }).then(() => {
+        this.clearCart();
         this.$message({
           type: 'success',
+          
           message: '清空成功!'
         });
       }).catch(() => {
