@@ -6,19 +6,19 @@
       </el-row>
       <el-row>
         <el-col :offset="12">
-          <img :src="genPicURL(merchant.imgAddress)" style="position:absolute;bottom:-131px;height:70px;width:70px;margin-left:-35px;" class="figure-img img-fluid rounded">
+          <img :src="genPicURL($store.getters.merchantInfo.imgAddress)" style="position:absolute;bottom:-131px;height:70px;width:70px;margin-left:-35px;" class="figure-img img-fluid rounded">
         </el-col>
       </el-row>
     </div>
       <el-row>
-        <figcaption class="figure-caption text-center font-weight-bold text-dark" style="font-size:1.25em;">{{merchant.title}}</figcaption>
-      <figcaption class="text-muted text-center small"><span>评价&nbsp;{{merchant.rate}}</span>&nbsp;&nbsp;&nbsp;&nbsp;<span>月售&nbsp;{{merchant.sale}}</span></figcaption>
+        <figcaption class="figure-caption text-center font-weight-bold text-dark" style="font-size:1.25em;">{{$store.getters.merchantInfo.title}}</figcaption>
+      <figcaption class="text-muted text-center small"><span>评价&nbsp;{{$store.getters.merchantInfo.rate}}</span>&nbsp;&nbsp;&nbsp;&nbsp;<span>月售&nbsp;{{$store.getters.merchantInfo.sale}}</span></figcaption>
       </el-row>
     <el-container>
       <el-main>
         <el-tabs v-model="activeName" @tab-click="handleClick" :stretch="true">
           <el-tab-pane :span="8" name="first">
-            <span slot="label"><router-link :to="{path:'/p_info/choosing/menuServe'}" replace>点餐</router-link></span>
+            <span slot="label"><router-link :to="{path:'/p_info/choosing/menuServe'}">点餐</router-link></span>
           </el-tab-pane>
           <el-tab-pane :span="8" name="second">
             <span slot="label"><router-link to="/p_info/choosing/commentRate" replace>评价</router-link></span>
@@ -43,7 +43,6 @@ import Vue from 'vue'
     name: 'choosing',
     data () {
       return {  
-        merchant:{},
         activeName: 'first',
         styleObject: {
           background: "url(http://localhost:8083/dmorder/image/canteen_bg/bg_mcd.jpg)",
@@ -61,14 +60,18 @@ import Vue from 'vue'
       getMerchantInfo(){
         let that = this;
         let req_map = that.HOST + "/merchant/id";
-        let param = {id: Vue.prototype.$merchantId};
+        let param = {id: that.$store.getters.merchantId};
         that.$axios({
             url: req_map,
             method: 'POST',
             data: param
         }).then(resp => {
         if(resp.data.success){
-            that.merchant = resp.data.content;
+          that.$store.commit('updateMerchantInfo',
+            {
+              merchantInfo: resp.data.content
+            }
+          );
         }else{
           that.$toast(resp.data.msg);
           }

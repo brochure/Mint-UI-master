@@ -24,23 +24,19 @@
       </el-col>
     </el-row>
     <el-footer>
-      <div style="position:fixed;bottom:0;">
-        <!-- <mt-tabbar fixed style="background:none;border:none;"> -->
-          <el-row type="flex" justify="space-between">
-            <el-col :span="3">
+      <div class="cart-concern-btm-fixed">
+        <div class="concern-cart">
+          <div style="float:left;margin-left:20px;">
             <el-badge :value="totalNum" class="item">
-              <i class="mintui mintui-life" style="font-size:2em;"/>
+              <i class="mintui mintui-life" style="font-size:4em;"/>
             </el-badge>
-            </el-col>
-            <el-col :span="10" :offset="3">
-                <small class="text-muted">¥45</small>
-                <small class="text-muted">另需配送费¥9</small>
-            </el-col>
-            <el-col :span="4" :offset="4">
-              <el-button @click="submitCart">去结算</el-button>
-            </el-col>
-          </el-row>
-        <!-- </mt-tabbar> -->
+          </div>
+          <div style="float:left;margin-top:2px;margin-left:20px;text-align:left;">
+            <div class="btm-text-lg">¥{{merchantCartGrossPrice}}</div>
+            <div class="btm-text-sm">另需配送费¥{{$store.getters.merchantInfo.initfee}}</div>
+          </div>
+          <el-button @click="submitCart" style="font-size:1.1em;width:120px;float:right;margin-top:4px;margin-right:2px;" type="success">去结算</el-button>
+        </div>
       </div>
     </el-footer>
   </div>
@@ -56,7 +52,7 @@ export default {
     }
   },
   computed: {
-    ...mapGetters(['totalNum']),
+    ...mapGetters(['totalNum', 'merchantCartGrossPrice']),
   },
   methods: {
     submitCart(){
@@ -64,8 +60,8 @@ export default {
       let url = that.HOST + "/order/submitCart";
       let param = {
         accountId: 1,
-        merchantId: Vue.prototype.$merchantId,
-        merchantCart: this.$store.getters.merchantCart
+        merchantId: that.$store.getters.merchantId,
+        merchantCart: that.$store.getters.merchantCart
       };
       that.$axios({
         url: url,
@@ -82,7 +78,7 @@ export default {
     getMenu(){
       let that = this;
       let req_map = that.HOST + "/order/getMenu";
-      let param = {merchantId: Vue.prototype.$merchantId};
+      let param = {merchantId: that.$store.getters.merchantId};
       that.$axios({
           url: req_map,
           method: 'POST',
@@ -102,7 +98,7 @@ export default {
       let req_map = that.HOST + "/order/getCart";
       let param = {
         accountId: 1,
-        merchantId: Vue.prototype.$merchantId
+        merchantId: that.$store.getters.merchantId
         };
       that.$axios({
           url: req_map,
@@ -110,7 +106,11 @@ export default {
           data: param
       }).then(resp => {
         if(resp.data.success){
-          Vue.prototype.$cart = resp.data.content;
+          that.$store.commit('updateCart',
+            {
+              cart: resp.data.content
+            }
+          );
         }else{
           that.$toast(resp.data.msg);
           }
@@ -123,7 +123,7 @@ export default {
         let req_map = that.HOST + "/order/getMerchantCart";
         let param = {
           accountId: 1,
-          merchantId: Vue.prototype.$merchantId
+          merchantId: that.$store.getters.merchantId
           };
         that.$axios({
           url: req_map,
@@ -131,7 +131,7 @@ export default {
           data: param
         }).then(resp => {
           if(resp.data.success){
-            this.$store.commit('updateMerchantCart', {merchantCart: resp.data.content});
+            that.$store.commit('updateMerchantCart', {merchantCart: resp.data.content});
           }else{
             that.$toast(resp.data.msg);
             }
@@ -152,9 +152,61 @@ export default {
 #ball {
   width:12px;
   height:12px;
-  background: rgb(61, 176, 230);
+  background: rgb(73, 147, 247);
   border-radius: 50%;
   position: fixed;
   transition: left 1s linear, top 1s ease-in;
 }
+
+.cart-concern-btm-fixed {
+  bottom: 0;
+  height: 50px;
+  left: 0;
+  position: fixed;
+  text-align: center;
+  width: 100%;
+  z-index: 10;
+}
+
+.concern-cart { 
+  background-color: rgba(10, 10, 10, 0.75); 
+  width: 100%;
+  height: 50px; 
+  line-height: 50px; 
+  float: left;
+} 
+
+.btm-text-lg {
+  float: left;
+  display: block;
+  height: 20px;
+  line-height: 25px;
+  width: 100%;
+  font-size:1.2em;
+  color:white;
+}
+
+.btm-text-sm {
+  float: left;
+  display: block;
+  height: 20px;
+  line-height: 25px;
+  width: 100%;
+  font-size:0.75em;
+  color:rgba(255, 255, 255, 0.6);
+}
+/*  
+.order-numbers { 
+    background-color: white; 
+    border-radius: 8px; 
+    color: #f15353; 
+    display: inline-block; 
+    font-size: 8px; 
+    font-style: normal; 
+    line-height: 12px; 
+    padding: 0 5px; 
+    position: absolute; 
+    right: -10px; 
+    top: -5px; 
+} */
 </style>

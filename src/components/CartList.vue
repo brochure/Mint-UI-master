@@ -19,6 +19,7 @@
 </template>
 
 <script>
+import{ mapGetters } from 'vuex'
 import CartDisplay from '../components/CartDisplay.vue'
 export default {
   props: {
@@ -37,6 +38,7 @@ export default {
     }
   },
   computed: {
+    // ...mapGetters(['cartGrossPrice']),
     getSum() {
       return function(merch){
         var acc = 0;

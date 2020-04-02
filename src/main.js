@@ -22,18 +22,49 @@ Vue.use(Mint);
 // import global_ from '../config/global.js'
 // Vue.prototype.GLOBAL = global_;
 Vue.prototype.staticURL = process.env.STATIC_URL
-Vue.prototype.$axios=axios;
+Vue.prototype.$axios = axios;
 Vue.config.productionTip = false
 Vue.prototype.SERVER_BASE_URL = 'http://localhost:8083/dmorder'
 Vue.prototype.HOST = '/dmorder'
 
 var store = new Vuex.Store({
 	state: {
-	  merchantCart: [],
-	  menu: [],
+		merchantInfo: {},
+		merchantId: 0,
+		merchantCart: [],
+		cart: [],
+		menu: [],
 	},
 	getters:{
+		merchantInfo: state=>state.merchantInfo,
+		merchantId: state=>state.merchantId,
 		merchantCart: state=>state.merchantCart,
+		merchantCartGrossPrice: function(state){
+			let acc = 0.0;
+			state.merchantCart.forEach(cartItem => {
+				acc += cartItem.price * cartItem.amount;
+			});
+			return acc;
+		},
+		cart: state=>state.cart,
+		cartGrossPrice: function(state){
+			let acc = 0.0;
+			state.cart.forEach(cartGroup => {
+				cartGroup.listCartItem.forEach(cartItem => {
+					acc += cartItem.price * cartItem.amount;
+				});
+			});
+			return acc;
+		},
+		cartGrossPriceGvMch: (state) => (playload) => {
+			let acc = 0.0;			
+			state.cart.find(
+				e => (e.merchantId == playload.merchantId).forEach(
+					cartItem =>{
+					acc += cartItem.price * cartItem.amount;
+				}));
+			return acc;
+		},
 		menu: state=>state.menu,
 		totalNum: function(state){
 				let totalNum = 0;
@@ -51,8 +82,17 @@ var store = new Vuex.Store({
 		}
 	},
 	mutations: {
+		updateMerchantInfo: (state, payload)=>{
+			state.merchantInfo = payload.merchantInfo;
+		},
+		updateMerchantId: (state, payload)=>{
+			state.merchantId = payload.merchantId;
+		},
 		updateMerchantCart: (state, playload)=>{
 			state.merchantCart = playload.merchantCart;
+		},
+		updateCart: (state, playload)=>{
+			state.cart = playload.cart;
 		},
 		updateMenu: (state, playload)=>{
 			state.menu = playload.menu;

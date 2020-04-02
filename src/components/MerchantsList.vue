@@ -60,7 +60,7 @@ export default {
       }
     },
     routerTo(merchant){
-      Vue.prototype.$merchantId = merchant.id;
+      this.$store.commit('updateMerchantId', {merchantId: merchant.id});
       this.$router.push({path: '/p_info/choosing', query:{id: merchant.id}});  
     },
   },

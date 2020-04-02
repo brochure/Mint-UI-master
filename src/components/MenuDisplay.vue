@@ -128,7 +128,7 @@ export default {
 #ball {
   width:12px;
   height:12px;
-  background: rgb(61, 176, 230);
+  background: rgb(73, 147, 247);
   border-radius: 50%;
   position: fixed;
   transition: left 1s linear, top 1s ease-in;
