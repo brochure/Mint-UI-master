@@ -12,52 +12,66 @@
     </el-header>
 <el-main>
   <el-row>
-    <div  @click="jumpto(urlprofile)">
-    <el-col :span="18">
-      <h1>{{accountInfo.nickName}}</h1>
-      <p style="font-size:0.7em;color:#777777;margin-top:-10px;">再忙，也要记得吃饭哟～</p>
-    </el-col>
-    <el-col :span="6">
-      <img :src="profileImgUrl" class="round_icon" alt="" style="float:right;">
-    </el-col>
-    </div>
+      <div v-if="$store.getters.loginState">
+        <div @click="jumpto(urlprofile)">
+          <el-col :span="18">
+            <h1>{{$store.getters.currentAccount.nickName}}</h1>
+            <p style="font-size:0.7em;color:#777777;margin-top:-10px;">再忙，也要记得吃饭哟～</p>
+          </el-col>
+          <el-col :span="6">
+            <img :src="genPicURL($store.getters.currentAccount.headPhotoAddress)" class="round_icon" alt="" style="float:right;">
+          </el-col>
+        </div>
+      </div>
+      <div v-else>
+        <div @click="jumpto('/user/loginPwd')">
+          <el-col :span="18">
+            <h1>立即登陆</h1>
+            <p style="font-size:0.7em;color:#777777;margin-top:-10px;">饿不饿都上饿了么</p>
+          </el-col>
+          <el-col :span="6">
+            <img :src="genPicURL('sys/eleme.jpg')" class="round_icon" alt="" style="float:right;">
+          </el-col>
+        </div>
+      </div>
+
   </el-row>
 
 <el-row type="flex" :gutter="5">
       <el-col :span="8">
-      <div class="card notice-card shadow-sm bg-white rounded" @click="jumpto(urlcouponspot)">
-        <div class="card-body p-2">
-          <h6 class="card-title mb-2">红包卡券</h6>
-          <p class="text-md-left font-weight-bold d-inline-block highlight-num mb-0">{{ncoupon}}</p>
-          <small class="text-muted smaller-font">个未使用</small>
+        <div class="card notice-card shadow-sm bg-white rounded" @click="jumpto(urlcouponspot)">
+          <div class="card-body p-2">
+            <h6 class="card-title mb-2">红包卡券</h6>
+            <p class="text-md-left font-weight-bold d-inline-block highlight-num mb-0">{{ncoupon}}</p>
+            <small class="text-muted smaller-font">个未使用</small>
+          </div>
         </div>
-      </div>
       </el-col>
       <el-col :span="8">
-            <div class="card notice-card shadow-sm bg-white rounded">
-        <div class="card-body p-2">
-          <h6 class="card-title mb-2">津贴</h6>
-          <p class="text-md-left font-weight-bold d-inline-block highlight-num mb-0">¥{{balanceprm}}</p><small class="text-muted smaller-font">可用</small>
+        <div class="card notice-card shadow-sm bg-white rounded">
+          <div class="card-body p-2">
+            <h6 class="card-title mb-2">津贴</h6>
+            <p class="text-md-left font-weight-bold d-inline-block highlight-num mb-0">¥{{balanceprm}}</p><small class="text-muted smaller-font">可用</small>
+          </div>
         </div>
-      </div>
       </el-col>
       <el-col :span="8">
-            <div class="card notice-card shadow-sm bg-white rounded">
-        <div class="card-body p-2">
-          <h6 class="card-title mb-2">钱包</h6>
-          <small class="text-muted mb-0 text-nowrap smaller-font">金币、借钱、福利</small>
-        </div>
+        <div class="card notice-card shadow-sm bg-white rounded">
+          <div class="card-body p-2">
+            <h6 class="card-title mb-2">钱包</h6>
+            <small class="text-muted mb-0 text-nowrap smaller-font">金币、借钱、福利</small>
+          </div>
       </div>
       </el-col>
 </el-row>
 
   <ul class="list-group list-group-flush">
-    <li class="list-group-item" v-for="value in userscopes" :key="value.title" @click="jumpto(value.link)">
+    <li class="list-group-item" v-for="value in userscopes" :key="value.title" @click="clcCell(value.link)">
       <i class="mintui" :class="'mintui-'+value.icon"></i>
-      <span class="ml-2">{{value.title}}</span>
+      <span style="margin-left:6px;">{{value.title}}</span>
       <span style="float:right;">
-      <span v-if="value.extra!=''" class="small font-weight-light text-muted">{{value.extra}}</span>
-      <svg class="bi bi-chevron-right text-muted font-weight-bold" width="15" height="15" viewBox="0 0 20 20" fill="currentColor" xmlns="http://www.w3.org/2000/svg"><path fill-rule="evenodd" d="M6.646 3.646a.5.5 0 01.708 0l6 6a.5.5 0 010 .708l-6 6a.5.5 0 01-.708-.708L12.293 10 6.646 4.354a.5.5 0 010-.708z" clip-rule="evenodd"/></svg>
+        <span v-if="value.extra!=''" class="rb-text-extra">{{value.extra}}</span>
+        <i class="el-icon-arrow-right" style="font-weight:bold;color:grey;"/>
       </span>
     </li>
   </ul>
@@ -68,6 +82,11 @@
 
 <style scoped>
 /*@import url("//at.alicdn.com/t/font_1684162_l2psewjzi8b.css");*/
+.rb-text-extra {
+  font-size: 0.75em;
+  color: #727171;
+  font-weight: lighter;
+}
 
   #account{
     display: flex;
@@ -136,15 +155,16 @@
       font-size:0.65em;
     }
 </style>
+
 <script>
-import {Toast} from 'mint-ui'
+import { Toast } from 'mint-ui'
   export default{
     name:'info',
     data () {
       return {
         profileImgUrl: "",
         urlmsgctr: "messageCenter",
-        accountInfo: {},
+        // accountInfo: {},
         userscopes: [
           { title: '我的收藏',
             icon:'collection',
@@ -194,24 +214,31 @@ import {Toast} from 'mint-ui'
       }
     },
     methods:{
+      clcCell(link){
+        if(this.$store.getters.loginState){
+          this.jumpto(link);
+        }else{
+          this.$toast("请先登陆");
+        }
+      },
       genPicURL(pic) {
         return this.SERVER_BASE_URL + "/image/" + pic;
       },
-      getAccountInfo () {
-        var that = this;
-        var req_map = that.HOST + "/account/id/1";
-        that.$axios({
-          url: req_map,
-          method: 'POST'
-        }).then(resp => {            
-          if(resp.data.success){
-            that.accountInfo = resp.data.content;
-          }else{that.$toast(resp.data.msg);}
-        }).catch(err =>{
-          console.log(err);
-          reject(err.data);
-        })
-      },
+      // getAccountInfo () {
+      //   var that = this;
+      //   var req_map = that.HOST + "/account/id/1";
+      //   that.$axios({
+      //     url: req_map,
+      //     method: 'POST'
+      //   }).then(resp => {            
+      //     if(resp.data.success){
+      //       that.accountInfo = resp.data.content;
+      //     }else{that.$toast(resp.data.msg);}
+      //   }).catch(err =>{
+      //     console.log(err);
+      //     reject(err.data);
+      //   })
+      // },
       jumpto(link){
         if(link==''){
           this.$toast("功能开发中");
@@ -221,17 +248,17 @@ import {Toast} from 'mint-ui'
       }
     },
     created(){
-      this.getAccountInfo();
+      // this.getAccountInfo();
     },
     mounted(){
       // .mintui color == blue
     },
     watch: {
-      accountInfo(val,oldVal) {        
-        this.$nextTick(() => {
-          this.profileImgUrl = this.genPicURL(this.accountInfo.headPhotoAddress);
-        })
-      }
+      // accountInfo(val,oldVal) {        
+      //   this.$nextTick(() => {
+      //     this.profileImgUrl = this.genPicURL(this.accountInfo.headPhotoAddress);
+      //   })
+      // }
     }
   }
 </script>

@@ -18,9 +18,9 @@
         </el-menu>
       </el-col>
       <el-col :span="20">
-        <keep-alive>
+        <!-- <keep-alive> -->
           <router-view></router-view>
-        </keep-alive>
+        <!-- </keep-alive> -->
       </el-col>
     </el-row>
     <el-footer>
@@ -47,6 +47,7 @@ import Vue from 'vue'
 import{ mapGetters } from 'vuex'
 
 export default {
+  name: "menuServe",
   data () {
     return {
     }
@@ -75,9 +76,7 @@ export default {
         }
       }).catch(err =>{console.log(err);})
     },
-    getMenu(){
-      console.log("getMenu");
-      
+    getMenu(){      
       let that = this;
       let req_map = that.HOST + "/order/getMenu";
       let param = {merchantId: that.$store.getters.merchantId};
@@ -86,7 +85,6 @@ export default {
           method: 'POST',
           data: param
       }).then(resp => {
-      console.log(resp.data.content);
       if(resp.data.success){
         that.$store.commit('updateMenu', {menu: resp.data.content});
       }else{
@@ -97,7 +95,6 @@ export default {
       });
     },
     getCart(){
-      console.log("getCart");
       let that = this;
       let req_map = that.HOST + "/order/getCart";
       let param = {
@@ -108,7 +105,6 @@ export default {
           method: 'POST',
           data: param
       }).then(resp => {
-        console.log(resp.data.content);
         if(resp.data.success){
           that.$store.commit('updateCart',
             {
@@ -134,7 +130,6 @@ export default {
           method: 'POST',
           data: param
         }).then(resp => {
-          console.log(resp.data.content);
           if(resp.data.success){
             that.$store.commit('updateMerchantCart', {merchantCart: resp.data.content});
           }else{

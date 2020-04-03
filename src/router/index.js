@@ -16,6 +16,7 @@ import CommentRate from '../pages/p_info/CommentRate.vue'
 import MerchantInfo from '../pages/p_info/MerchantInfo.vue'
 import MenuBlock from '../pages/p_info/MenuBlock.vue'
 import Cart from '../pages/p_info/cart.vue'
+import LoginPwd from '../pages/user/loginPwd.vue'
 
 
 Vue.use(Router);
@@ -46,6 +47,12 @@ export default new Router({
       }
     },
     {
+      path: '/user/loginPwd', component: LoginPwd,
+      meta: {
+        showFootBar: false
+      }
+    },
+    {
       path: '/info', component: Info,
       meta: {
         showFootBar: true
@@ -59,7 +66,7 @@ export default new Router({
     },
     {
       path: '/p_info/choosing',
-      name: 'choosing',
+      // name: 'choosing',
       component: Choosing,
       children:[
         {
@@ -68,7 +75,7 @@ export default new Router({
         },
         {
           path: 'menuServe',
-          // name: 'menuServe',
+          name: 'menuServe',
           component: MenuServe,
           children:[
             // {

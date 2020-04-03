@@ -61,7 +61,7 @@ export default {
     },
     routerTo(merchant){
       this.$store.commit('updateMerchantId', {merchantId: merchant.id});
-      this.$router.push({path: '/p_info/choosing', query:{id: merchant.id}});  
+      this.$router.push({path: '/p_info/choosing/menuServe'});  
     },
   },
   created () {

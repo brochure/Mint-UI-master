@@ -49,6 +49,30 @@ export default{
         }
       },
       methods:{
+        updateAccount() {
+          let that = this;
+          let accountId = that.$store.getters.currentAccount.accountId;
+          let url = that.HOST + "/account/id/" + accountId;
+          let param = {
+              accountId: accountId
+          };
+          that.$axios({
+              url: url,
+              method: 'POST',
+              data: param
+          }).then(resp => {
+          if(resp.data.success){
+              that.$store.commit('updateCurrentAccount',
+                  {
+                      currentAccount: resp.data.content
+                  }
+              );
+          }else{
+              that.$toast(resp.data.msg);
+          }}).catch(err =>{
+              that.$toast(err.data.msg);
+          });
+        },
         savePhoneNo(){
           var url = this.HOST + "/account/modifyPhoneNo";
           var that = this;
@@ -57,11 +81,10 @@ export default{
             url: url,
             method: 'POST',
             data: param
-          }).then(resp => {
-            console.log(resp);
-            
+          }).then(resp => {            
             if(resp.data.success){
               that.$toast("修改成功");
+              that.updateAccount();
               that.prev();
             }else{
               that.$toast(resp.data.msg);

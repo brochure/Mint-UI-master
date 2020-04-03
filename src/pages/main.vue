@@ -276,7 +276,8 @@
 </style>
 
 <script>
-import {TabContainer, TabContainerItem} from 'mint-ui'
+import Vue from 'vue'
+import { TabContainer, TabContainerItem } from 'mint-ui'
 import MerchantsList from '../components/MerchantsList.vue'
 import SearchBar from '../components/SearchBar.vue'
 import SortPanel from '../components/SortPanel.vue'

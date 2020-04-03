@@ -32,6 +32,8 @@ Vue.prototype.HOST = '/dmorder'
 
 var store = new Vuex.Store({
 	state: {
+		loginState: false,
+		currentAccount: {},
 		merchantInfo: {},
 		merchantId: 0,
 		merchantCart: [],
@@ -39,6 +41,8 @@ var store = new Vuex.Store({
 		menu: [],
 	},
 	getters:{
+		currentAccount: state=>state.currentAccount,
+		loginState: state=>state.loginState,
 		merchantInfo: state=>state.merchantInfo,
 		merchantId: state=>state.merchantId,
 		merchantCart: state=>state.merchantCart,
@@ -77,7 +81,7 @@ var store = new Vuex.Store({
 			return totalNum;
 		},
 		amountByOrdinals: (state) => (playload) => {
-			return state.merchantCart.find(
+			return (state.merchantCart == null || state.merchantCart.length == 0) ? 0 : state.merchantCart.find(
 				e => (
 					e.itemOrdinal == playload.itemOrdinal && e.colOrdinal == playload.colOrdinal
 				)
@@ -85,6 +89,19 @@ var store = new Vuex.Store({
 		}
 	},
 	mutations: {
+		loginAccount: (state, playload)=>{
+			if(playload.currentAccount != null) {
+				state.currentAccount = playload.currentAccount;
+				state.loginState = true;
+			}
+		},
+		logoutAccount: (state)=>{
+			state.currentAccount = {};
+			state.loginState = false;
+		},
+		updateCurrentAccount: (state, payload)=>{
+			state.currentAccount = payload.currentAccount;
+		},
 		updateMerchantInfo: (state, payload)=>{
 			state.merchantInfo = payload.merchantInfo;
 		},
@@ -111,9 +128,6 @@ var store = new Vuex.Store({
 		}
 	}
   })
-
-// export default store;
-
 
 /* eslint-disable no-new */
 new Vue({

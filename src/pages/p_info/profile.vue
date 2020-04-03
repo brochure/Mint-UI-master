@@ -7,16 +7,17 @@
     <el-main>
       <p type="info">基础信息</p>
       <mt-cell title="头像" is-link @click.native="actionSheet">
-        <img v-if="update" :src="profileImgUrl" class="round_icon" />
+        <img :src="genPicURL($store.getters.currentAccount.headPhotoAddress)" class="round_icon" />
+        <!-- <img v-if="update" :src="profileImgUrl" class="round_icon" /> -->
       </mt-cell>
           <mt-cell title="用户名" is-link>
-        <span style="color:#909399;">{{accountInfo.nickName}}</span>
+        <span style="color:#909399;">{{$store.getters.currentAccount.nickName}}</span>
       </mt-cell>
       <mt-cell title="收货地址" is-link />
 
       <p type="info" class="mt-4">账号绑定</p>
       <mt-cell title="手机" is-link to="/p_info/modifyPhoneNo">
-        <span style="color:#909399;">{{replacePhoneNo(accountInfo.phoneNo)}}</span>
+        <span style="color:#909399;">{{replacePhoneNo($store.getters.currentAccount.phoneNo)}}</span>
       </mt-cell>
       <div v-for="item in thirdpartyBound" :key="item.providerName">
         <mt-cell :title="item.providerName" is-link>
@@ -49,7 +50,7 @@
           thirdpartyBound: [],
           update: true,
           profileImgUrl: "",
-          accountInfo:{},
+          // accountInfo:{},
           sheetVisible: false,
           actions: [{
           name: '拍照',
@@ -65,30 +66,51 @@
       },
     methods:{
       reloadProfileImg() {
-        // 移除组件
         this.update = false;
-        // 在组件移除后，重新渲染组件
-        // this.$nextTick可实现在DOM 状态更新后，执行传入的方法。
-        this.getAccountInfo ();
+        // this.getAccountInfo ();
       },
       genPicURL(pic) {        
         return this.SERVER_BASE_URL + "/image/" + pic;
       },
-      getAccountInfo () {
+      updateAccount() {
         let that = this;
-        let req_map = that.HOST + "/account/id/1";
+        let accountId = that.$store.getters.currentAccount.accountId;
+        let url = that.HOST + "/account/id/" + accountId;
+        let param = {
+            accountId: accountId
+        };
         that.$axios({
-          url: req_map,
-          method: 'POST'
-        }).then(resp => {            
-          if(resp.data.success){
-            that.accountInfo = resp.data.content;
-          }else{that.$toast(resp.data.msg);}
-        }).catch(err =>{
-          console.log(err);
-          reject(err.data);
-        })
+            url: url,
+            method: 'POST',
+            data: param
+        }).then(resp => {
+        if(resp.data.success){
+            that.$store.commit('updateCurrentAccount',
+                {
+                    currentAccount: resp.data.content
+                }
+            );
+        }else{
+            that.$toast(resp.data.msg);
+        }}).catch(err =>{
+            that.$toast(err.data.msg);
+        });
       },
+      // getAccountInfo () {
+      //   let that = this;
+      //   let req_map = that.HOST + "/account/id/1";
+      //   that.$axios({
+      //     url: req_map,
+      //     method: 'POST'
+      //   }).then(resp => {            
+      //     if(resp.data.success){
+      //       that.accountInfo = resp.data.content;
+      //     }else{that.$toast(resp.data.msg);}
+      //   }).catch(err =>{
+      //     console.log(err);
+      //     reject(err.data);
+      //   })
+      // },
       replacePhoneNo (str) { // should be handed to the backstage
           if(!str){return ''}
           return str.replace(/(\d{3})\d{5}(\d{3})/, '$1****$2');
@@ -136,7 +158,8 @@
 					}
 				}).then(response => {
           // that.profileImgUrl = that.genPicURL(accountInfo.pic);
-          this.reloadProfileImg();
+          that.updateAccount();
+          // this.reloadProfileImg();
 				}).catch(function(err) {
 					console.log(err);
 				});
@@ -158,16 +181,16 @@
       }
     },
     created(){
-      this.getAccountInfo();
+      // this.getAccountInfo();
       this.getThirdpartyServiceProviderBound();
     },
     watch: {
-      accountInfo(val,oldVal) {
-        this.$nextTick(() => {
-          this.profileImgUrl = this.genPicURL(this.accountInfo.headPhotoAddress);
-          this.update = true;
-        })
-      }
+      // accountInfo(val,oldVal) {
+      //   this.$nextTick(() => {
+      //     this.profileImgUrl = this.genPicURL(this.accountInfo.headPhotoAddress);
+      //     this.update = true;
+      //   })
+      // }
     }
   }
 </script>

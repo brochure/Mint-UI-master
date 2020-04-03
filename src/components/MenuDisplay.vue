@@ -64,7 +64,7 @@ export default {
   },
   methods: {
     inrement(num){
-      if((this.amt+num) >= 0){
+      if((this.amt + num) >= 0){
         this.$store.commit('incrementMerchantCart', 
           {
             num: num,
@@ -76,7 +76,7 @@ export default {
           {
             itemOrdinal: this.itemOrdinal,
             colOrdinal: this.colOrdinal
-          }
+          }          
         );
       }
     },
