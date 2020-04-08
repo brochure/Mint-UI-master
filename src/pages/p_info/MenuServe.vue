@@ -32,7 +32,7 @@
             </el-badge>
           </div>
           <div style="float:left;margin-top:2px;margin-left:20px;text-align:left;">
-            <div class="btm-text-lg">¥{{merchantCartGrossPrice}}</div>
+            <div class="btm-text-lg">¥{{basketGrossPriceByMid}}</div>
             <div class="btm-text-sm">另需配送费¥{{$store.getters.merchantInfo.initfee}}</div>
           </div>
           <el-button @click="submitCart" style="font-size:1.1em;width:120px;float:right;margin-top:4px;margin-right:2px;" type="success">去结算</el-button>
@@ -53,16 +53,16 @@ export default {
     }
   },
   computed: {
-    ...mapGetters(['totalNum', 'merchantCartGrossPrice']),
+    ...mapGetters(['totalNum', 'basketGrossPriceByMid']),
   },
   methods: {
     submitCart(){
       let that = this;
       let url = that.HOST + "/order/submitCart";
       let param = {
-        accountId: 1,
+        accountId: that.$store.getters.currentAccountId,
         merchantId: that.$store.getters.merchantId,
-        merchantCart: that.$store.getters.merchantCart
+        // merchantCart: that.$store.getters.merchantCart
       };
       that.$axios({
         url: url,
@@ -86,6 +86,8 @@ export default {
           data: param
       }).then(resp => {
       if(resp.data.success){
+        console.log("menu");
+        console.log(resp.data.content);
         that.$store.commit('updateMenu', {menu: resp.data.content});
       }else{
           that.$toast(resp.data.msg);
@@ -98,7 +100,7 @@ export default {
       let that = this;
       let req_map = that.HOST + "/order/getCart";
       let param = {
-        accountId: 1,
+        accountId: that.$store.getters.currentAccountId,
         };
       that.$axios({
           url: req_map,
@@ -118,32 +120,14 @@ export default {
           that.$toast(err.data);
         });
       },
-      getMerchantCart(){
-        let that = this;
-        let req_map = that.HOST + "/order/getMerchantCart";
-        let param = {
-          accountId: 1,
-          merchantId: that.$store.getters.merchantId
-          };
-        that.$axios({
-          url: req_map,
-          method: 'POST',
-          data: param
-        }).then(resp => {
-          if(resp.data.success){
-            that.$store.commit('updateMerchantCart', {merchantCart: resp.data.content});
-          }else{
-            that.$toast(resp.data.msg);
-            }
-          }).catch(err =>{
-            that.$toast(err.data);
-        });
-      }
+      
   },
   created(){
     this.getMenu();
     this.getCart();
     this.getMerchantCart();
+    console.log("MenuServe created");
+    console.log(this.$store.getters.merchantId);
   }
 }
 </script>
