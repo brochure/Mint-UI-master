@@ -18,12 +18,7 @@ Vue.use(Vuex);
 Vue.use(ElementUI)
 Vue.use(VueResource)
 Vue.use(Mint);
-// import source from './assets/js/source.js'
-// Vue.prototype.$source = source
-// import 'element-ui/lib/theme-default/index.css'
 
-// import global_ from '../config/global.js'
-// Vue.prototype.GLOBAL = global_;
 Vue.prototype.staticURL = process.env.STATIC_URL
 Vue.prototype.$axios = axios;
 Vue.config.productionTip = false
@@ -39,34 +34,19 @@ var store = new Vuex.Store({
 		merchantCart: [],
 		cart: [],
 		menu: [],
+		baskets: {},
 	},
 	getters:{
 		currentAccount: state=>state.currentAccount,
 		loginState: state=>state.loginState,
 		merchantInfo: state=>state.merchantInfo,
 		merchantId: state=>state.merchantId,
-		merchantCart: state=>state.merchantCart,
-		merchantCartGrossPrice: function(state){
-			let acc = 0.0;
-			state.merchantCart.forEach(cartItem => {
-				acc += cartItem.price * cartItem.amount;
-			});
-			return acc;
-		},
+		baskets: state=>state.baskets,
 		cart: state=>state.cart,
-		cartGrossPrice: function(state){
+		cartGrossPriceGvMch: (state) => (payload) => {
 			let acc = 0.0;
-			state.cart.forEach(cartGroup => {
-				cartGroup.listCartItem.forEach(cartItem => {
-					acc += cartItem.price * cartItem.amount;
-				});
-			});
-			return acc;
-		},
-		cartGrossPriceGvMch: (state) => (playload) => {
-			let acc = 0.0;			
 			state.cart.find(
-				e => (e.merchantId == playload.merchantId).forEach(
+				e => (e.merchantId == payload.merchantId).forEach(
 					cartItem =>{
 					acc += cartItem.price * cartItem.amount;
 				}));
@@ -74,24 +54,53 @@ var store = new Vuex.Store({
 		},
 		menu: state=>state.menu,
 		totalNum: function(state){
-				let totalNum = 0;
-				state.merchantCart.forEach(element => {
-				totalNum += element.amount;
+			let totalNum = 0;
+			if(state.baskets.hasOwnProperty(1))
+				state.baskets[1].forEach(e => {
+				totalNum += e.amount;
 			});
 			return totalNum;
 		},
-		amountByOrdinals: (state) => (playload) => {
+		amountByOrdinals: (state) => (payload) => {
 			return (state.merchantCart == null || state.merchantCart.length == 0) ? 0 : state.merchantCart.find(
 				e => (
-					e.itemOrdinal == playload.itemOrdinal && e.colOrdinal == playload.colOrdinal
+					e.itemOrdinal == payload.itemOrdinal && e.colOrdinal == payload.colOrdinal
 				)
 			).amount;
-		}
+		},
+		merchantBasket: (state) => (payload) => {
+			return (state.merchantCart == null || state.merchantCart.length == 0) ? 0 : state.merchantCart.find(
+				e => (
+					e.itemOrdinal == payload.itemOrdinal && e.colOrdinal == payload.colOrdinal
+				)
+			).amount;
+		},
+		amountByOrdinalsAndMid: (state) => (payload) => {
+			return (state.baskets[payload.merchantId] == null || state.baskets[payload.merchantId].length == 0) ? 0 : state.baskets[payload.merchantId].find(
+				e => (
+					e.itemOrdinal == payload.itemOrdinal && e.colOrdinal == payload.colOrdinal
+				)
+			).amount;
+		},
+		basketsHasKey: (state) => (payload) => {
+			return state.baskets.hasOwnProperty(payload.merchantId);
+		},
+		basketGrossPriceByMid: function(state) {
+			let acc = 0.0;
+			if(state.baskets.hasOwnProperty(1)){
+				// state.baskets[state.merchantId].forEach(cartItem => {
+					// acc += cartItem.price * cartItem.amount;
+					acc += state.baskets[1][5].amount;
+				// });
+			}
+			acc += 14.1;
+			return JSON.stringify(state.baskets) == "{}";
+		},
 	},
 	mutations: {
-		loginAccount: (state, playload)=>{
-			if(playload.currentAccount != null) {
-				state.currentAccount = playload.currentAccount;
+		loginAccount: (state, payload)=>{
+			if(payload.currentAccount != null) {
+				state.currentAccount = payload.currentAccount;
 				state.loginState = true;
 			}
 		},
@@ -108,23 +117,24 @@ var store = new Vuex.Store({
 		updateMerchantId: (state, payload)=>{
 			state.merchantId = payload.merchantId;
 		},
-		updateMerchantCart: (state, playload)=>{
-			state.merchantCart = playload.merchantCart;
+		updateCart: (state, payload)=>{
+			state.cart = payload.cart;
 		},
-		updateCart: (state, playload)=>{
-			state.cart = playload.cart;
+		updateMenu: (state, payload)=>{
+			state.menu = payload.menu;
 		},
-		updateMenu: (state, playload)=>{
-			state.menu = playload.menu;
+		appendBaskets: (state, payload)=>{
+			if(state.baskets.hasOwnProperty(payload.merchantId)) delete state.baskets[payload.merchantId];
+			state.baskets[payload.merchantId] = payload.merchantCart;
 		},
-		incrementMerchantCart: (state, playload)=>{
-			let num = playload.num;
-			let itemOrdinal = playload.itemOrdinal;
-			let colOrdinal = playload.colOrdinal;
-			state.merchantCart.forEach(e => {
-				if(itemOrdinal == e.itemOrdinal && colOrdinal == e.colOrdinal)
-					e.amount += num;
-			});
+		incrementBaskets: (state, payload)=>{
+			if(state.baskets.hasOwnProperty(payload.merchantId)){
+				state.baskets[payload.merchantId].find(
+					e => (
+						e.itemOrdinal == payload.itemOrdinal && e.colOrdinal == payload.colOrdinal
+					)
+				).amount += payload.num;
+			}
 		}
 	}
   })
@@ -137,7 +147,3 @@ new Vue({
 	components: { App },
 	template: '<App/>'
 })
-
-// Vue.prototype.genPicURL = function(pic) {
-// 	return this.GLOBAL.SSERVER_BASE_URL + "/image/" + pic;
-// }

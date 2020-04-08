@@ -54,12 +54,12 @@ import Vue from 'vue'
       }
     },
     methods: {
-      // toURL(){
-      //   this.$router.push({ path: '/p_info/choosing/commentRate' })
-      // },
       getMerchantInfo(){
         let that = this;
         let req_map = that.HOST + "/merchant/id";
+        console.log("getMerchantInfo");
+        console.log(that.$store.getters.merchantId);
+        
         let param = {id: that.$store.getters.merchantId};
         that.$axios({
             url: req_map,
@@ -86,13 +86,14 @@ import Vue from 'vue'
         return this.SERVER_BASE_URL + "/image/" + pic;
       },
       handleClick(tab, event) {
-        console.log(tab, event);
+        // console.log(tab, event);
       },
       prev(){this.$router.go(-1)}
     },
     created(){
       this.getMerchantInfo();
-      // this.styleObject.background = this.genPicURL('canteen_bg/bg_mcd.jpg');          
+      // this.styleObject.background = this.genPicURL('canteen_bg/bg_mcd.jpg');
+               
     }
   }
 </script>

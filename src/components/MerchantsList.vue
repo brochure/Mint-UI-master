@@ -59,8 +59,32 @@ export default {
           break;
       }
     },
+    getMerchantCart(merchantId){
+        let that = this;
+        let req_map = that.HOST + "/order/getMerchantCart";
+        let param = {
+          accountId: 1,
+          merchantId: merchantId
+          };
+        that.$axios({
+          url: req_map,
+          method: 'POST',
+          data: param
+        }).then(resp => {
+          if(resp.data.success){
+            if(!that.$store.getters.basketsHasKey({merchantId: merchantId})){
+              that.$store.commit('appendBaskets', {merchantId: merchantId, merchantCart: resp.data.content});
+            }
+          }else{
+            that.$toast(resp.data.msg);
+            }
+          }).catch(err =>{
+            that.$toast(err.data);
+        });
+      },
     routerTo(merchant){
       this.$store.commit('updateMerchantId', {merchantId: merchant.id});
+      this.getMerchantCart(merchant.id);
       this.$router.push({path: '/p_info/choosing/menuServe'});  
     },
   },
