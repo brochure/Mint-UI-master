@@ -45,7 +45,9 @@ export default {
         url: url,
         method: 'POST',
         data: param
-      }).then(resp => {}).catch(err =>{console.log(err);})
+      }).then(resp => {}).catch(err =>{
+        reject(err.data);
+        })
     },
     setConfirm(){
       this.$confirm('确定清空购物车所有商品？', {
@@ -84,9 +86,11 @@ export default {
             }
           );
           that.hasReload = true;
-        }else{that.$toast(resp.data.msg);}
+        }else{
+          console.log(resp.data.msg);
+          }
       }).catch(err =>{
-        that.$toast(err.data);
+        reject(err.data);
       });
     },
   },

@@ -72,7 +72,7 @@ export default {
         if(resp.data.success){
           that.$router.push("/p_info/cart");
         }else{
-          that.$toast(resp.data.msg);
+          console.log(resp.data.msg);
         }
       }).catch(err =>{console.log(err);})
     },
@@ -112,7 +112,7 @@ export default {
             }
           );
         }else{
-          that.$toast(resp.data.msg);
+          console.log(resp.data.msg);
           }
         }).catch(err =>{
           that.$toast(err.data);
@@ -133,7 +133,7 @@ export default {
           if(resp.data.success){
             that.$store.commit('updateMerchantCart', {merchantCart: resp.data.content});
           }else{
-            that.$toast(resp.data.msg);
+            console.log(resp.data.msg);
             }
           }).catch(err =>{
             that.$toast(err.data);
@@ -142,8 +142,12 @@ export default {
   },
   created(){
     this.getMenu();
-    this.getCart();
-    this.getMerchantCart();
+    if(this.$store.getters.loginState) {
+      this.getCart();
+      this.getMerchantCart();
+    }
+    else this.$toast("请先登录");
+    
   }
 }
 </script>
