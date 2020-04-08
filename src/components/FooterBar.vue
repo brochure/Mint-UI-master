@@ -10,13 +10,15 @@
         </mt-tab-item>
         <mt-tab-item id="life">
           <!-- <mt-cell icon='life' class="footicon"></mt-cell> -->
-          <i class="mintui mintui-life" style="font-size:2em;"/>
+          <!-- <i class="mintui mintui-life" style="font-size:2em;"/> -->
+          <i class="el-icon-menu" style="font-size:2em;"/>
           <p class="foottxt">生活</p>
         </mt-tab-item>
 
         <mt-tab-item id="order">
           <!-- <mt-cell icon='order' class="footicon"></mt-cell> -->
-          <i class="mintui mintui-order" style="font-size:2em;"/>
+          <i class="el-icon-document" style="font-size:2em;"/>
+          <!-- <i class="mintui mintui-order" style="font-size:2em;"/> -->
           <p class="foottxt">订单</p>
         </mt-tab-item>
 
