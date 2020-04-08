@@ -32,7 +32,7 @@
             </el-badge>
           </div>
           <div style="float:left;margin-top:2px;margin-left:20px;text-align:left;">
-            <div class="btm-text-lg">¥{{basketGrossPriceByMid}}</div>
+            <div class="btm-text-lg">¥{{merchantCartGrossPrice}}</div>
             <div class="btm-text-sm">另需配送费¥{{$store.getters.merchantInfo.initfee}}</div>
           </div>
           <el-button @click="submitCart" style="font-size:1.1em;width:120px;float:right;margin-top:4px;margin-right:2px;" type="success">去结算</el-button>
@@ -53,7 +53,7 @@ export default {
     }
   },
   computed: {
-    ...mapGetters(['totalNum', 'basketGrossPriceByMid']),
+    ...mapGetters(['totalNum', 'merchantCartGrossPrice']),
   },
   methods: {
     submitCart(){
@@ -62,7 +62,7 @@ export default {
       let param = {
         accountId: 1,
         merchantId: that.$store.getters.merchantId,
-        // merchantCart: that.$store.getters.merchantCart
+        merchantCart: that.$store.getters.merchantCart
       };
       that.$axios({
         url: url,
@@ -86,8 +86,6 @@ export default {
           data: param
       }).then(resp => {
       if(resp.data.success){
-        console.log("menu");
-        console.log(resp.data.content);
         that.$store.commit('updateMenu', {menu: resp.data.content});
       }else{
           that.$toast(resp.data.msg);
@@ -123,10 +121,9 @@ export default {
       getMerchantCart(){
         let that = this;
         let req_map = that.HOST + "/order/getMerchantCart";
-        let mid = that.$store.getters.merchantId;
         let param = {
           accountId: 1,
-          merchantId: mid
+          merchantId: that.$store.getters.merchantId
           };
         that.$axios({
           url: req_map,
@@ -134,11 +131,7 @@ export default {
           data: param
         }).then(resp => {
           if(resp.data.success){
-            console.log("basket");
-            console.log(resp.data.content);
-            if(!that.$store.getters.basketsHasKey({merchantId: mid})){
-              that.$store.commit('appendBaskets', {merchantId: mid, merchantCart: resp.data.content});
-            }
+            that.$store.commit('updateMerchantCart', {merchantCart: resp.data.content});
           }else{
             that.$toast(resp.data.msg);
             }
@@ -151,8 +144,6 @@ export default {
     this.getMenu();
     this.getCart();
     this.getMerchantCart();
-    console.log("MenuServe created");
-    console.log(this.$store.getters.merchantId);
   }
 }
 </script>

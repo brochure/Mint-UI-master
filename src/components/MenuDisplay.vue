@@ -58,7 +58,6 @@ export default {
   data () {
     return {
       amt: 0,
-      merchantId: 0,
       itemOrdinal: 0,
       colOrdinal: 0,
     }
@@ -66,42 +65,19 @@ export default {
   methods: {
     inrement(num){
       if((this.amt + num) >= 0){
-        // this.$store.commit('incrementMerchantCart', 
-        //   {
-        //     num: num,
-        //     itemOrdinal: this.itemOrdinal,
-        //     colOrdinal: this.colOrdinal
-        //   }
-        // );
-        this.$store.commit('incrementBaskets', {
-            merchantId: this.merchantId,
-            itemOrdinal: this.itemOrdinal,
-            colOrdinal: this.colOrdinal,
-            num: num
-          });
-        this.amt = this.$store.getters.amountByOrdinalsAndMid(
+        this.$store.commit('incrementMerchantCart', 
           {
-            merchantId: this.merchantId,
+            num: num,
+            itemOrdinal: this.itemOrdinal,
+            colOrdinal: this.colOrdinal
+          }
+        );        
+        this.amt = this.$store.getters.amountByOrdinals(
+          {
             itemOrdinal: this.itemOrdinal,
             colOrdinal: this.colOrdinal
           }          
         );
-        console.log("amt");
-        // this.$store.getters.baskets[1].forEach(e => {
-        //   console.log(e.price);
-        // });
-        console.log(this.$store.getters.baskets.hasOwnProperty(1));
-        
-        this.$store.getters.baskets[1].forEach(e => {
-          console.log(e.amount);
-          
-        });
-        console.log("/amt");
-        
-
-        
-        
-        
       }
     },
     main_log(evt) {
@@ -136,19 +112,14 @@ export default {
   created(){    
     this.itemOrdinal = this.menuItem.ordinal;
     this.colOrdinal = this.menuItem.colOrdinal;
-    this.merchantId = this.$store.getters.merchantId;
-    // if(!this.stringOrObjectIsNull(this.$store.getters.merchantCart)){
-    if(this.$store.getters.basketsHasKey({merchantId: this.merchantId})){
-      this.amt = this.$store.getters.amountByOrdinalsAndMid(
+    if(!this.stringOrObjectIsNull(this.$store.getters.merchantCart)){
+      this.amt = this.$store.getters.amountByOrdinals(
         {
-          merchantId: this.merchantId,
           itemOrdinal: this.itemOrdinal,
           colOrdinal: this.colOrdinal
         }
       );
     }
-    console.log("MenuDisplay created");
-    console.log(this.$store.getters.merchantId);
   }
 }
 </script>
