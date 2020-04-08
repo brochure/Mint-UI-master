@@ -1,11 +1,16 @@
 <template>
   <div>
     <el-container>
+        <el-header>
+            <div @click="prev">
+                <i class="el-icon-close" style="font-size:2em;margin-top:15px;"></i>
+            </div>
+        </el-header>
         <el-main>
             <el-row>
                 <h2>密码登陆</h2>
             </el-row>
-            <el-form ref="form" :model="form" label-width="80px">
+            <el-form ref="form" :model="form">
                 <el-row>
                     <div style="margin-top:50px;">
                         <el-form-item prop="username" required>
@@ -24,7 +29,7 @@
                 </el-row>
                 <el-row>
                     <div style="margin-top:50px;">
-                        <el-button @click="loginSubmit" type="info" plain style="width:100%">登录</el-button>
+                        <el-button @click="loginSubmit" type="info" plain style="width:100%;">登录</el-button>
                     </div>
                 </el-row>
             </el-form>
@@ -82,6 +87,7 @@ export default {
                 that.$toast(err.data.msg);
             });
         },
+        prev(){this.$router.go(-1)},
     },
     components: {
 
@@ -90,5 +96,4 @@ export default {
 </script>
 
 <style scoped>
-
 </style>
