@@ -3,7 +3,7 @@
     <el-header>
       <el-row style="padding-top:10px;" type="flex" :gutter="30">
           <el-col :span="2" :offset="20">
-            <i class="el-icon-setting" style="font-size:1.5em;float:right;" @click="jumpto(urlmsgctr)" />
+            <i class="el-icon-setting" style="font-size:1.5em;float:right;" @click="jumpto(urlsettings)" />
           </el-col>
           <el-col :span="2">
             <i class="el-icon-chat-line-square" style="font-size:1.5em;float:right;" @click="jumpto(urlmsgctr)" />
@@ -163,8 +163,8 @@ import { Toast } from 'mint-ui'
     data () {
       return {
         profileImgUrl: "",
+        urlsettings: "/p_info/settings",
         urlmsgctr: "messageCenter",
-        // accountInfo: {},
         userscopes: [
           { title: '我的收藏',
             icon:'collection',
@@ -224,21 +224,6 @@ import { Toast } from 'mint-ui'
       genPicURL(pic) {
         return this.SERVER_BASE_URL + "/image/" + pic;
       },
-      // getAccountInfo () {
-      //   var that = this;
-      //   var req_map = that.HOST + "/account/id/1";
-      //   that.$axios({
-      //     url: req_map,
-      //     method: 'POST'
-      //   }).then(resp => {            
-      //     if(resp.data.success){
-      //       that.accountInfo = resp.data.content;
-      //     }else{that.$toast(resp.data.msg);}
-      //   }).catch(err =>{
-      //     console.log(err);
-      //     reject(err.data);
-      //   })
-      // },
       jumpto(link){
         if(link==''){
           this.$toast("功能开发中");
@@ -248,17 +233,9 @@ import { Toast } from 'mint-ui'
       }
     },
     created(){
-      // this.getAccountInfo();
     },
     mounted(){
       // .mintui color == blue
-    },
-    watch: {
-      // accountInfo(val,oldVal) {        
-      //   this.$nextTick(() => {
-      //     this.profileImgUrl = this.genPicURL(this.accountInfo.headPhotoAddress);
-      //   })
-      // }
     }
   }
 </script>

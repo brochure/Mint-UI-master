@@ -17,6 +17,7 @@ import MerchantInfo from '../pages/p_info/MerchantInfo.vue'
 import MenuBlock from '../pages/p_info/MenuBlock.vue'
 import Cart from '../pages/p_info/cart.vue'
 import LoginPwd from '../pages/user/loginPwd.vue'
+import Settings from '../pages/p_info/settings.vue'
 
 
 Vue.use(Router);
@@ -137,5 +138,11 @@ export default new Router({
         showFootBar: false
       }
     },
+    {
+      path: '/p_info/settings', component: Settings,
+      meta: {
+        showFootBar: false
+      }
+    }
   ]
 })
