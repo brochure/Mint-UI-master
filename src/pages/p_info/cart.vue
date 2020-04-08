@@ -39,7 +39,7 @@ export default {
       let that = this;
       let url = that.HOST + "/order/clearCart";
       let param = {
-        accountId: 1,
+        accountId: that.$store.getters.currentAccountId,
       };
       that.$axios({
         url: url,
@@ -70,7 +70,7 @@ export default {
       let that = this;
       let req_map = that.HOST + "/order/getCart";
       let param = {
-        accountId: 1,
+        accountId: that.$store.getters.currentAccountId,
         };
       that.$axios({
           url: req_map,

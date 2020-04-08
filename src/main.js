@@ -42,6 +42,7 @@ var store = new Vuex.Store({
 	},
 	getters:{
 		currentAccount: state=>state.currentAccount,
+		currentAccountId: state=>state.currentAccount.accountId,
 		loginState: state=>state.loginState,
 		merchantInfo: state=>state.merchantInfo,
 		merchantId: state=>state.merchantId,

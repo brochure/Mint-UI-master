@@ -60,7 +60,9 @@ export default {
 
     }
   },
-  methods: {
+  created() {
+  },
+  methods: {    
     logoutSubmit(){      
       this.$store.commit('logoutAccount');
       this.jumpto('/info');
