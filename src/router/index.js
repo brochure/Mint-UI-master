@@ -108,7 +108,7 @@ export default new Router({
     {
       path: '/p_info/profile', component: Profile,
       meta: {
-        showFootBar: true
+        showFootBar: false
       }
     },
     {
